@@ -7,15 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8A2C8F14227536FF00188975 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2C8F13227536FF00188975 /* Colors.swift */; };
+		8A2C8F162275680400188975 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8A2C8F152275680400188975 /* GoogleService-Info.plist */; };
 		8A5AF90D2273D31500E4AC1A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF90C2273D31500E4AC1A /* AppDelegate.swift */; };
 		8A5AF90F2273D31500E4AC1A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF90E2273D31500E4AC1A /* ViewController.swift */; };
 		8A5AF9122273D31500E4AC1A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A5AF9102273D31500E4AC1A /* Main.storyboard */; };
 		8A5AF9152273D31500E4AC1A /* RealTalk.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF9132273D31500E4AC1A /* RealTalk.xcdatamodeld */; };
 		8A5AF9172273D31700E4AC1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A5AF9162273D31700E4AC1A /* Assets.xcassets */; };
 		8A5AF91A2273D31700E4AC1A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A5AF9182273D31700E4AC1A /* LaunchScreen.storyboard */; };
+		8A5AF92222743F9E00E4AC1A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF92122743F9E00E4AC1A /* HomeViewController.swift */; };
+		8A5AF9242275088A00E4AC1A /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF9232275088A00E4AC1A /* PostTableViewCell.swift */; };
+		8A5AF92622750F8900E4AC1A /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF92522750F8900E4AC1A /* Post.swift */; };
+		8A5AF9282275266C00E4AC1A /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF9272275266C00E4AC1A /* CreatePostViewController.swift */; };
+		9F71B75505BC8C73CAEF8894 /* Pods_RealTalk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2869E8359ECA7ECECC54B28 /* Pods_RealTalk.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		51901FD10A1D8ADCECBB9236 /* Pods-RealTalk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealTalk.release.xcconfig"; path = "Pods/Target Support Files/Pods-RealTalk/Pods-RealTalk.release.xcconfig"; sourceTree = "<group>"; };
+		8A2C8F13227536FF00188975 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		8A2C8F152275680400188975 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8A5AF9092273D31500E4AC1A /* RealTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A5AF90C2273D31500E4AC1A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8A5AF90E2273D31500E4AC1A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -24,6 +34,12 @@
 		8A5AF9162273D31700E4AC1A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8A5AF9192273D31700E4AC1A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8A5AF91B2273D31700E4AC1A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8A5AF92122743F9E00E4AC1A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		8A5AF9232275088A00E4AC1A /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
+		8A5AF92522750F8900E4AC1A /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		8A5AF9272275266C00E4AC1A /* CreatePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
+		A0570830AB5455B44E73DE65 /* Pods-RealTalk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealTalk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RealTalk/Pods-RealTalk.debug.xcconfig"; sourceTree = "<group>"; };
+		E2869E8359ECA7ECECC54B28 /* Pods_RealTalk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RealTalk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +47,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F71B75505BC8C73CAEF8894 /* Pods_RealTalk.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2B485FC7F2A18F87B20AF986 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A0570830AB5455B44E73DE65 /* Pods-RealTalk.debug.xcconfig */,
+				51901FD10A1D8ADCECBB9236 /* Pods-RealTalk.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		61D39476ECBC089B08501AB5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E2869E8359ECA7ECECC54B28 /* Pods_RealTalk.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		8A5AF9002273D31500E4AC1A = {
 			isa = PBXGroup;
 			children = (
 				8A5AF90B2273D31500E4AC1A /* RealTalk */,
 				8A5AF90A2273D31500E4AC1A /* Products */,
+				2B485FC7F2A18F87B20AF986 /* Pods */,
+				61D39476ECBC089B08501AB5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -59,10 +95,16 @@
 				8A5AF90C2273D31500E4AC1A /* AppDelegate.swift */,
 				8A5AF90E2273D31500E4AC1A /* ViewController.swift */,
 				8A5AF9102273D31500E4AC1A /* Main.storyboard */,
+				8A2C8F13227536FF00188975 /* Colors.swift */,
+				8A5AF9232275088A00E4AC1A /* PostTableViewCell.swift */,
+				8A5AF9272275266C00E4AC1A /* CreatePostViewController.swift */,
+				8A5AF92122743F9E00E4AC1A /* HomeViewController.swift */,
+				8A5AF92522750F8900E4AC1A /* Post.swift */,
 				8A5AF9162273D31700E4AC1A /* Assets.xcassets */,
 				8A5AF9182273D31700E4AC1A /* LaunchScreen.storyboard */,
 				8A5AF91B2273D31700E4AC1A /* Info.plist */,
 				8A5AF9132273D31500E4AC1A /* RealTalk.xcdatamodeld */,
+				8A2C8F152275680400188975 /* GoogleService-Info.plist */,
 			);
 			path = RealTalk;
 			sourceTree = "<group>";
@@ -74,9 +116,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8A5AF91E2273D31700E4AC1A /* Build configuration list for PBXNativeTarget "RealTalk" */;
 			buildPhases = (
+				D072D57C80CF36A43DD1D21D /* [CP] Check Pods Manifest.lock */,
 				8A5AF9052273D31500E4AC1A /* Sources */,
 				8A5AF9062273D31500E4AC1A /* Frameworks */,
 				8A5AF9072273D31500E4AC1A /* Resources */,
+				7F1579CD27D596918C9621CE /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -125,6 +169,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A2C8F162275680400188975 /* GoogleService-Info.plist in Resources */,
 				8A5AF91A2273D31700E4AC1A /* LaunchScreen.storyboard in Resources */,
 				8A5AF9172273D31700E4AC1A /* Assets.xcassets in Resources */,
 				8A5AF9122273D31500E4AC1A /* Main.storyboard in Resources */,
@@ -133,14 +178,74 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		7F1579CD27D596918C9621CE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-RealTalk/Pods-RealTalk-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/ProgressHUD/ProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/RAMAnimatedTabBarController/RAMAnimatedTabBarController.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RAMAnimatedTabBarController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RealTalk/Pods-RealTalk-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D072D57C80CF36A43DD1D21D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RealTalk-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		8A5AF9052273D31500E4AC1A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				8A5AF90F2273D31500E4AC1A /* ViewController.swift in Sources */,
+				8A2C8F14227536FF00188975 /* Colors.swift in Sources */,
+				8A5AF9282275266C00E4AC1A /* CreatePostViewController.swift in Sources */,
 				8A5AF9152273D31500E4AC1A /* RealTalk.xcdatamodeld in Sources */,
+				8A5AF9242275088A00E4AC1A /* PostTableViewCell.swift in Sources */,
+				8A5AF92622750F8900E4AC1A /* Post.swift in Sources */,
 				8A5AF90D2273D31500E4AC1A /* AppDelegate.swift in Sources */,
+				8A5AF92222743F9E00E4AC1A /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,10 +389,13 @@
 		};
 		8A5AF91F2273D31700E4AC1A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A0570830AB5455B44E73DE65 /* Pods-RealTalk.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 75GE4R4KM2;
 				INFOPLIST_FILE = RealTalk/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -301,10 +409,13 @@
 		};
 		8A5AF9202273D31700E4AC1A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 51901FD10A1D8ADCECBB9236 /* Pods-RealTalk.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 75GE4R4KM2;
 				INFOPLIST_FILE = RealTalk/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
