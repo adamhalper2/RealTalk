@@ -83,7 +83,10 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
         let newPostID = postsReference.childByAutoId().key
         let newPostReference = postsReference.child(newPostID!)
         //newPostReference.setValue(["photoUrl": photoUrl, "caption": caption, "userID": Auth.auth().currentUser?.uid])
-        newPostReference.setValue(["photoUrl": photoUrl, "content": content, "userID": "mrBean"]) { (error, ref) in
+        var timestamp = NSDate().timeIntervalSince1970
+
+
+        newPostReference.setValue(["photoUrl": photoUrl, "content": content, "userID": "mrBean", "date": "\(timestamp)"]) { (error, ref) in
             if error != nil {
                 ProgressHUD.showError(error!.localizedDescription)
                 return
@@ -102,11 +105,13 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
       //  tabBarController?.selectedIndex = 1
 
     }
+
     @IBAction func shareTapped(_ sender: Any) {
         if let content = textView.text {
             let photoUrl = "samplePhotoUrl"
             sendDataToDatabase(photoUrl: photoUrl, content: content)
         }
+        tabBarController!.selectedIndex = 0
     }
     /*
     // MARK: - Navigation

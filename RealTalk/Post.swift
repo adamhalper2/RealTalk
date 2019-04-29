@@ -12,15 +12,15 @@ class Post {
 
     var author: String
     var content: String
-    var date: Date
+    var timestamp: NSDate
     var commentCount: Int
     //var messages: [Messages]
 
 
-    init(content: String, author: String) {
+    init(content: String, author: String, timestamp: NSDate) {
         self.content = content
         self.author = author
-        self.date = Date()
+        self.timestamp = timestamp
         self.commentCount = 0
     }
 }

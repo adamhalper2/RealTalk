@@ -13,11 +13,6 @@ import RAMAnimatedTabBarController
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
 
-    let samplePost1 = Post(content: "I have a crazy roommate. He laminated live goldfish to the kitchen table. When I talked to my other two roommates about the crazy one, there was some general shifting from foot to foot, some half-hearted agreements that the situation was untenable, but a general unwillingness to deal with the situation with the defense I mean, he's our boy", author: "FreddyKeys")
-    let samplePost2 = Post(content: "I feel like my major is useless...I wanna switch but I'm worried it's too late. Looking for someone to talk to who has gone through this", author: "ClearEyes")
-    let samplePost3 = Post(content: "Can someone who interned at FB/Google/etc tell me what the interview process was like?!", author: "MrBean")
-    var samplePosts: [Post]?
-
     var postArray = [Post]()
 
     @IBOutlet weak var tableView: UITableView!
@@ -28,7 +23,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        print("sample posts \(samplePosts!.count)")
         return postArray.count
     }
 
@@ -42,12 +36,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
      
         cell.authorLabel.text = posts[indexPath.section].author
         cell.contentLabel.text = posts[indexPath.section].content
+        let date = posts[indexPath.section].timestamp
+        let timestamp = timeAgoSinceDate(date: date, numericDates: true)
+        cell.timeLabel.text = timestamp
 
-        let df = DateFormatter()
-        df.dateFormat = "hh" //change to show either day or hour or minute
-        cell.timeLabel.text = df.string(from: posts[indexPath.section].date) + "hr"
         cell.commentBtn.titleLabel!.text = "34"
-
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
         return cell
     }
@@ -60,7 +53,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         loadPosts()
-        samplePosts = [samplePost1, samplePost2, samplePost3]
         tableView.delegate = self
         tableView.dataSource = self
 
@@ -76,18 +68,152 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 let content = dict["content"] as! String
                 let photoUrlString = dict["photoUrl"] as! String
                 let userID = dict["userID"] as! String
-                let post = Post(content: content, author: userID)
-                self.postArray.append(post)
+                let timeString = dict["date"] as! String
+
+                if let timeNum = Double(timeString) {
+                    let date = NSDate(timeIntervalSince1970: timeNum)
+                    let post = Post(content: content, author: userID, timestamp: date)
+                    self.postArray.append(post)
+                }
 
                 //let url = URL(string: photoUrlString)
                 //let data = try? Data(contentsOf: url!)
-
+                //self.postArray = self.postArray.reversed()
                 self.tableView.reloadData()
             }
         }
     }
 
-    
+
+    /*
+    func timeAgoSinceDate(date:NSDate, numericDates:Bool) -> String {
+        let calendar = NSCalendar.current
+        let unitFlags: Set<Calendar.Component> = [.minute, .hour, .day, .weekOfYear, .month, .year, .second]
+        let now = NSDate()
+        let earliest = now.earlierDate(date as Date)
+        let latest = (earliest == now as Date) ? date : now
+        let components = calendar.dateComponents(unitFlags, from: earliest as Date,  to: latest as Date)
+
+        if (components.year! >= 2) {
+            return "\(components.year!) years ago"
+        } else if (components.year! >= 1){
+            if (numericDates){
+                return "1 year ago"
+            } else {
+                return "Last year"
+            }
+        } else if (components.month! >= 2) {
+            return "\(components.month!) months ago"
+        } else if (components.month! >= 1){
+            if (numericDates){
+                return "1 month ago"
+            } else {
+                return "Last month"
+            }
+        } else if (components.weekOfYear! >= 2) {
+            return "\(components.weekOfYear!) weeks ago"
+        } else if (components.weekOfYear! >= 1){
+            if (numericDates){
+                return "1 week ago"
+            } else {
+                return "Last week"
+            }
+        } else if (components.day! >= 2) {
+            return "\(components.day!) days ago"
+        } else if (components.day! >= 1){
+            if (numericDates){
+                return "1 day ago"
+            } else {
+                return "Yesterday"
+            }
+        } else if (components.hour! >= 2) {
+            return "\(components.hour!) hours ago"
+        } else if (components.hour! >= 1){
+            if (numericDates){
+                return "1 hour ago"
+            } else {
+                return "An hour ago"
+            }
+        } else if (components.minute! >= 2) {
+            return "\(components.minute!) mins ago"
+        } else if (components.minute! >= 1){
+            if (numericDates){
+                return "1 min ago"
+            } else {
+                return "A min ago"
+            }
+        } else if (components.second! >= 3) {
+            return "\(components.second!) secs ago"
+        } else {
+            return "Just now"
+        }
+
+    }
+    */
+
+    func timeAgoSinceDate(date:NSDate, numericDates:Bool) -> String {
+        let calendar = NSCalendar.current
+        let unitFlags: Set<Calendar.Component> = [.minute, .hour, .day, .weekOfYear, .month, .year, .second]
+        let now = NSDate()
+        let earliest = now.earlierDate(date as Date)
+        let latest = (earliest == now as Date) ? date : now
+        let components = calendar.dateComponents(unitFlags, from: earliest as Date,  to: latest as Date)
+
+        if (components.year! >= 2) {
+            return "\(components.year!)y"
+        } else if (components.year! >= 1){
+            if (numericDates){
+                return "1 yr"
+            } else {
+                return "Last year"
+            }
+        } else if (components.month! >= 2) {
+            return "\(components.month!)mo"
+        } else if (components.month! >= 1){
+            if (numericDates){
+                return "1 month ago"
+            } else {
+                return "Last month"
+            }
+        } else if (components.weekOfYear! >= 2) {
+            return "\(components.weekOfYear!)w"
+        } else if (components.weekOfYear! >= 1){
+            if (numericDates){
+                return "1w"
+            } else {
+                return "Last week"
+            }
+        } else if (components.day! >= 2) {
+            return "\(components.day!)d"
+        } else if (components.day! >= 1){
+            if (numericDates){
+                return "1d"
+            } else {
+                return "Yesterday"
+            }
+        } else if (components.hour! >= 2) {
+            return "\(components.hour!)h"
+        } else if (components.hour! >= 1){
+            if (numericDates){
+                return "1h"
+            } else {
+                return "An hour ago"
+            }
+        } else if (components.minute! >= 2) {
+            return "\(components.minute!) min"
+        } else if (components.minute! >= 1){
+            if (numericDates){
+                return "1 min ago"
+            } else {
+                return "A min ago"
+            }
+        } else if (components.second! >= 3) {
+            return "\(components.second!)s"
+        } else {
+            return "Just now"
+        }
+
+    }
 
     /*
     // MARK: - Navigation
