@@ -1,0 +1,6 @@
+framework module Pods_RealTalk {
+  umbrella header "Pods-RealTalk-umbrella.h"
+
+  export *
+  module * { export * }
+}
