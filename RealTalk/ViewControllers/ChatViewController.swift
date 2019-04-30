@@ -41,7 +41,7 @@ final class ChatViewController: MessagesViewController {
   private var messageListener: ListenerRegistration?
   
   private let user: User
-  private let post: Post2
+  private let post: Post
   
   private var isSendingPhoto = false {
     didSet {
@@ -55,7 +55,7 @@ final class ChatViewController: MessagesViewController {
   
   private let storage = Storage.storage().reference()
   
-  init(user: User, post: Post2) {
+  init(user: User, post: Post) {
     self.user = user
     self.post = post
     super.init(nibName: nil, bundle: nil)
@@ -140,7 +140,7 @@ final class ChatViewController: MessagesViewController {
   
   // MARK: - Helpers
   
-  private func uploadImage(_ image: UIImage, to post: Post2, completion: @escaping (URL?) -> Void) {
+  private func uploadImage(_ image: UIImage, to post: Post, completion: @escaping (URL?) -> Void) {
     guard let channelID = post.id else {
       completion(nil)
       return

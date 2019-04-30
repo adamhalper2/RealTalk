@@ -12,7 +12,7 @@ import FirebaseFirestore
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    private var posts = [Post2]()
+    private var posts = [Post]()
     private var postsListener: ListenerRegistration?
 
     @IBOutlet weak var tableView: UITableView!
@@ -85,7 +85,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
-    private func addPostToTable(_ post: Post2) {
+    private func addPostToTable(_ post: Post) {
         guard !posts.contains(post) else {
             return
         }
@@ -99,7 +99,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.insertRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
     }
     
-    private func updatePostInTable(_ post: Post2) {
+    private func updatePostInTable(_ post: Post) {
         guard let index = posts.index(of: post) else {
             return
         }
@@ -108,7 +108,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
     }
     
-    private func removePostFromTable(_ post: Post2) {
+    private func removePostFromTable(_ post: Post) {
         guard let index = posts.index(of: post) else {
             return
         }
@@ -118,7 +118,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     private func handleDocumentChange(_ change: DocumentChange) {
-        guard let post = Post2(document: change.document) else {
+        guard let post = Post(document: change.document) else {
             return
         }
         

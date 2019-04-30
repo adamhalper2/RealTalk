@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3B1F1A9D2277B132001655B6 /* Post2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1F1A9C2277B131001655B6 /* Post2.swift */; };
+		3B1F1A9D2277B132001655B6 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1F1A9C2277B131001655B6 /* Post.swift */; };
 		3B1F1A9F2277B3D3001655B6 /* DatabaseRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1F1A9E2277B3D2001655B6 /* DatabaseRepresentation.swift */; };
 		3BAAC09522780F68007C5DCE /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAAC09422780F68007C5DCE /* ChatViewController.swift */; };
 		3BC2AFEE22781D5500B01F32 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC2AFED22781D5500B01F32 /* Message.swift */; };
@@ -26,13 +26,12 @@
 		8A5AF91A2273D31700E4AC1A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A5AF9182273D31700E4AC1A /* LaunchScreen.storyboard */; };
 		8A5AF92222743F9E00E4AC1A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF92122743F9E00E4AC1A /* HomeViewController.swift */; };
 		8A5AF9242275088A00E4AC1A /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF9232275088A00E4AC1A /* PostTableViewCell.swift */; };
-		8A5AF92622750F8900E4AC1A /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF92522750F8900E4AC1A /* Post.swift */; };
 		8A5AF9282275266C00E4AC1A /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF9272275266C00E4AC1A /* CreatePostViewController.swift */; };
 		9F71B75505BC8C73CAEF8894 /* Pods_RealTalk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2869E8359ECA7ECECC54B28 /* Pods_RealTalk.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3B1F1A9C2277B131001655B6 /* Post2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post2.swift; sourceTree = "<group>"; };
+		3B1F1A9C2277B131001655B6 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		3B1F1A9E2277B3D2001655B6 /* DatabaseRepresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseRepresentation.swift; sourceTree = "<group>"; };
 		3BAAC09422780F68007C5DCE /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		3BC2AFED22781D5500B01F32 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -54,7 +53,6 @@
 		8A5AF91B2273D31700E4AC1A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8A5AF92122743F9E00E4AC1A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		8A5AF9232275088A00E4AC1A /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
-		8A5AF92522750F8900E4AC1A /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		8A5AF9272275266C00E4AC1A /* CreatePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
 		A0570830AB5455B44E73DE65 /* Pods-RealTalk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealTalk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RealTalk/Pods-RealTalk.debug.xcconfig"; sourceTree = "<group>"; };
 		E2869E8359ECA7ECECC54B28 /* Pods_RealTalk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RealTalk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -110,8 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				3B1F1A9E2277B3D2001655B6 /* DatabaseRepresentation.swift */,
-				3B1F1A9C2277B131001655B6 /* Post2.swift */,
-				8A5AF92522750F8900E4AC1A /* Post.swift */,
+				3B1F1A9C2277B131001655B6 /* Post.swift */,
 				3BC2AFED22781D5500B01F32 /* Message.swift */,
 			);
 			path = Models;
@@ -312,7 +309,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BC2AFFE227826E300B01F32 /* NSDate+Additions.swift in Sources */,
-				3B1F1A9D2277B132001655B6 /* Post2.swift in Sources */,
+				3B1F1A9D2277B132001655B6 /* Post.swift in Sources */,
 				3BC2AFF022781D7A00B01F32 /* UIColor+Additions.swift in Sources */,
 				8A5AF90F2273D31500E4AC1A /* ViewController.swift in Sources */,
 				3BAAC09522780F68007C5DCE /* ChatViewController.swift in Sources */,
@@ -322,7 +319,6 @@
 				8A5AF9282275266C00E4AC1A /* CreatePostViewController.swift in Sources */,
 				8A5AF9152273D31500E4AC1A /* RealTalk.xcdatamodeld in Sources */,
 				8A5AF9242275088A00E4AC1A /* PostTableViewCell.swift in Sources */,
-				8A5AF92622750F8900E4AC1A /* Post.swift in Sources */,
 				3BC2AFEE22781D5500B01F32 /* Message.swift in Sources */,
 				8A5AF90D2273D31500E4AC1A /* AppDelegate.swift in Sources */,
 				3BC2AFF222781D8B00B01F32 /* UICollectionView+Additions.swift in Sources */,

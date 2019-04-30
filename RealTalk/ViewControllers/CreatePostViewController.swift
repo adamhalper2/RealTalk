@@ -79,7 +79,7 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
     func sendDataToDatabase(photoUrl: String, content: String){
         let db = Firestore.firestore()
         let  postsReference =  db.collection("channels")
-        let post = Post2(content: content, author: "mrBean", timestamp: NSDate())
+        let post = Post(content: content, author: "mrBean", timestamp: NSDate())
         postsReference.addDocument(data: post.representation) { error in
             if error != nil {
                 ProgressHUD.showError(error!.localizedDescription)
