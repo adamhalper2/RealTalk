@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B1F1A9D2277B132001655B6 /* Post2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1F1A9C2277B131001655B6 /* Post2.swift */; };
+		3B1F1A9F2277B3D3001655B6 /* DatabaseRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1F1A9E2277B3D2001655B6 /* DatabaseRepresentation.swift */; };
+		3BAAC09522780F68007C5DCE /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAAC09422780F68007C5DCE /* ChatViewController.swift */; };
+		3BC2AFEE22781D5500B01F32 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC2AFED22781D5500B01F32 /* Message.swift */; };
+		3BC2AFF022781D7A00B01F32 /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC2AFEF22781D7A00B01F32 /* UIColor+Additions.swift */; };
+		3BC2AFF222781D8B00B01F32 /* UICollectionView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC2AFF122781D8B00B01F32 /* UICollectionView+Additions.swift */; };
+		3BC2AFF422781DBE00B01F32 /* UIImage+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC2AFF322781DBE00B01F32 /* UIImage+Additions.swift */; };
+		3BC2AFF622781DC600B01F32 /* UIView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC2AFF522781DC600B01F32 /* UIView+Additions.swift */; };
+		3BC2AFFE227826E300B01F32 /* NSDate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC2AFFD227826E300B01F32 /* NSDate+Additions.swift */; };
 		8A2C8F14227536FF00188975 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2C8F13227536FF00188975 /* Colors.swift */; };
 		8A2C8F162275680400188975 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8A2C8F152275680400188975 /* GoogleService-Info.plist */; };
 		8A5AF90D2273D31500E4AC1A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF90C2273D31500E4AC1A /* AppDelegate.swift */; };
@@ -23,6 +32,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3B1F1A9C2277B131001655B6 /* Post2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post2.swift; sourceTree = "<group>"; };
+		3B1F1A9E2277B3D2001655B6 /* DatabaseRepresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseRepresentation.swift; sourceTree = "<group>"; };
+		3BAAC09422780F68007C5DCE /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		3BC2AFED22781D5500B01F32 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		3BC2AFEF22781D7A00B01F32 /* UIColor+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Additions.swift"; sourceTree = "<group>"; };
+		3BC2AFF122781D8B00B01F32 /* UICollectionView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Additions.swift"; sourceTree = "<group>"; };
+		3BC2AFF322781DBE00B01F32 /* UIImage+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Additions.swift"; sourceTree = "<group>"; };
+		3BC2AFF522781DC600B01F32 /* UIView+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Additions.swift"; sourceTree = "<group>"; };
+		3BC2AFFD227826E300B01F32 /* NSDate+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDate+Additions.swift"; sourceTree = "<group>"; };
 		51901FD10A1D8ADCECBB9236 /* Pods-RealTalk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealTalk.release.xcconfig"; path = "Pods/Target Support Files/Pods-RealTalk/Pods-RealTalk.release.xcconfig"; sourceTree = "<group>"; };
 		8A2C8F13227536FF00188975 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		8A2C8F152275680400188975 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -63,6 +81,54 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		3BC2AFF722781DCD00B01F32 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3BC2AFF322781DBE00B01F32 /* UIImage+Additions.swift */,
+				3BC2AFF522781DC600B01F32 /* UIView+Additions.swift */,
+				3BC2AFEF22781D7A00B01F32 /* UIColor+Additions.swift */,
+				3BC2AFF122781D8B00B01F32 /* UICollectionView+Additions.swift */,
+				3BC2AFFD227826E300B01F32 /* NSDate+Additions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3BC2AFF82278259D00B01F32 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				8A5AF9102273D31500E4AC1A /* Main.storyboard */,
+				8A5AF90E2273D31500E4AC1A /* ViewController.swift */,
+				8A5AF9232275088A00E4AC1A /* PostTableViewCell.swift */,
+				8A5AF9272275266C00E4AC1A /* CreatePostViewController.swift */,
+				3BAAC09422780F68007C5DCE /* ChatViewController.swift */,
+				8A5AF92122743F9E00E4AC1A /* HomeViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		3BC2AFF9227825AD00B01F32 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3B1F1A9E2277B3D2001655B6 /* DatabaseRepresentation.swift */,
+				3B1F1A9C2277B131001655B6 /* Post2.swift */,
+				8A5AF92522750F8900E4AC1A /* Post.swift */,
+				3BC2AFED22781D5500B01F32 /* Message.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		3BC2AFFA227825C900B01F32 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8A2C8F13227536FF00188975 /* Colors.swift */,
+				8A5AF9162273D31700E4AC1A /* Assets.xcassets */,
+				8A5AF9182273D31700E4AC1A /* LaunchScreen.storyboard */,
+				8A5AF9132273D31500E4AC1A /* RealTalk.xcdatamodeld */,
+				8A2C8F152275680400188975 /* GoogleService-Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		61D39476ECBC089B08501AB5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -92,19 +158,12 @@
 		8A5AF90B2273D31500E4AC1A /* RealTalk */ = {
 			isa = PBXGroup;
 			children = (
-				8A5AF90C2273D31500E4AC1A /* AppDelegate.swift */,
-				8A5AF90E2273D31500E4AC1A /* ViewController.swift */,
-				8A5AF9102273D31500E4AC1A /* Main.storyboard */,
-				8A2C8F13227536FF00188975 /* Colors.swift */,
-				8A5AF9232275088A00E4AC1A /* PostTableViewCell.swift */,
-				8A5AF9272275266C00E4AC1A /* CreatePostViewController.swift */,
-				8A5AF92122743F9E00E4AC1A /* HomeViewController.swift */,
-				8A5AF92522750F8900E4AC1A /* Post.swift */,
-				8A5AF9162273D31700E4AC1A /* Assets.xcassets */,
-				8A5AF9182273D31700E4AC1A /* LaunchScreen.storyboard */,
 				8A5AF91B2273D31700E4AC1A /* Info.plist */,
-				8A5AF9132273D31500E4AC1A /* RealTalk.xcdatamodeld */,
-				8A2C8F152275680400188975 /* GoogleService-Info.plist */,
+				8A5AF90C2273D31500E4AC1A /* AppDelegate.swift */,
+				3BC2AFF9227825AD00B01F32 /* Models */,
+				3BC2AFF82278259D00B01F32 /* ViewControllers */,
+				3BC2AFF722781DCD00B01F32 /* Extensions */,
+				3BC2AFFA227825C900B01F32 /* Supporting Files */,
 			);
 			path = RealTalk;
 			sourceTree = "<group>";
@@ -187,10 +246,17 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-RealTalk/Pods-RealTalk-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-RealTalk/Pods-RealTalk-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/MessageKit/MessageKit.framework",
 				"${BUILT_PRODUCTS_DIR}/ProgressHUD/ProgressHUD.framework",
-				"${BUILT_PRODUCTS_DIR}/RAMAnimatedTabBarController/RAMAnimatedTabBarController.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-RxLibrary/RxLibrary.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -198,15 +264,22 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessageKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProgressHUD.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RAMAnimatedTabBarController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxLibrary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RealTalk/Pods-RealTalk-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RealTalk/Pods-RealTalk-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D072D57C80CF36A43DD1D21D /* [CP] Check Pods Manifest.lock */ = {
@@ -238,14 +311,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BC2AFFE227826E300B01F32 /* NSDate+Additions.swift in Sources */,
+				3B1F1A9D2277B132001655B6 /* Post2.swift in Sources */,
+				3BC2AFF022781D7A00B01F32 /* UIColor+Additions.swift in Sources */,
 				8A5AF90F2273D31500E4AC1A /* ViewController.swift in Sources */,
+				3BAAC09522780F68007C5DCE /* ChatViewController.swift in Sources */,
+				3BC2AFF622781DC600B01F32 /* UIView+Additions.swift in Sources */,
 				8A2C8F14227536FF00188975 /* Colors.swift in Sources */,
+				3B1F1A9F2277B3D3001655B6 /* DatabaseRepresentation.swift in Sources */,
 				8A5AF9282275266C00E4AC1A /* CreatePostViewController.swift in Sources */,
 				8A5AF9152273D31500E4AC1A /* RealTalk.xcdatamodeld in Sources */,
 				8A5AF9242275088A00E4AC1A /* PostTableViewCell.swift in Sources */,
 				8A5AF92622750F8900E4AC1A /* Post.swift in Sources */,
+				3BC2AFEE22781D5500B01F32 /* Message.swift in Sources */,
 				8A5AF90D2273D31500E4AC1A /* AppDelegate.swift in Sources */,
+				3BC2AFF222781D8B00B01F32 /* UICollectionView+Additions.swift in Sources */,
 				8A5AF92222743F9E00E4AC1A /* HomeViewController.swift in Sources */,
+				3BC2AFF422781DBE00B01F32 /* UIImage+Additions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,14 +475,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 75GE4R4KM2;
+				DEVELOPMENT_TEAM = 3PHM8K6QXJ;
 				INFOPLIST_FILE = RealTalk/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = personal.RealTalk;
+				PRODUCT_BUNDLE_IDENTIFIER = colin.RealTalk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -413,14 +495,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 75GE4R4KM2;
+				DEVELOPMENT_TEAM = 3PHM8K6QXJ;
 				INFOPLIST_FILE = RealTalk/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = personal.RealTalk;
+				PRODUCT_BUNDLE_IDENTIFIER = colin.RealTalk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
