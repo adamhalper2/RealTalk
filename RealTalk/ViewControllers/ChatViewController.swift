@@ -73,6 +73,7 @@ final class ChatViewController: MessagesViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    self.tabBarController?.tabBar.isHidden = true
     
     guard let id = post.id else {
       navigationController?.popViewController(animated: true)
