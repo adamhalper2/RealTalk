@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		3B1F1A9D2277B132001655B6 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1F1A9C2277B131001655B6 /* Post.swift */; };
 		3B1F1A9F2277B3D3001655B6 /* DatabaseRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1F1A9E2277B3D2001655B6 /* DatabaseRepresentation.swift */; };
+		3B5EA19D22798269005D9E5F /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EA19C22798269005D9E5F /* AppController.swift */; };
+		3B5EA19F22798281005D9E5F /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EA19E22798281005D9E5F /* AppSettings.swift */; };
+		3B5EA1A12279829C005D9E5F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EA1A02279829C005D9E5F /* LoginViewController.swift */; };
 		3BAAC09522780F68007C5DCE /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAAC09422780F68007C5DCE /* ChatViewController.swift */; };
 		3BC2AFEE22781D5500B01F32 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC2AFED22781D5500B01F32 /* Message.swift */; };
 		3BC2AFF022781D7A00B01F32 /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC2AFEF22781D7A00B01F32 /* UIColor+Additions.swift */; };
@@ -19,7 +22,6 @@
 		8A1F306A227A18050065D370 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8A1F3069227A18050065D370 /* GoogleService-Info.plist */; };
 		8A2C8F14227536FF00188975 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2C8F13227536FF00188975 /* Colors.swift */; };
 		8A5AF90D2273D31500E4AC1A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF90C2273D31500E4AC1A /* AppDelegate.swift */; };
-		8A5AF90F2273D31500E4AC1A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF90E2273D31500E4AC1A /* ViewController.swift */; };
 		8A5AF9122273D31500E4AC1A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A5AF9102273D31500E4AC1A /* Main.storyboard */; };
 		8A5AF9152273D31500E4AC1A /* RealTalk.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF9132273D31500E4AC1A /* RealTalk.xcdatamodeld */; };
 		8A5AF9172273D31700E4AC1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A5AF9162273D31700E4AC1A /* Assets.xcassets */; };
@@ -33,6 +35,9 @@
 /* Begin PBXFileReference section */
 		3B1F1A9C2277B131001655B6 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		3B1F1A9E2277B3D2001655B6 /* DatabaseRepresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseRepresentation.swift; sourceTree = "<group>"; };
+		3B5EA19C22798269005D9E5F /* AppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
+		3B5EA19E22798281005D9E5F /* AppSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		3B5EA1A02279829C005D9E5F /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		3BAAC09422780F68007C5DCE /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		3BC2AFED22781D5500B01F32 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		3BC2AFEF22781D7A00B01F32 /* UIColor+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Additions.swift"; sourceTree = "<group>"; };
@@ -45,7 +50,6 @@
 		8A2C8F13227536FF00188975 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		8A5AF9092273D31500E4AC1A /* RealTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A5AF90C2273D31500E4AC1A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8A5AF90E2273D31500E4AC1A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8A5AF9112273D31500E4AC1A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8A5AF9142273D31500E4AC1A /* RealTalk.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RealTalk.xcdatamodel; sourceTree = "<group>"; };
 		8A5AF9162273D31700E4AC1A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -94,8 +98,8 @@
 		3BC2AFF82278259D00B01F32 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				3B5EA1A02279829C005D9E5F /* LoginViewController.swift */,
 				8A5AF9102273D31500E4AC1A /* Main.storyboard */,
-				8A5AF90E2273D31500E4AC1A /* ViewController.swift */,
 				8A5AF9232275088A00E4AC1A /* PostTableViewCell.swift */,
 				8A5AF9272275266C00E4AC1A /* CreatePostViewController.swift */,
 				3BAAC09422780F68007C5DCE /* ChatViewController.swift */,
@@ -155,6 +159,8 @@
 		8A5AF90B2273D31500E4AC1A /* RealTalk */ = {
 			isa = PBXGroup;
 			children = (
+				3B5EA19C22798269005D9E5F /* AppController.swift */,
+				3B5EA19E22798281005D9E5F /* AppSettings.swift */,
 				8A5AF91B2273D31700E4AC1A /* Info.plist */,
 				8A5AF90C2273D31500E4AC1A /* AppDelegate.swift */,
 				3BC2AFF9227825AD00B01F32 /* Models */,
@@ -311,12 +317,13 @@
 				3BC2AFFE227826E300B01F32 /* NSDate+Additions.swift in Sources */,
 				3B1F1A9D2277B132001655B6 /* Post.swift in Sources */,
 				3BC2AFF022781D7A00B01F32 /* UIColor+Additions.swift in Sources */,
-				8A5AF90F2273D31500E4AC1A /* ViewController.swift in Sources */,
 				3BAAC09522780F68007C5DCE /* ChatViewController.swift in Sources */,
 				3BC2AFF622781DC600B01F32 /* UIView+Additions.swift in Sources */,
 				8A2C8F14227536FF00188975 /* Colors.swift in Sources */,
+				3B5EA1A12279829C005D9E5F /* LoginViewController.swift in Sources */,
 				3B1F1A9F2277B3D3001655B6 /* DatabaseRepresentation.swift in Sources */,
 				8A5AF9282275266C00E4AC1A /* CreatePostViewController.swift in Sources */,
+				3B5EA19D22798269005D9E5F /* AppController.swift in Sources */,
 				8A5AF9152273D31500E4AC1A /* RealTalk.xcdatamodeld in Sources */,
 				8A5AF9242275088A00E4AC1A /* PostTableViewCell.swift in Sources */,
 				3BC2AFEE22781D5500B01F32 /* Message.swift in Sources */,
@@ -324,6 +331,7 @@
 				3BC2AFF222781D8B00B01F32 /* UICollectionView+Additions.swift in Sources */,
 				8A5AF92222743F9E00E4AC1A /* HomeViewController.swift in Sources */,
 				3BC2AFF422781DBE00B01F32 /* UIImage+Additions.swift in Sources */,
+				3B5EA19F22798281005D9E5F /* AppSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

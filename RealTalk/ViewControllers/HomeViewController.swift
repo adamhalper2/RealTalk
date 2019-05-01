@@ -49,7 +49,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let post = posts[indexPath.row]
-        let user = Auth.auth().currentUser
+        let user = AppController.user
         let vc = ChatViewController(user: user!, post: post)
         self.navigationController?.pushViewController(vc, animated:true)
     }
