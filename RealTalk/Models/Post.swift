@@ -62,11 +62,15 @@ struct Post {
     guard let timestamp = data["timestamp"] as? String else {
         return nil
     }
-    
+
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "MM/dd/yy h:mm a Z"
-    let date = dateFormatter.date(from: timestamp)! as NSDate
     
+    let date = dateFormatter.date(from: timestamp)! as NSDate
+    print("date is \(date)")
+
+
+
     guard let commentCount = data["commentCount"] as? String else {
         return nil
     }
@@ -79,6 +83,7 @@ struct Post {
     self.author = author
     self.commentCount = commentCountInt
     self.timestamp = date
+    print("timestamp is \(timestamp)")
 
   }
   
@@ -108,7 +113,7 @@ extension Post: Comparable {
   }
   
   static func < (lhs: Post, rhs: Post) -> Bool {
-    return lhs.timestamp < rhs.timestamp
+    return rhs.timestamp < lhs.timestamp
   }
 
 }

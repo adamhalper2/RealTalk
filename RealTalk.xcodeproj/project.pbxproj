@@ -16,8 +16,8 @@
 		3BC2AFF422781DBE00B01F32 /* UIImage+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC2AFF322781DBE00B01F32 /* UIImage+Additions.swift */; };
 		3BC2AFF622781DC600B01F32 /* UIView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC2AFF522781DC600B01F32 /* UIView+Additions.swift */; };
 		3BC2AFFE227826E300B01F32 /* NSDate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC2AFFD227826E300B01F32 /* NSDate+Additions.swift */; };
+		8A1F306A227A18050065D370 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8A1F3069227A18050065D370 /* GoogleService-Info.plist */; };
 		8A2C8F14227536FF00188975 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2C8F13227536FF00188975 /* Colors.swift */; };
-		8A2C8F162275680400188975 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8A2C8F152275680400188975 /* GoogleService-Info.plist */; };
 		8A5AF90D2273D31500E4AC1A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF90C2273D31500E4AC1A /* AppDelegate.swift */; };
 		8A5AF90F2273D31500E4AC1A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF90E2273D31500E4AC1A /* ViewController.swift */; };
 		8A5AF9122273D31500E4AC1A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A5AF9102273D31500E4AC1A /* Main.storyboard */; };
@@ -41,8 +41,8 @@
 		3BC2AFF522781DC600B01F32 /* UIView+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Additions.swift"; sourceTree = "<group>"; };
 		3BC2AFFD227826E300B01F32 /* NSDate+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDate+Additions.swift"; sourceTree = "<group>"; };
 		51901FD10A1D8ADCECBB9236 /* Pods-RealTalk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealTalk.release.xcconfig"; path = "Pods/Target Support Files/Pods-RealTalk/Pods-RealTalk.release.xcconfig"; sourceTree = "<group>"; };
+		8A1F3069227A18050065D370 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8A2C8F13227536FF00188975 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
-		8A2C8F152275680400188975 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8A5AF9092273D31500E4AC1A /* RealTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A5AF90C2273D31500E4AC1A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8A5AF90E2273D31500E4AC1A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -117,11 +117,11 @@
 		3BC2AFFA227825C900B01F32 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8A1F3069227A18050065D370 /* GoogleService-Info.plist */,
 				8A2C8F13227536FF00188975 /* Colors.swift */,
 				8A5AF9162273D31700E4AC1A /* Assets.xcassets */,
 				8A5AF9182273D31700E4AC1A /* LaunchScreen.storyboard */,
 				8A5AF9132273D31500E4AC1A /* RealTalk.xcdatamodeld */,
-				8A2C8F152275680400188975 /* GoogleService-Info.plist */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -225,8 +225,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8A2C8F162275680400188975 /* GoogleService-Info.plist in Resources */,
 				8A5AF91A2273D31700E4AC1A /* LaunchScreen.storyboard in Resources */,
+				8A1F306A227A18050065D370 /* GoogleService-Info.plist in Resources */,
 				8A5AF9172273D31700E4AC1A /* Assets.xcassets in Resources */,
 				8A5AF9122273D31500E4AC1A /* Main.storyboard in Resources */,
 			);
