@@ -320,7 +320,7 @@ extension ChatViewController: MessagesDataSource {
   
   // 1
   func currentSender() -> Sender {
-    return Sender(id: user.uid, displayName: "MrBean")
+    return Sender(id: user.uid, displayName: AppSettings.displayName)
   }
   
   // 2
