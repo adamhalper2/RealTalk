@@ -17,10 +17,12 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var closeBtn: UIButton!
 
     let colors = Colors()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         textView.delegate = self
         textView.textColor = UIColor.lightGray
+
         // Do any additional setup after loading the view.
     }
 
@@ -80,6 +82,8 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
         let db = Firestore.firestore()
         let  postsReference =  db.collection("channels")
         let post = Post(content: content, author: "mrBean", timestamp: NSDate())
+        print(post.timestamp)
+
         postsReference.addDocument(data: post.representation) { error in
             if error != nil {
                 ProgressHUD.showError(error!.localizedDescription)

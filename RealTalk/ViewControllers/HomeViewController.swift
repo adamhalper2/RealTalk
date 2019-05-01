@@ -15,6 +15,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     private var posts = [Post]()
     private var postsListener: ListenerRegistration?
 
+    var refreshControl = UIRefreshControl()
+
     @IBOutlet weak var tableView: UITableView!
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -26,17 +28,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         return 1
     }
 
-
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "postCell") as! PostTableViewCell
-
-        //let posts = postArray
         print(posts.count)
-        print("nidex path: \(indexPath.section)")
-     
+
         cell.authorLabel.text = posts[indexPath.row].author
         cell.contentLabel.text = posts[indexPath.row].content
-        let date = posts[indexPath.section].timestamp
+        let date = posts[indexPath.row].timestamp
         let timestamp = timeAgoSinceDate(date: date, numericDates: true)
         cell.timeLabel.text = timestamp
 
@@ -54,21 +52,24 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let user = Auth.auth().currentUser
         let vc = ChatViewController(user: user!, post: post)
         self.navigationController?.pushViewController(vc, animated:true)
-
     }
-    
+
 
     deinit {
         postsListener?.remove()
     }
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //loadPosts()
         tableView.delegate = self
         tableView.dataSource = self
-        
+
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+        tableView.addSubview(refreshControl) // not required when using UITableViewController
+
         let db = Firestore.firestore()
         let  postsReference =  db.collection("channels")
         
@@ -83,6 +84,20 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }
         
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+
+    @objc func refresh() {
+        // Code to refresh table view
     }
     
     private func addPostToTable(_ post: Post) {
@@ -232,7 +247,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let earliest = now.earlierDate(date as Date)
         let latest = (earliest == now as Date) ? date : now
         let components = calendar.dateComponents(unitFlags, from: earliest as Date,  to: latest as Date)
-
+        print("date is \(date)")
         if (components.year! >= 2) {
             return "\(components.year!)y"
         } else if (components.year! >= 1){
