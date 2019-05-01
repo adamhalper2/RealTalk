@@ -7,7 +7,7 @@ target 'RealTalk' do
 
   # Pods for RealTalk
   pod 'Firebase/Core'
-  pod 'Firebase/Database'
+  pod 'Firebase/Firestore'
   pod 'ProgressHUD'
 
 

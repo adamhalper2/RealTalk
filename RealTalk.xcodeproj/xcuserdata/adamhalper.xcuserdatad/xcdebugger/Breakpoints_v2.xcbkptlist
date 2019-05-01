@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RealTalk/PostTableViewCell.swift"
-            timestampString = "578212743.0354919"
+            timestampString = "578301185.656525"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "6"
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RealTalk/CreatePostViewController.swift"
-            timestampString = "578212743.035565"
+            timestampString = "578368154.715741"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
             landmarkName = "CreatePostViewController"
             landmarkType = "3">
          </BreakpointContent>

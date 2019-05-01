@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseFirestore
 import ProgressHUD
-import RAMAnimatedTabBarController
+import Firebase
 
 class CreatePostViewController: UIViewController, UITextViewDelegate {
 
@@ -75,7 +75,35 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
             shareBtn.setTitleColor(UIColor.lightGray, for: .normal)
         }
     }
-    
+
+    func sendPostToDB(photoUrl: String, content: String){
+
+        let timestamp = NSDate().timeIntervalSince1970
+
+        let db = Firestore.firestore()
+        var ref: DocumentReference? = nil
+
+        ref = db.collection("posts").addDocument(data: [
+            "photo": photoUrl,
+            "content": content,
+            "userID": "1234",
+            "timestamp": "\(timestamp)"
+        ]) { err in
+            if let err = err {
+                print("Error adding document: \(err)")
+                ProgressHUD.showError(err.localizedDescription)
+
+            } else {
+                ProgressHUD.showSuccess("Success")
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
+                    self.tabBarController!.selectedIndex = 0
+                })
+                print("Document added with ID: \(ref!.documentID)")
+            }
+        }
+    }
+
+    /*
 
     func sendDataToDatabase(photoUrl: String, content: String){
         let ref = Database.database().reference()
@@ -97,7 +125,7 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
             })
         }
     }
-
+*/
     @IBAction func closeTapped(_ sender: Any) {
         print("close tapped")
         tabBarController!.selectedIndex = 0
@@ -109,9 +137,8 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
     @IBAction func shareTapped(_ sender: Any) {
         if let content = textView.text {
             let photoUrl = "samplePhotoUrl"
-            sendDataToDatabase(photoUrl: photoUrl, content: content)
+            sendPostToDB(photoUrl: photoUrl, content: content)
         }
-        tabBarController!.selectedIndex = 0
     }
     /*
     // MARK: - Navigation

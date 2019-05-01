@@ -7,8 +7,7 @@
 //
 
 import UIKit
-import Firebase
-import RAMAnimatedTabBarController
+import FirebaseFirestore
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -32,7 +31,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         let posts = postArray
         print(posts.count)
-        print("nidex path: \(indexPath.section)")
+        print("index path: \(indexPath.section)")
      
         cell.authorLabel.text = posts[indexPath.section].author
         cell.contentLabel.text = posts[indexPath.section].content
@@ -49,17 +48,71 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         return 10.0
     }
 
+    /*
+    override func viewWillAppear(_ animated: Bool) {
+        db.collection("posts")
+            .addSnapshotListener { querySnapshot, error in
+                if let err = error {
+                    print("Error getting documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        let photoUrlString = document.data()["photo"] as! String
+                        let content = document.data()["content"] as! String
+                        let userID = document.data()["userID"] as! String
+                        let timeString = document.data()["timestamp"] as! String
+                        if let timeNum = Double(timeString) {
+                            let date = NSDate(timeIntervalSince1970: timeNum)
+                            let post = Post(content: content, author: userID, timestamp: date)
+                            self.postArray.append(post)
+                        }
+                        print("\(document.documentID) => \(document.data())")
+                    }
+                    self.tableView.reloadData()
+                }
 
+        }
+    }
+
+ */
     override func viewDidLoad() {
+
         super.viewDidLoad()
-        loadPosts()
         tableView.delegate = self
         tableView.dataSource = self
-
+        loadPosts()
+        tableView.reloadData()
 
         // Do any additional setup after loading the view.
     }
 
+    func loadPosts(){
+
+        let db = Firestore.firestore()
+
+        let postRef = db.collection("posts")
+        postRef.order(by: "timestamp", descending: true).limit(to: 20).getDocuments { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    let photoUrlString = document.data()["photo"] as! String
+                    let content = document.data()["content"] as! String
+                    let userID = document.data()["userID"] as! String
+                    let timeString = document.data()["timestamp"] as! String
+                    if let timeNum = Double(timeString) {
+                        let date = NSDate(timeIntervalSince1970: timeNum)
+                        let post = Post(content: content, author: userID, timestamp: date)
+                        self.postArray.append(post)
+                    }
+                    print("\(document.documentID) => \(document.data())")
+                }
+                self.tableView.reloadData()
+            }
+        }
+
+    }
+
+     /*
     func loadPosts(){
         print("load Posts called \n")
         Database.database().reference().child("posts").observe(.childAdded) { (snapshot: DataSnapshot) in
@@ -83,8 +136,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }
     }
-
-
+    */
+    
     /*
     func timeAgoSinceDate(date:NSDate, numericDates:Bool) -> String {
         let calendar = NSCalendar.current
