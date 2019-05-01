@@ -23,6 +23,7 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
         textView.delegate = self
         textView.textColor = UIColor.lightGray
 
+        
         // Do any additional setup after loading the view.
     }
 
@@ -30,8 +31,7 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
         super.viewDidAppear(animated)
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
-
-
+        self.tabBarController?.tabBar.isHidden = true
 
         // Show keyboard by default
        // textView.becomeFirstResponder()
@@ -101,6 +101,7 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
         tabBarController!.selectedIndex = 0
 
       //  tabBarController?.selectedIndex = 1
+        self.tabBarController?.tabBar.isHidden = false
 
     }
 

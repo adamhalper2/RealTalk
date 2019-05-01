@@ -62,13 +62,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //loadPosts()
+    
+
+
         tableView.delegate = self
         tableView.dataSource = self
 
-        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
-        tableView.addSubview(refreshControl) // not required when using UITableViewController
+        var refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(reloadData), for: UIControl.Event.valueChanged)
+        tableView.refreshControl = refreshControl
 
         let db = Firestore.firestore()
         let  postsReference =  db.collection("channels")
@@ -88,6 +90,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = false
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 
@@ -96,8 +99,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 
-    @objc func refresh() {
-        // Code to refresh table view
+    @objc func reloadData() {
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            //add in real functionality
+            self.tableView.refreshControl?.endRefreshing()
+        }
     }
     
     private func addPostToTable(_ post: Post) {
@@ -289,7 +296,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 return "An hour ago"
             }
         } else if (components.minute! >= 2) {
-            return "\(components.minute!) min"
+            return "\(components.minute!)min"
         } else if (components.minute! >= 1){
             if (numericDates){
                 return "1 min ago"
