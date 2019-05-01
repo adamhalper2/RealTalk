@@ -20,6 +20,10 @@
 		3BC2AFF622781DC600B01F32 /* UIView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC2AFF522781DC600B01F32 /* UIView+Additions.swift */; };
 		3BC2AFFE227826E300B01F32 /* NSDate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC2AFFD227826E300B01F32 /* NSDate+Additions.swift */; };
 		8A1F306A227A18050065D370 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8A1F3069227A18050065D370 /* GoogleService-Info.plist */; };
+		8A1F306C227A23AC0065D370 /* Heart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1F306B227A23AC0065D370 /* Heart.swift */; };
+		8A1F306E227A27020065D370 /* TabBar+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1F306D227A27020065D370 /* TabBar+Additions.swift */; };
+		8A1F3072227A48150065D370 /* MyChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1F3071227A48150065D370 /* MyChatsViewController.swift */; };
+		8A1F3074227A57B70065D370 /* ChatPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1F3073227A57B70065D370 /* ChatPreviewTableViewCell.swift */; };
 		8A2C8F14227536FF00188975 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2C8F13227536FF00188975 /* Colors.swift */; };
 		8A5AF90D2273D31500E4AC1A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF90C2273D31500E4AC1A /* AppDelegate.swift */; };
 		8A5AF9122273D31500E4AC1A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A5AF9102273D31500E4AC1A /* Main.storyboard */; };
@@ -47,6 +51,10 @@
 		3BC2AFFD227826E300B01F32 /* NSDate+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDate+Additions.swift"; sourceTree = "<group>"; };
 		51901FD10A1D8ADCECBB9236 /* Pods-RealTalk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealTalk.release.xcconfig"; path = "Pods/Target Support Files/Pods-RealTalk/Pods-RealTalk.release.xcconfig"; sourceTree = "<group>"; };
 		8A1F3069227A18050065D370 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8A1F306B227A23AC0065D370 /* Heart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heart.swift; sourceTree = "<group>"; };
+		8A1F306D227A27020065D370 /* TabBar+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabBar+Additions.swift"; sourceTree = "<group>"; };
+		8A1F3071227A48150065D370 /* MyChatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChatsViewController.swift; sourceTree = "<group>"; };
+		8A1F3073227A57B70065D370 /* ChatPreviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPreviewTableViewCell.swift; sourceTree = "<group>"; };
 		8A2C8F13227536FF00188975 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		8A5AF9092273D31500E4AC1A /* RealTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A5AF90C2273D31500E4AC1A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -91,6 +99,7 @@
 				3BC2AFEF22781D7A00B01F32 /* UIColor+Additions.swift */,
 				3BC2AFF122781D8B00B01F32 /* UICollectionView+Additions.swift */,
 				3BC2AFFD227826E300B01F32 /* NSDate+Additions.swift */,
+				8A1F306D227A27020065D370 /* TabBar+Additions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -100,6 +109,9 @@
 			children = (
 				3B5EA1A02279829C005D9E5F /* LoginViewController.swift */,
 				8A5AF9102273D31500E4AC1A /* Main.storyboard */,
+				8A1F3073227A57B70065D370 /* ChatPreviewTableViewCell.swift */,
+				8A5AF90E2273D31500E4AC1A /* ViewController.swift */,
+				8A1F3071227A48150065D370 /* MyChatsViewController.swift */,
 				8A5AF9232275088A00E4AC1A /* PostTableViewCell.swift */,
 				8A5AF9272275266C00E4AC1A /* CreatePostViewController.swift */,
 				3BAAC09422780F68007C5DCE /* ChatViewController.swift */,
@@ -114,6 +126,7 @@
 				3B1F1A9E2277B3D2001655B6 /* DatabaseRepresentation.swift */,
 				3B1F1A9C2277B131001655B6 /* Post.swift */,
 				3BC2AFED22781D5500B01F32 /* Message.swift */,
+				8A1F306B227A23AC0065D370 /* Heart.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -315,11 +328,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BC2AFFE227826E300B01F32 /* NSDate+Additions.swift in Sources */,
+				8A1F306E227A27020065D370 /* TabBar+Additions.swift in Sources */,
 				3B1F1A9D2277B132001655B6 /* Post.swift in Sources */,
 				3BC2AFF022781D7A00B01F32 /* UIColor+Additions.swift in Sources */,
 				3BAAC09522780F68007C5DCE /* ChatViewController.swift in Sources */,
+				8A1F3074227A57B70065D370 /* ChatPreviewTableViewCell.swift in Sources */,
 				3BC2AFF622781DC600B01F32 /* UIView+Additions.swift in Sources */,
 				8A2C8F14227536FF00188975 /* Colors.swift in Sources */,
+				8A1F3072227A48150065D370 /* MyChatsViewController.swift in Sources */,
 				3B5EA1A12279829C005D9E5F /* LoginViewController.swift in Sources */,
 				3B1F1A9F2277B3D3001655B6 /* DatabaseRepresentation.swift in Sources */,
 				8A5AF9282275266C00E4AC1A /* CreatePostViewController.swift in Sources */,
@@ -330,6 +346,7 @@
 				8A5AF90D2273D31500E4AC1A /* AppDelegate.swift in Sources */,
 				3BC2AFF222781D8B00B01F32 /* UICollectionView+Additions.swift in Sources */,
 				8A5AF92222743F9E00E4AC1A /* HomeViewController.swift in Sources */,
+				8A1F306C227A23AC0065D370 /* Heart.swift in Sources */,
 				3BC2AFF422781DBE00B01F32 /* UIImage+Additions.swift in Sources */,
 				3B5EA19F22798281005D9E5F /* AppSettings.swift in Sources */,
 			);
