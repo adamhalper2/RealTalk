@@ -30,11 +30,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "postCell") as! PostTableViewCell
-        print("post coount: \(posts.count)")
-        
         let post = posts[indexPath.row]
-        //cell.authorLabel.text = post.author
-        let memberLabel = getMembers(members: post.members, author: post.author)
+
+        let memberLabel = getMemberNames(members: post.members, author: post.author)
         cell.authorLabel.text = memberLabel
         cell.contentLabel.text = post.content
         let date = post.timestamp
@@ -42,6 +40,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.timeLabel.text = timestamp
         cell.commentBtn.titleLabel!.text = String(post.commentCount)
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
+
         return cell
     }
 
@@ -56,9 +55,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.navigationController?.pushViewController(vc, animated:true)
     }
 
-
-    func getMembers(members: [String], author: String)->String? {
-        print("members: \(members), author: \(author)")
+    func getMemberNames(members: [String], author: String)->String? {
         let db = Firestore.firestore()
         var memberLabel = author
         if members.count > 2 {
@@ -74,12 +71,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         postsListener?.remove()
     }
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-
-
         tableView.delegate = self
         tableView.dataSource = self
 
@@ -100,7 +93,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.handleDocumentChange(change)
             }
         }
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -281,7 +273,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let earliest = now.earlierDate(date as Date)
         let latest = (earliest == now as Date) ? date : now
         let components = calendar.dateComponents(unitFlags, from: earliest as Date,  to: latest as Date)
-        print("date is \(date)")
         if (components.year! >= 2) {
             return "\(components.year!)y"
         } else if (components.year! >= 1){

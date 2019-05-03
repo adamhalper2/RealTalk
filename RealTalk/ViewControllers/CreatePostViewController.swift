@@ -23,9 +23,6 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
         super.viewDidLoad()
         textView.delegate = self
         textView.textColor = UIColor.lightGray
-
-        
-        // Do any additional setup after loading the view.
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -45,8 +42,6 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
         }
         return true
     }
-
-
 
     @objc func dismissKeyboard() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
@@ -77,7 +72,6 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
             shareBtn.setTitleColor(UIColor.lightGray, for: .normal)
         }
     }
-    
     
     func sendDataToDatabase(photoUrl: String, content: String){
         let db = Firestore.firestore()
@@ -118,8 +112,6 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
     @IBAction func closeTapped(_ sender: Any) {
         print("close tapped")
         tabBarController!.selectedIndex = 0
-
-      //  tabBarController?.selectedIndex = 1
         self.tabBarController?.tabBar.isHidden = false
 
     }

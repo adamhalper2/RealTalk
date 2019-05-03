@@ -71,7 +71,6 @@ struct Post {
     dateFormatter.dateFormat = "MM/dd/yy h:mm a Z"
     
     let date = dateFormatter.date(from: timestamp)! as NSDate
-    print("date is \(date)")
 
     guard let authorID = data["authorID"] as? String else {
         return nil
