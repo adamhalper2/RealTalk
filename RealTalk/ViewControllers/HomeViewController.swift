@@ -30,9 +30,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "postCell") as! PostTableViewCell
-        print(posts.count)
-
-        cell.authorLabel.text = posts[indexPath.row].author
+        print("post coount: \(posts.count)")
+        
+        let post = posts[indexPath.row]
+        cell.authorLabel.text = post.author
+        //let memberLabel = getMembers(members: post.members, author: post.author)
+        //cell.authorLabel.text = memberLabel
+        print("at click, members: \(post.members)")
         cell.contentLabel.text = posts[indexPath.row].content
         let date = posts[indexPath.row].timestamp
         let timestamp = timeAgoSinceDate(date: date, numericDates: true)
@@ -55,6 +59,46 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
 
+    
+    func getMembers(members: [String], author: String)->String? {
+        print("members: \(members), author: \(author)")
+        let db = Firestore.firestore()
+        var memberLabel = author
+        if members.count > 2 {
+            memberLabel = author + "and \(members.count - 1) others in chat"
+            return memberLabel
+        } else if members.count > 1 {
+            for member in members {
+                let studentRef = db.collection("students").document(member)
+                studentRef.getDocument { (documentSnapshot, err) in
+                    guard let snapshot = documentSnapshot else {
+                        print("Unable to find user for user id \(member): \(err?.localizedDescription ?? "No error")")
+                        return
+                    }
+                    if snapshot.exists {
+                        if let data = snapshot.data() {
+                            guard let otherAuthor = data["username"] as? String else {
+                                return
+                            }
+                            memberLabel = author + "and \(otherAuthor) in chat"
+
+                        }
+                    } else {
+                        print("no se existe")
+                    }
+                    /*
+                    if let student = Student(document: snapshot as? QueryDocumentSnapshot) {
+                        if student.username != author {
+                            memberLabel = author + "and \(student.username) in chat"
+                        }
+                    }
+                    */
+                }
+            }
+        }
+        return memberLabel
+    }
+
     deinit {
         postsListener?.remove()
     }
@@ -74,7 +118,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         let db = Firestore.firestore()
         let  postsReference =  db.collection("channels")
-        
+
         postsListener =  postsReference.addSnapshotListener { querySnapshot, error in
             guard let snapshot = querySnapshot else {
                 print("Error listening for channel updates: \(error?.localizedDescription ?? "No error")")

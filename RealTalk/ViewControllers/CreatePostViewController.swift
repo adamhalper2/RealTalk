@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import ProgressHUD
+import FirebaseAuth
 
 class CreatePostViewController: UIViewController, UITextViewDelegate {
 
@@ -81,7 +82,25 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
     func sendDataToDatabase(photoUrl: String, content: String){
         let db = Firestore.firestore()
         let  postsReference =  db.collection("channels")
-        let post = Post(content: content, author: "mrBean", timestamp: NSDate())
+
+        var author = "mrBean"
+        var uid = ""
+        if let user = Auth.auth().currentUser {
+            uid = user.uid
+            print("user.uid is \(user.uid)")
+            if let username = user.displayName {
+                print("username is \(username)")
+
+                author = username
+            }
+
+        } else {
+            print("user is nil")
+        }
+
+        print("author is \(author)")
+
+        let post = Post(content: content, author: AppSettings.displayName, timestamp: NSDate(), authorID: uid)
         print(post.timestamp)
 
         postsReference.addDocument(data: post.representation) { error in
@@ -109,6 +128,8 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
         if let content = textView.text {
             let photoUrl = "samplePhotoUrl"
             sendDataToDatabase(photoUrl: photoUrl, content: content)
+            textView.text = "I wanna talk with someone about..."
+            textView.textColor = UIColor.lightGray
         }
         tabBarController!.selectedIndex = 0
     }

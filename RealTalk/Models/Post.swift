@@ -28,24 +28,28 @@
 
 
 import FirebaseFirestore
+import FirebaseAuth
 
 struct Post {
   
   let id: String?
-    
+  let authorID: String?
   let author: String
   let content: String
   let timestamp: NSDate
-  let commentCount: Int
-    
+  var commentCount: Int
+  var members: [String]
+
   
-    init(content: String, author: String, timestamp: NSDate) {
-    id = nil
-    self.content = content
-    self.author = author
-    self.timestamp = timestamp
-    self.commentCount = 0
-  }
+    init(content: String, author: String, timestamp: NSDate, authorID: String) {
+        id = nil
+        self.content = content
+        self.author = author
+        self.timestamp = timestamp
+        self.commentCount = 0
+        self.members = [authorID]
+        self.authorID = authorID
+    }
   
   init?(document: QueryDocumentSnapshot) {
     let data = document.data()
@@ -69,7 +73,14 @@ struct Post {
     let date = dateFormatter.date(from: timestamp)! as NSDate
     print("date is \(date)")
 
+    guard let authorID = data["authorID"] as? String else {
+        return nil
+    }
 
+    guard let membersStr = data["members"] as? String else {
+        return nil
+    }
+    let members = membersStr.components(separatedBy: "-")
 
     guard let commentCount = data["commentCount"] as? String else {
         return nil
@@ -83,19 +94,28 @@ struct Post {
     self.author = author
     self.commentCount = commentCountInt
     self.timestamp = date
-    print("timestamp is \(timestamp)")
-
+    self.members = members
+    if let user = Auth.auth().currentUser {
+        self.authorID = user.uid
+        self.members.append(user.uid)
+    }else {
+        print("no user")
+        self.authorID = nil
+    }
   }
-  
 }
 
 extension Post : DatabaseRepresentation {
+
   
   var representation: [String : Any] {
     var rep = ["content": content]
     rep["author"] = author
     rep["timestamp"] = timestamp.toString(dateFormat: "MM/dd/yy h:mm a Z")
     rep["commentCount"] = String(commentCount)
+    rep["authorID"] = authorID
+    rep["members"] = members.joined(separator: "-")
+
     
     if let id = id {
       rep["id"] = id

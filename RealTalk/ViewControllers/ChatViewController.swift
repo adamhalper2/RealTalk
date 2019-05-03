@@ -74,12 +74,11 @@ final class ChatViewController: MessagesViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.tabBarController?.tabBar.isHidden = true
-    
     guard let id = post.id else {
       navigationController?.popViewController(animated: true)
       return
     }
-    
+
     reference = db.collection(["channels", id, "thread"].joined(separator: "/"))
     
     messageListener = reference?.addSnapshotListener { querySnapshot, error in
@@ -360,10 +359,55 @@ extension ChatViewController: MessageInputBarDelegate {
     
     // 2
     save(message)
-    
+
+    print("members are: \(post.members)")
+    // 2.5 add new member
+    //addMember(uid: user.uid)
+
     // 3
     inputBar.inputTextView.text = ""
+
+    /*
+    if !post.members.contains(user.uid) {
+        members.append(user.uid)
+        let postRef = db.collection("channels").document(post.id!)
+        postRef.updateData([
+            "members": FieldValue.arrayUnion([user.uid])
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+            }
+        }
+    }
+    */
   }
+
+
+
+    func addMember(uid: String) {
+        let postRef = db.collection("channels").document(post.id!)
+        var mem = post.members
+        if post.members.contains(user.uid) {
+            print("Already contains userID")
+            return
+        }
+        mem.append(uid)
+        let membersStr = mem.joined(separator: "-")
+        postRef.updateData([
+            "members": membersStr
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+                print("added member")
+            }
+        }
+    }
+
+
 }
 
 // MARK: - UIImagePickerControllerDelegate
