@@ -183,17 +183,34 @@ final class ChatViewController: MessagesViewController {
   }
 
   
-  private func save(_ message: Message) {
-    reference?.addDocument(data: message.representation) { error in
-      if let e = error {
-        print("Error sending message: \(e.localizedDescription)")
-        return
-      }
-      
-      self.messagesCollectionView.scrollToBottom()
+    private func save(_ message: Message) {
+        reference?.addDocument(data: message.representation) { error in
+          if let e = error {
+            print("Error sending message: \(e.localizedDescription)")
+            return
+          }
+
+          self.messagesCollectionView.scrollToBottom()
+        }
+        let delta = 1
+        updateCommentCount(delta: delta)
     }
-  }
-  
+
+    func updateCommentCount(delta: Int) {
+        let newCount = post.commentCount + delta
+        guard let id = post.id else { return }
+        let postRef = db.collection("channels").document(id)
+        postRef.updateData([
+            "commentCount": String(newCount)
+        ]) { err in
+            if let err = err {
+                print("Error updating comment count: \(err)")
+            } else {
+                print("updated comment count")
+            }
+        }
+    }
+
   private func insertNewMessage(_ message: Message) {
     guard !messages.contains(message) else {
       return
@@ -236,7 +253,7 @@ final class ChatViewController: MessagesViewController {
       } else {
         insertNewMessage(message)
       }
-      
+
     default:
       break
     }
@@ -281,8 +298,8 @@ extension ChatViewController: MessagesDisplayDelegate {
                     in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
     
     let corner: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
-    
     // 3
+
     return .bubbleTail(corner, .curved)
   }
 }
@@ -406,7 +423,6 @@ extension ChatViewController: MessageInputBarDelegate {
             }
         }
     }
-
 
 }
 
