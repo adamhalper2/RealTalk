@@ -97,8 +97,7 @@ struct Post {
     self.members = members
     if let user = Auth.auth().currentUser {
         self.authorID = user.uid
-        self.members.append(user.uid)
-    }else {
+    } else {
         print("no user")
         self.authorID = nil
     }

@@ -33,10 +33,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         print("post coount: \(posts.count)")
         
         let post = posts[indexPath.row]
-        cell.authorLabel.text = post.author
-        //let memberLabel = getMembers(members: post.members, author: post.author)
-        //cell.authorLabel.text = memberLabel
-        print("at click, members: \(post.members)")
+        //cell.authorLabel.text = post.author
+        let memberLabel = getMembers(members: post.members, author: post.author)
+        cell.authorLabel.text = memberLabel
+        print("at click, members: \(post.members). current uid: \(AppController.user!.uid)")
+
         cell.contentLabel.text = posts[indexPath.row].content
         let date = posts[indexPath.row].timestamp
         let timestamp = timeAgoSinceDate(date: date, numericDates: true)
@@ -59,7 +60,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
 
-    
     func getMembers(members: [String], author: String)->String? {
         print("members: \(members), author: \(author)")
         let db = Firestore.firestore()
@@ -106,7 +106,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+
 
 
         tableView.delegate = self
@@ -146,7 +146,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     @objc func reloadData() {
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            //add in real functionality
+            self.tableView.reloadData()
             self.tableView.refreshControl?.endRefreshing()
         }
     }

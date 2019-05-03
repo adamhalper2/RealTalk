@@ -362,7 +362,7 @@ extension ChatViewController: MessageInputBarDelegate {
 
     print("members are: \(post.members)")
     // 2.5 add new member
-    //addMember(uid: user.uid)
+    addMember(uid: user.uid)
 
     // 3
     inputBar.inputTextView.text = ""
