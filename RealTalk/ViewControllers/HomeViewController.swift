@@ -31,16 +31,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "postCell") as! PostTableViewCell
         let post = posts[indexPath.row]
-
-        let memberLabel = getMemberNames(members: post.members, author: post.author)
-        cell.authorLabel.text = memberLabel
-        cell.contentLabel.text = post.content
-        let date = post.timestamp
-        let timestamp = timeAgoSinceDate(date: date, numericDates: true)
-        cell.timeLabel.text = timestamp
-        cell.commentBtn.titleLabel!.text = String(post.commentCount)
-        cell.selectionStyle = UITableViewCell.SelectionStyle.none
-
+        cell.setCell(post: post)
         return cell
     }
 
@@ -53,18 +44,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let user = AppController.user
         let vc = ChatViewController(user: user!, post: post)
         self.navigationController?.pushViewController(vc, animated:true)
-    }
-
-    func getMemberNames(members: [String], author: String)->String? {
-        let db = Firestore.firestore()
-        var memberLabel = author
-        if members.count > 2 {
-            memberLabel = author + " and \(members.count - 1) others in chat"
-            return memberLabel
-        } else if members.count > 1 {
-            memberLabel = author + " and 1 other in chat"
-        }
-        return memberLabel
     }
 
     deinit {
@@ -107,23 +86,37 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     @objc func reloadData() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.tableView.reloadData()
+            self.tableView.refreshControl?.endRefreshing()
+        }
+        //I think unnecessary?
+        /*
         let db = Firestore.firestore()
         let  postsReference =  db.collection("channels")
 
-        postsListener =  postsReference.addSnapshotListener { querySnapshot, error in
-            guard let snapshot = querySnapshot else {
-                print("Error listening for channel updates: \(error?.localizedDescription ?? "No error")")
-                return
-            }
+        for post in posts {
+            if let id = post.id {
+                let postRef = postsReference.document(id)
+                postRef.getDocument { (documentSnapshot, err) in
+                    if let err = err {
+                        print("Error getting document: \(err)")
+                    } else {
 
-            snapshot.documentChanges.forEach { change in
-                self.handleDocumentChange(change)
+                        let docId = documentSnapshot?.documentID
+                        let commentCount = documentSnapshot?.get("commentCount") as! String
+                        let commentCountInt = Int(commentCount)!
+                        print("after reload, comment count: \(commentCountInt)")
+                    }
+
+                }
             }
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.tableView.reloadData()
             self.tableView.refreshControl?.endRefreshing()
         }
+        */
     }
     
     private func addPostToTable(_ post: Post) {
@@ -265,69 +258,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     }
     */
-
-    func timeAgoSinceDate(date:NSDate, numericDates:Bool) -> String {
-        let calendar = NSCalendar.current
-        let unitFlags: Set<Calendar.Component> = [.minute, .hour, .day, .weekOfYear, .month, .year, .second]
-        let now = NSDate()
-        let earliest = now.earlierDate(date as Date)
-        let latest = (earliest == now as Date) ? date : now
-        let components = calendar.dateComponents(unitFlags, from: earliest as Date,  to: latest as Date)
-        if (components.year! >= 2) {
-            return "\(components.year!)y"
-        } else if (components.year! >= 1){
-            if (numericDates){
-                return "1 yr"
-            } else {
-                return "Last year"
-            }
-        } else if (components.month! >= 2) {
-            return "\(components.month!)mo"
-        } else if (components.month! >= 1){
-            if (numericDates){
-                return "1 month ago"
-            } else {
-                return "Last month"
-            }
-        } else if (components.weekOfYear! >= 2) {
-            return "\(components.weekOfYear!)w"
-        } else if (components.weekOfYear! >= 1){
-            if (numericDates){
-                return "1w"
-            } else {
-                return "Last week"
-            }
-        } else if (components.day! >= 2) {
-            return "\(components.day!)d"
-        } else if (components.day! >= 1){
-            if (numericDates){
-                return "1d"
-            } else {
-                return "Yesterday"
-            }
-        } else if (components.hour! >= 2) {
-            return "\(components.hour!)h"
-        } else if (components.hour! >= 1){
-            if (numericDates){
-                return "1h"
-            } else {
-                return "An hour ago"
-            }
-        } else if (components.minute! >= 2) {
-            return "\(components.minute!)min"
-        } else if (components.minute! >= 1){
-            if (numericDates){
-                return "1 min ago"
-            } else {
-                return "A min ago"
-            }
-        } else if (components.second! >= 3) {
-            return "\(components.second!)s"
-        } else {
-            return "Just now"
-        }
-
-    }
 
     /*
     // MARK: - Navigation

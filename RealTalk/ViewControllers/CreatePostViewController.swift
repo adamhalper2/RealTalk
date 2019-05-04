@@ -81,10 +81,7 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
         var uid = ""
         if let user = Auth.auth().currentUser {
             uid = user.uid
-            print("user.uid is \(user.uid)")
             if let username = user.displayName {
-                print("username is \(username)")
-
                 author = username
             }
 

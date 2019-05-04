@@ -206,7 +206,7 @@ final class ChatViewController: MessagesViewController {
             if let err = err {
                 print("Error updating comment count: \(err)")
             } else {
-                print("updated comment count")
+                print("updated comment count to \(newCount)")
             }
         }
     }
@@ -268,12 +268,10 @@ final class ChatViewController: MessagesViewController {
         completion(nil)
         return
       }
-      
+
       completion(UIImage(data: imageData))
     }
   }
-  
-  
 }
 
 // MARK: - MessagesDisplayDelegate
@@ -383,25 +381,7 @@ extension ChatViewController: MessageInputBarDelegate {
 
     // 3
     inputBar.inputTextView.text = ""
-
-    /*
-    if !post.members.contains(user.uid) {
-        members.append(user.uid)
-        let postRef = db.collection("channels").document(post.id!)
-        postRef.updateData([
-            "members": FieldValue.arrayUnion([user.uid])
-        ]) { err in
-            if let err = err {
-                print("Error updating document: \(err)")
-            } else {
-                print("Document successfully updated")
-            }
-        }
-    }
-    */
   }
-
-
 
     func addMember(uid: String) {
         let postRef = db.collection("channels").document(post.id!)
@@ -418,12 +398,10 @@ extension ChatViewController: MessageInputBarDelegate {
             if let err = err {
                 print("Error updating document: \(err)")
             } else {
-                print("Document successfully updated")
                 print("added member")
             }
         }
     }
-
 }
 
 // MARK: - UIImagePickerControllerDelegate

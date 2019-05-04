@@ -38,6 +38,7 @@ struct Post {
   let content: String
   let timestamp: NSDate
   var commentCount: Int
+  var heartCount: Int
   var members: [String]
 
   
@@ -47,6 +48,7 @@ struct Post {
         self.author = author
         self.timestamp = timestamp
         self.commentCount = 0
+        self.heartCount = 0
         self.members = [authorID]
         self.authorID = authorID
     }
@@ -84,22 +86,23 @@ struct Post {
     guard let commentCount = data["commentCount"] as? String else {
         return nil
     }
-    
     let commentCountInt = Int(commentCount)!
+
+
+    guard let heartCount = data["heartCount"] as? String else {
+        return nil
+    }
+    let heartCountInt = Int(heartCount)!
     
     id = document.documentID
     
     self.content = content
     self.author = author
     self.commentCount = commentCountInt
+    self.heartCount = heartCountInt
     self.timestamp = date
     self.members = members
-    if let user = Auth.auth().currentUser {
-        self.authorID = user.uid
-    } else {
-        print("no user")
-        self.authorID = nil
-    }
+    self.authorID = authorID
   }
 }
 
@@ -111,6 +114,7 @@ extension Post : DatabaseRepresentation {
     rep["author"] = author
     rep["timestamp"] = timestamp.toString(dateFormat: "MM/dd/yy h:mm a Z")
     rep["commentCount"] = String(commentCount)
+    rep["heartCount"] = String(heartCount)
     rep["authorID"] = authorID
     rep["members"] = members.joined(separator: "-")
 
