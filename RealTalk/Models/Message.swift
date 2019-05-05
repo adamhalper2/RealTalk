@@ -69,16 +69,24 @@ struct Message: MessageType {
   
   init?(document: QueryDocumentSnapshot) {
     let data = document.data()
-    
-    guard let sentDate = data["created"] as? Date else {
-      return nil
-    }
+//    guard let sentDate = data["created"] as? Date else {
+//      return nil
+//    }
+
     guard let senderID = data["senderID"] as? String else {
       return nil
     }
     guard let senderName = data["senderName"] as? String else {
       return nil
     }
+    
+    guard let date = data["created"] as? String else {
+        return nil
+    }
+    
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "MM/dd/yy h:mm a Z"
+    let sentDate = dateFormatter.date(from: date)!
     
     id = document.documentID
     
@@ -99,10 +107,9 @@ struct Message: MessageType {
 }
 
 extension Message: DatabaseRepresentation {
-  
   var representation: [String : Any] {
     var rep: [String : Any] = [
-      "created": sentDate,
+      "created": sentDate.toString(dateFormat: "MM/dd/yy h:mm a Z"),
       "senderID": sender.id,
       "senderName": sender.displayName
     ]

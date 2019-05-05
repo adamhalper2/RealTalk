@@ -12,6 +12,9 @@
 		3B5EA19D22798269005D9E5F /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EA19C22798269005D9E5F /* AppController.swift */; };
 		3B5EA19F22798281005D9E5F /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EA19E22798281005D9E5F /* AppSettings.swift */; };
 		3B5EA1A12279829C005D9E5F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EA1A02279829C005D9E5F /* LoginViewController.swift */; };
+		3B82425C227EA0CC00C0A6CA /* String+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B82425B227EA0CC00C0A6CA /* String+Additions.swift */; };
+		3B824260227EB77B00C0A6CA /* HandleSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B82425F227EB77B00C0A6CA /* HandleSelectionViewController.swift */; };
+		3B824262227F6DE400C0A6CA /* Date+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B824261227F6DE400C0A6CA /* Date+Additions.swift */; };
 		3BAAC09522780F68007C5DCE /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAAC09422780F68007C5DCE /* ChatViewController.swift */; };
 		3BC2AFEE22781D5500B01F32 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC2AFED22781D5500B01F32 /* Message.swift */; };
 		3BC2AFF022781D7A00B01F32 /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC2AFEF22781D7A00B01F32 /* UIColor+Additions.swift */; };
@@ -24,6 +27,7 @@
 		8A1F306E227A27020065D370 /* TabBar+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1F306D227A27020065D370 /* TabBar+Additions.swift */; };
 		8A1F3072227A48150065D370 /* MyChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1F3071227A48150065D370 /* MyChatsViewController.swift */; };
 		8A1F3074227A57B70065D370 /* ChatPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1F3073227A57B70065D370 /* ChatPreviewTableViewCell.swift */; };
+		8A1F3076227B7F0F0065D370 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1F3075227B7F0F0065D370 /* Student.swift */; };
 		8A2C8F14227536FF00188975 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2C8F13227536FF00188975 /* Colors.swift */; };
 		8A5AF90D2273D31500E4AC1A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF90C2273D31500E4AC1A /* AppDelegate.swift */; };
 		8A5AF9122273D31500E4AC1A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A5AF9102273D31500E4AC1A /* Main.storyboard */; };
@@ -39,9 +43,13 @@
 /* Begin PBXFileReference section */
 		3B1F1A9C2277B131001655B6 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		3B1F1A9E2277B3D2001655B6 /* DatabaseRepresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseRepresentation.swift; sourceTree = "<group>"; };
+		3B311EC7227E5F7700893EA2 /* RealTalk.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RealTalk.entitlements; sourceTree = "<group>"; };
 		3B5EA19C22798269005D9E5F /* AppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		3B5EA19E22798281005D9E5F /* AppSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		3B5EA1A02279829C005D9E5F /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		3B82425B227EA0CC00C0A6CA /* String+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Additions.swift"; sourceTree = "<group>"; };
+		3B82425F227EB77B00C0A6CA /* HandleSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandleSelectionViewController.swift; sourceTree = "<group>"; };
+		3B824261227F6DE400C0A6CA /* Date+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Additions.swift"; sourceTree = "<group>"; };
 		3BAAC09422780F68007C5DCE /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		3BC2AFED22781D5500B01F32 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		3BC2AFEF22781D7A00B01F32 /* UIColor+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Additions.swift"; sourceTree = "<group>"; };
@@ -55,6 +63,7 @@
 		8A1F306D227A27020065D370 /* TabBar+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabBar+Additions.swift"; sourceTree = "<group>"; };
 		8A1F3071227A48150065D370 /* MyChatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChatsViewController.swift; sourceTree = "<group>"; };
 		8A1F3073227A57B70065D370 /* ChatPreviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPreviewTableViewCell.swift; sourceTree = "<group>"; };
+		8A1F3075227B7F0F0065D370 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		8A2C8F13227536FF00188975 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		8A5AF9092273D31500E4AC1A /* RealTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A5AF90C2273D31500E4AC1A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -96,10 +105,12 @@
 			children = (
 				3BC2AFF322781DBE00B01F32 /* UIImage+Additions.swift */,
 				3BC2AFF522781DC600B01F32 /* UIView+Additions.swift */,
+				3B82425B227EA0CC00C0A6CA /* String+Additions.swift */,
 				3BC2AFEF22781D7A00B01F32 /* UIColor+Additions.swift */,
 				3BC2AFF122781D8B00B01F32 /* UICollectionView+Additions.swift */,
 				3BC2AFFD227826E300B01F32 /* NSDate+Additions.swift */,
 				8A1F306D227A27020065D370 /* TabBar+Additions.swift */,
+				3B824261227F6DE400C0A6CA /* Date+Additions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -107,10 +118,10 @@
 		3BC2AFF82278259D00B01F32 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				3B82425F227EB77B00C0A6CA /* HandleSelectionViewController.swift */,
 				3B5EA1A02279829C005D9E5F /* LoginViewController.swift */,
 				8A5AF9102273D31500E4AC1A /* Main.storyboard */,
 				8A1F3073227A57B70065D370 /* ChatPreviewTableViewCell.swift */,
-				8A5AF90E2273D31500E4AC1A /* ViewController.swift */,
 				8A1F3071227A48150065D370 /* MyChatsViewController.swift */,
 				8A5AF9232275088A00E4AC1A /* PostTableViewCell.swift */,
 				8A5AF9272275266C00E4AC1A /* CreatePostViewController.swift */,
@@ -127,6 +138,7 @@
 				3B1F1A9C2277B131001655B6 /* Post.swift */,
 				3BC2AFED22781D5500B01F32 /* Message.swift */,
 				8A1F306B227A23AC0065D370 /* Heart.swift */,
+				8A1F3075227B7F0F0065D370 /* Student.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -172,6 +184,7 @@
 		8A5AF90B2273D31500E4AC1A /* RealTalk */ = {
 			isa = PBXGroup;
 			children = (
+				3B311EC7227E5F7700893EA2 /* RealTalk.entitlements */,
 				3B5EA19C22798269005D9E5F /* AppController.swift */,
 				3B5EA19E22798281005D9E5F /* AppSettings.swift */,
 				8A5AF91B2273D31700E4AC1A /* Info.plist */,
@@ -218,6 +231,14 @@
 				TargetAttributes = {
 					8A5AF9082273D31500E4AC1A = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 0;
+							};
+							com.apple.SafariKeychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -263,16 +284,14 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-RealTalk/Pods-RealTalk-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/MessageKit/MessageKit.framework",
 				"${BUILT_PRODUCTS_DIR}/ProgressHUD/ProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-RxLibrary/RxLibrary.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -280,16 +299,14 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessageKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxLibrary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -329,7 +346,10 @@
 			files = (
 				3BC2AFFE227826E300B01F32 /* NSDate+Additions.swift in Sources */,
 				8A1F306E227A27020065D370 /* TabBar+Additions.swift in Sources */,
+				3B82425C227EA0CC00C0A6CA /* String+Additions.swift in Sources */,
+				3B824262227F6DE400C0A6CA /* Date+Additions.swift in Sources */,
 				3B1F1A9D2277B132001655B6 /* Post.swift in Sources */,
+				3B824260227EB77B00C0A6CA /* HandleSelectionViewController.swift in Sources */,
 				3BC2AFF022781D7A00B01F32 /* UIColor+Additions.swift in Sources */,
 				3BAAC09522780F68007C5DCE /* ChatViewController.swift in Sources */,
 				8A1F3074227A57B70065D370 /* ChatPreviewTableViewCell.swift in Sources */,
@@ -349,6 +369,7 @@
 				8A1F306C227A23AC0065D370 /* Heart.swift in Sources */,
 				3BC2AFF422781DBE00B01F32 /* UIImage+Additions.swift in Sources */,
 				3B5EA19F22798281005D9E5F /* AppSettings.swift in Sources */,
+				8A1F3076227B7F0F0065D370 /* Student.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -495,6 +516,7 @@
 			baseConfigurationReference = A0570830AB5455B44E73DE65 /* Pods-RealTalk.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = RealTalk/RealTalk.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3PHM8K6QXJ;
 				INFOPLIST_FILE = RealTalk/Info.plist;
@@ -515,6 +537,7 @@
 			baseConfigurationReference = 51901FD10A1D8ADCECBB9236 /* Pods-RealTalk.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = RealTalk/RealTalk.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3PHM8K6QXJ;
 				INFOPLIST_FILE = RealTalk/Info.plist;
