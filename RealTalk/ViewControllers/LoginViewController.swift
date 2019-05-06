@@ -28,6 +28,8 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
+import ProgressHUD
 
 class LoginViewController: UIViewController {
   
@@ -95,8 +97,34 @@ class LoginViewController: UIViewController {
     displayNameField.resignFirstResponder()
     
     AppSettings.displayName = name
+
     
-    Auth.auth().signInAnonymously(completion: nil)
+    Auth.auth().signInAnonymously { (user, err) in
+        let db = Firestore.firestore()
+        let  studentsReference =  db.collection("students")
+
+        let newStudent = Student(uid: user!.uid, username: name, bio: "", createdDate: NSDate())
+
+        studentsReference.document(newStudent.uid).setData(newStudent.representation) { error in
+            if error != nil {
+                ProgressHUD.showError(error!.localizedDescription)
+                return
+            }
+            ProgressHUD.showSuccess("Success")
+        }
+        /*
+        studentsReference.addDocument(data: newStudent.representation) { error in
+            if error != nil {
+                ProgressHUD.showError(error!.localizedDescription)
+                return
+            }
+            ProgressHUD.showSuccess("Success")
+        }
+        */
+    }
+
+
+    
   }
   
   private func showMissingNameAlert() {

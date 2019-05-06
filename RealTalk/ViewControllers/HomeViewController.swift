@@ -14,11 +14,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     private var posts = [Post]()
     private var postsListener: ListenerRegistration?
+    private let db = Firestore.firestore()
 
     var refreshControl = UIRefreshControl()
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var heartBtn: UIButton!
     
+    var heartCount = 0
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
     }
@@ -30,16 +34,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "postCell") as! PostTableViewCell
-        print(posts.count)
-
-        cell.authorLabel.text = posts[indexPath.row].author
-        cell.contentLabel.text = posts[indexPath.row].content
-        let date = posts[indexPath.row].timestamp
-        let timestamp = timeAgoSinceDate(date: date, numericDates: true)
-        cell.timeLabel.text = timestamp
-
-        cell.commentBtn.titleLabel!.text = "34"
-        cell.selectionStyle = UITableViewCell.SelectionStyle.none
+        let post = posts[indexPath.row]
+        cell.setCell(post: post)
         return cell
     }
 
@@ -54,27 +50,21 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.navigationController?.pushViewController(vc, animated:true)
     }
 
-
     deinit {
         postsListener?.remove()
     }
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-
-
         tableView.delegate = self
         tableView.dataSource = self
-
+        loadUserHearts()
         var refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(reloadData), for: UIControl.Event.valueChanged)
         tableView.refreshControl = refreshControl
 
-        let db = Firestore.firestore()
         let  postsReference =  db.collection("channels")
-        
+
         postsListener =  postsReference.addSnapshotListener { querySnapshot, error in
             guard let snapshot = querySnapshot else {
                 print("Error listening for channel updates: \(error?.localizedDescription ?? "No error")")
@@ -85,7 +75,31 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.handleDocumentChange(change)
             }
         }
-        
+    }
+
+    func loadUserHearts() {
+        guard let currUser = Auth.auth().currentUser else {return}
+        let userID = currUser.uid
+
+        db.collection("students").document(userID)
+            .addSnapshotListener { documentSnapshot, error in
+                guard let document = documentSnapshot else {
+                    print("Error fetching document: \(error!)")
+                    return
+                }
+                guard let data = document.data() else {
+                    print("Document data was empty.")
+                    return
+                }
+                if let heartCount = data["heartCount"] as? String {
+                    print("updated heart count \(heartCount)")
+                    //animation?
+                    DispatchQueue.main.async {
+                        self.heartBtn.setTitle(String(heartCount), for: .normal)
+                    }
+
+                }
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -100,11 +114,37 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     @objc func reloadData() {
-
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            //add in real functionality
+            self.tableView.reloadData()
             self.tableView.refreshControl?.endRefreshing()
         }
+        //I think unnecessary?
+        /*
+        let db = Firestore.firestore()
+        let  postsReference =  db.collection("channels")
+
+        for post in posts {
+            if let id = post.id {
+                let postRef = postsReference.document(id)
+                postRef.getDocument { (documentSnapshot, err) in
+                    if let err = err {
+                        print("Error getting document: \(err)")
+                    } else {
+
+                        let docId = documentSnapshot?.documentID
+                        let commentCount = documentSnapshot?.get("commentCount") as! String
+                        let commentCountInt = Int(commentCount)!
+                        print("after reload, comment count: \(commentCountInt)")
+                    }
+
+                }
+            }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.tableView.reloadData()
+            self.tableView.refreshControl?.endRefreshing()
+        }
+        */
     }
     
     private func addPostToTable(_ post: Post) {
@@ -155,170 +195,4 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             removePostFromTable(post)
         }
     }
-
-//    func loadPosts(){
-//        print("load Posts called \n")
-//        Database.database().reference().child("posts").observe(.childAdded) { (snapshot: DataSnapshot) in
-//            print("snapshot value:\n \(snapshot.value)")
-//            if let dict = snapshot.value as? [String: Any] {
-//                let content = dict["content"] as! String
-//                let photoUrlString = dict["photoUrl"] as! String
-//                let userID = dict["userID"] as! String
-//                let timeString = dict["date"] as! String
-//
-//                if let timeNum = Double(timeString) {
-//                    let date = NSDate(timeIntervalSince1970: timeNum)
-//                    let post = Post(content: content, author: userID, timestamp: date)
-//                    self.postArray.append(post)
-//                }
-//
-//                //let url = URL(string: photoUrlString)
-//                //let data = try? Data(contentsOf: url!)
-//                //self.postArray = self.postArray.reversed()
-//                self.tableView.reloadData()
-//            }
-//        }
-//    }
-
-
-    /*
-    func timeAgoSinceDate(date:NSDate, numericDates:Bool) -> String {
-        let calendar = NSCalendar.current
-        let unitFlags: Set<Calendar.Component> = [.minute, .hour, .day, .weekOfYear, .month, .year, .second]
-        let now = NSDate()
-        let earliest = now.earlierDate(date as Date)
-        let latest = (earliest == now as Date) ? date : now
-        let components = calendar.dateComponents(unitFlags, from: earliest as Date,  to: latest as Date)
-
-        if (components.year! >= 2) {
-            return "\(components.year!) years ago"
-        } else if (components.year! >= 1){
-            if (numericDates){
-                return "1 year ago"
-            } else {
-                return "Last year"
-            }
-        } else if (components.month! >= 2) {
-            return "\(components.month!) months ago"
-        } else if (components.month! >= 1){
-            if (numericDates){
-                return "1 month ago"
-            } else {
-                return "Last month"
-            }
-        } else if (components.weekOfYear! >= 2) {
-            return "\(components.weekOfYear!) weeks ago"
-        } else if (components.weekOfYear! >= 1){
-            if (numericDates){
-                return "1 week ago"
-            } else {
-                return "Last week"
-            }
-        } else if (components.day! >= 2) {
-            return "\(components.day!) days ago"
-        } else if (components.day! >= 1){
-            if (numericDates){
-                return "1 day ago"
-            } else {
-                return "Yesterday"
-            }
-        } else if (components.hour! >= 2) {
-            return "\(components.hour!) hours ago"
-        } else if (components.hour! >= 1){
-            if (numericDates){
-                return "1 hour ago"
-            } else {
-                return "An hour ago"
-            }
-        } else if (components.minute! >= 2) {
-            return "\(components.minute!) mins ago"
-        } else if (components.minute! >= 1){
-            if (numericDates){
-                return "1 min ago"
-            } else {
-                return "A min ago"
-            }
-        } else if (components.second! >= 3) {
-            return "\(components.second!) secs ago"
-        } else {
-            return "Just now"
-        }
-
-    }
-    */
-
-    func timeAgoSinceDate(date:NSDate, numericDates:Bool) -> String {
-        let calendar = NSCalendar.current
-        let unitFlags: Set<Calendar.Component> = [.minute, .hour, .day, .weekOfYear, .month, .year, .second]
-        let now = NSDate()
-        let earliest = now.earlierDate(date as Date)
-        let latest = (earliest == now as Date) ? date : now
-        let components = calendar.dateComponents(unitFlags, from: earliest as Date,  to: latest as Date)
-        print("date is \(date)")
-        if (components.year! >= 2) {
-            return "\(components.year!)y"
-        } else if (components.year! >= 1){
-            if (numericDates){
-                return "1 yr"
-            } else {
-                return "Last year"
-            }
-        } else if (components.month! >= 2) {
-            return "\(components.month!)mo"
-        } else if (components.month! >= 1){
-            if (numericDates){
-                return "1 month ago"
-            } else {
-                return "Last month"
-            }
-        } else if (components.weekOfYear! >= 2) {
-            return "\(components.weekOfYear!)w"
-        } else if (components.weekOfYear! >= 1){
-            if (numericDates){
-                return "1w"
-            } else {
-                return "Last week"
-            }
-        } else if (components.day! >= 2) {
-            return "\(components.day!)d"
-        } else if (components.day! >= 1){
-            if (numericDates){
-                return "1d"
-            } else {
-                return "Yesterday"
-            }
-        } else if (components.hour! >= 2) {
-            return "\(components.hour!)h"
-        } else if (components.hour! >= 1){
-            if (numericDates){
-                return "1h"
-            } else {
-                return "An hour ago"
-            }
-        } else if (components.minute! >= 2) {
-            return "\(components.minute!)min"
-        } else if (components.minute! >= 1){
-            if (numericDates){
-                return "1 min ago"
-            } else {
-                return "A min ago"
-            }
-        } else if (components.second! >= 3) {
-            return "\(components.second!)s"
-        } else {
-            return "Just now"
-        }
-
-    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

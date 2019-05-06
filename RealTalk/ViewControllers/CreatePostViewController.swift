@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import ProgressHUD
+import FirebaseAuth
 
 class CreatePostViewController: UIViewController, UITextViewDelegate {
 
@@ -22,9 +23,6 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
         super.viewDidLoad()
         textView.delegate = self
         textView.textColor = UIColor.lightGray
-
-        
-        // Do any additional setup after loading the view.
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -44,8 +42,6 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
         }
         return true
     }
-
-
 
     @objc func dismissKeyboard() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
@@ -77,11 +73,15 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
         }
     }
     
-    
     func sendDataToDatabase(photoUrl: String, content: String){
         let db = Firestore.firestore()
         let  postsReference =  db.collection("channels")
-        let post = Post(content: content, author: "mrBean", timestamp: NSDate())
+
+        var uid = ""
+        if let user = Auth.auth().currentUser {
+            uid = user.uid
+        }
+        let post = Post(content: content, author: AppSettings.displayName, timestamp: NSDate(), authorID: uid)
         print(post.timestamp)
 
         postsReference.addDocument(data: post.representation) { error in
@@ -99,8 +99,6 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
     @IBAction func closeTapped(_ sender: Any) {
         print("close tapped")
         tabBarController!.selectedIndex = 0
-
-      //  tabBarController?.selectedIndex = 1
         self.tabBarController?.tabBar.isHidden = false
 
     }
@@ -109,6 +107,8 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
         if let content = textView.text {
             let photoUrl = "samplePhotoUrl"
             sendDataToDatabase(photoUrl: photoUrl, content: content)
+            textView.text = "I wanna talk with someone about..."
+            textView.textColor = UIColor.lightGray
         }
         tabBarController!.selectedIndex = 0
     }

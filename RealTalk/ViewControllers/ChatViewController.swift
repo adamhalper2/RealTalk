@@ -74,12 +74,11 @@ final class ChatViewController: MessagesViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.tabBarController?.tabBar.isHidden = true
-    
     guard let id = post.id else {
       navigationController?.popViewController(animated: true)
       return
     }
-    
+
     reference = db.collection(["channels", id, "thread"].joined(separator: "/"))
     
     messageListener = reference?.addSnapshotListener { querySnapshot, error in
@@ -184,17 +183,34 @@ final class ChatViewController: MessagesViewController {
   }
 
   
-  private func save(_ message: Message) {
-    reference?.addDocument(data: message.representation) { error in
-      if let e = error {
-        print("Error sending message: \(e.localizedDescription)")
-        return
-      }
-      
-      self.messagesCollectionView.scrollToBottom()
+    private func save(_ message: Message) {
+        reference?.addDocument(data: message.representation) { error in
+          if let e = error {
+            print("Error sending message: \(e.localizedDescription)")
+            return
+          }
+
+          self.messagesCollectionView.scrollToBottom()
+        }
+        let delta = 1
+        updateCommentCount(delta: delta)
     }
-  }
-  
+
+    func updateCommentCount(delta: Int) {
+        let newCount = post.commentCount + delta
+        guard let id = post.id else { return }
+        let postRef = db.collection("channels").document(id)
+        postRef.updateData([
+            "commentCount": String(newCount)
+        ]) { err in
+            if let err = err {
+                print("Error updating comment count: \(err)")
+            } else {
+                print("updated comment count to \(newCount)")
+            }
+        }
+    }
+
   private func insertNewMessage(_ message: Message) {
     guard !messages.contains(message) else {
       return
@@ -237,7 +253,7 @@ final class ChatViewController: MessagesViewController {
       } else {
         insertNewMessage(message)
       }
-      
+
     default:
       break
     }
@@ -252,12 +268,10 @@ final class ChatViewController: MessagesViewController {
         completion(nil)
         return
       }
-      
+
       completion(UIImage(data: imageData))
     }
   }
-  
-  
 }
 
 // MARK: - MessagesDisplayDelegate
@@ -282,8 +296,8 @@ extension ChatViewController: MessagesDisplayDelegate {
                     in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
     
     let corner: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
-    
     // 3
+
     return .bubbleTail(corner, .curved)
   }
 }
@@ -360,10 +374,34 @@ extension ChatViewController: MessageInputBarDelegate {
     
     // 2
     save(message)
-    
+
+    print("members are: \(post.members)")
+    // 2.5 add new member
+    addMember(uid: user.uid)
+
     // 3
     inputBar.inputTextView.text = ""
   }
+
+    func addMember(uid: String) {
+        let postRef = db.collection("channels").document(post.id!)
+        var mem = post.members
+        if post.members.contains(user.uid) {
+            print("Already contains userID")
+            return
+        }
+        mem.append(uid)
+        let membersStr = mem.joined(separator: "-")
+        postRef.updateData([
+            "members": membersStr
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("added member")
+            }
+        }
+    }
 }
 
 // MARK: - UIImagePickerControllerDelegate

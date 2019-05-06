@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -272,6 +272,9 @@
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose a display name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XOA-MY-kvN">
                                         <rect key="frame" x="118.5" y="0.0" width="177" height="154.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="kBx-hW-NUb"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -394,29 +397,32 @@
                                                         <constraint firstAttribute="height" constant="16" id="UrN-9g-7NQ"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                    <nil key="textColor"/>
+                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EWm-d7-0E9">
                                                     <rect key="frame" x="15" y="119.5" width="384" height="30"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s3n-T9-h49">
-                                                            <rect key="frame" x="157" y="0.0" width="42" height="30"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s3n-T9-h49">
+                                                            <rect key="frame" x="162" y="0.0" width="60" height="30"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="60" id="DOI-JF-eER"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                            <state key="normal" title="89" image="commentIcon">
+                                                            <state key="normal" title="10" image="commentIcon">
                                                                 <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </state>
                                                         </button>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="reportIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Wt1-fx-dBW">
-                                                            <rect key="frame" x="283.5" y="7.5" width="11" height="15"/>
+                                                            <rect key="frame" x="297" y="7.5" width="11" height="15"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="15" id="hXl-OB-UYl"/>
                                                                 <constraint firstAttribute="width" constant="11" id="s0u-7l-dV7"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2h" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Yl-wl-Zei">
-                                                            <rect key="frame" x="85" y="7" width="15.5" height="16"/>
+                                                            <rect key="frame" x="71.5" y="7" width="15.5" height="16"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -427,9 +433,9 @@
                                                         <constraint firstItem="Wt1-fx-dBW" firstAttribute="centerY" secondItem="EWm-d7-0E9" secondAttribute="centerY" id="LEe-Wy-9d5"/>
                                                         <constraint firstItem="6Yl-wl-Zei" firstAttribute="centerY" secondItem="EWm-d7-0E9" secondAttribute="centerY" id="VtI-Ax-LFd"/>
                                                         <constraint firstItem="s3n-T9-h49" firstAttribute="centerX" secondItem="EWm-d7-0E9" secondAttribute="centerX" id="auj-7s-Mvm"/>
-                                                        <constraint firstItem="s3n-T9-h49" firstAttribute="leading" secondItem="6Yl-wl-Zei" secondAttribute="trailing" constant="75" id="hHe-Q7-WJz"/>
+                                                        <constraint firstItem="s3n-T9-h49" firstAttribute="leading" secondItem="6Yl-wl-Zei" secondAttribute="trailing" priority="999" constant="75" id="hHe-Q7-WJz"/>
                                                         <constraint firstItem="s3n-T9-h49" firstAttribute="top" secondItem="EWm-d7-0E9" secondAttribute="top" id="i2L-BC-Nt0"/>
-                                                        <constraint firstItem="Wt1-fx-dBW" firstAttribute="leading" secondItem="s3n-T9-h49" secondAttribute="trailing" constant="75" id="iUd-cK-nTf"/>
+                                                        <constraint firstItem="Wt1-fx-dBW" firstAttribute="leading" secondItem="s3n-T9-h49" secondAttribute="trailing" priority="999" constant="75" id="iUd-cK-nTf"/>
                                                         <constraint firstAttribute="bottom" secondItem="s3n-T9-h49" secondAttribute="bottom" id="oE8-6k-ToY"/>
                                                     </constraints>
                                                 </view>
@@ -439,13 +445,14 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3CK-lh-CaF">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3CK-lh-CaF">
                                                     <rect key="frame" x="364" y="47.5" width="30" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="30" id="pPv-Vy-X05"/>
                                                         <constraint firstAttribute="height" constant="25" id="r14-F0-F1b"/>
                                                     </constraints>
-                                                    <state key="normal" title="123" image="unfilledHeart"/>
+                                                    <color key="tintColor" red="0.9327558279" green="0.26188103740000002" blue="0.050758466920000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <state key="normal" image="unfilledHeart"/>
                                                     <connections>
                                                         <action selector="heartTapped:" destination="fNE-5H-4pV" eventType="touchUpInside" id="fpy-gU-9ha"/>
                                                     </connections>
@@ -517,12 +524,13 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="heartBtn" destination="JBQ-ig-AX2" id="lpz-rm-YgJ"/>
                         <outlet property="tableView" destination="ZJK-oC-7RE" id="NBa-MQ-sSo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IQh-H1-Lem" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1535" y="-350"/>
+            <point key="canvasLocation" x="1534.7826086956522" y="-350.22321428571428"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="N7F-Pg-Uo3">
