@@ -157,7 +157,7 @@ final class ChatViewController: MessagesViewController {
     
     let imageName = [UUID().uuidString, String(Date().timeIntervalSince1970)].joined()
     storage.child(channelID).child(imageName).putData(data, metadata: metadata) { meta, error in
-      completion(meta?.downloadURL())
+      //completion(meta?.downloadURL())
     }
   }
   

@@ -166,7 +166,6 @@ class PostTableViewCell: UITableViewCell {
         }
 
 
-
     }
 
     func timeAgoSinceDate(date:NSDate, numericDates:Bool) -> String {

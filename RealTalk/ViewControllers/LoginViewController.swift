@@ -40,6 +40,8 @@ class LoginViewController: UIViewController {
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
   }
+    
+  private let actionCodeSettings = ActionCodeSettings()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -53,6 +55,12 @@ class LoginViewController: UIViewController {
     )
     
     registerForKeyboardNotifications()
+    
+    actionCodeSettings.url = URL(string: "https://realtalk.page.link")
+    // The sign-in operation has to always be completed in the app.
+    actionCodeSettings.handleCodeInApp = true
+    actionCodeSettings.setIOSBundleID(Bundle.main.bundleIdentifier!)
+    actionCodeSettings.dynamicLinkDomain = "realtalk.page.link"
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -89,51 +97,64 @@ class LoginViewController: UIViewController {
   }
   
   private func signIn() {
-    guard let name = displayNameField.text, !name.isEmpty else {
-      showMissingNameAlert()
+    guard let email = displayNameField.text, !email.isEmpty else {
+      showMissingEmailAlert()
       return
     }
     
     displayNameField.resignFirstResponder()
     
-    AppSettings.displayName = name
-
+    if email.isValidEmail() && email.isCollegeEmail() {
     
-    Auth.auth().signInAnonymously { (user, err) in
-        let db = Firestore.firestore()
-        let  studentsReference =  db.collection("students")
-
-        let newStudent = Student(uid: user!.uid, username: name, bio: "", createdDate: NSDate())
-
-        studentsReference.document(newStudent.uid).setData(newStudent.representation) { error in
-            if error != nil {
-                ProgressHUD.showError(error!.localizedDescription)
+        Auth.auth().sendSignInLink(toEmail:email,
+                                actionCodeSettings: actionCodeSettings) { error in
+            // ...
+            if let error = error {
+                print(error)
+                //self.showMessagePrompt(error.localizedDescription)
                 return
             }
-            ProgressHUD.showSuccess("Success")
+            // The link was successfully sent. Inform the user.
+            // Save the email locally so you don't need to ask the user for it again
+            // if they open the link on the same device.
+            UserDefaults.standard.set(email, forKey: "Email")
+            self.emailSentAlert()
+
         }
-        /*
-        studentsReference.addDocument(data: newStudent.representation) { error in
-            if error != nil {
-                ProgressHUD.showError(error!.localizedDescription)
-                return
-            }
-            ProgressHUD.showSuccess("Success")
-        }
-        */
+    } else {
+        invalidEmailAlert()
     }
-
-
     
   }
-  
-  private func showMissingNameAlert() {
-    let ac = UIAlertController(title: "Display Name Required", message: "Please enter a display name.", preferredStyle: .alert)
+    
+
+  private func showMissingEmailAlert() {
+    let ac = UIAlertController(title: "Email Required", message: "Please enter a university email.", preferredStyle: .alert)
     ac.addAction(UIAlertAction(title: "Okay", style: .default, handler: { _ in
       DispatchQueue.main.async {
         self.displayNameField.becomeFirstResponder()
       }
     }))
+    present(ac, animated: true, completion: nil)
+  }
+    
+  private func invalidEmailAlert() {
+    let ac = UIAlertController(title: "Invalid Email", message: "Please enter a valid university (.edu) email.", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Okay", style: .default, handler: { _ in
+            DispatchQueue.main.async {
+                self.displayNameField.becomeFirstResponder()
+            }
+        }))
+        present(ac, animated: true, completion: nil)
+  }
+    
+  private func emailSentAlert() {
+    let ac = UIAlertController(title: "Log in Link Sent", message: "Please check your email for a log in link.", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Okay", style: .default, handler: { _ in
+            DispatchQueue.main.async {
+                self.displayNameField.becomeFirstResponder()
+            }
+        }))
     present(ac, animated: true, completion: nil)
   }
   

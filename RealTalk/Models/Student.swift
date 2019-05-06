@@ -74,6 +74,7 @@ extension Student: DatabaseRepresentation {
             "bio": bio,
             "heartCount": String(heartCount),
             "createdDate": createdDate.toString(dateFormat: "MM/dd/yy h:mm a Z")
+
         ]
 
         return rep

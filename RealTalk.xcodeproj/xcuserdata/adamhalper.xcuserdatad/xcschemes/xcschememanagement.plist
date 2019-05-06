@@ -7,7 +7,11 @@
 		<key>RealTalk.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
+<<<<<<< HEAD
 			<integer>30</integer>
+=======
+			<integer>0</integer>
+>>>>>>> login_email
 		</dict>
 	</dict>
 </dict>

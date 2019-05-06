@@ -20,4 +20,5 @@ target 'RealTalk' do
 
   pod 'Firebase/Database'
   pod 'ProgressHUD'
+  pod 'Firebase/DynamicLinks'
 end

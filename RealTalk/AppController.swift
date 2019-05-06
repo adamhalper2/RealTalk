@@ -70,6 +70,11 @@ final class AppController {
         print("Error signing out: \(error.localizedDescription)")
     }
     
+    // TODO: remove when done testing
+    let domain = Bundle.main.bundleIdentifier!
+    UserDefaults.standard.removePersistentDomain(forName: domain)
+    UserDefaults.standard.synchronize()
+    
     self.window = window
     window.tintColor = .primary
     window.backgroundColor = .white
@@ -78,17 +83,55 @@ final class AppController {
     
     window.makeKeyAndVisible()
   }
+    
+    func signIn(link: String) {
+        if let email = UserDefaults.standard.string(forKey: "Email") {
+            if Auth.auth().isSignIn(withEmailLink: link) {
+                Auth.auth().signIn(withEmail: email, link: link) { (user, error) in
+                    if (error != nil) {
+                        print(error!)
+                    }
+
+//                    let newStudent = Student(uid: user!.uid, username: name, bio: "", createdDate: Date())
+//                        studentsReference.document(newStudent.uid).setData(newStudent.representation) { error in
+//                            if error != nil {
+//                                ProgressHUD.showError(error!.localizedDescription)
+//                                return
+//                            }
+//                            ProgressHUD.showSuccess("Success")
+                    //        /*
+                    //        studentsReference.addDocument(data: newStudent.representation) { error in
+                    //            if error != nil {
+                    //                ProgressHUD.showError(error!.localizedDescription)
+                    //                return
+                    //            }
+                    //            ProgressHUD.showSuccess("Success")
+                    //        }
+                    //        */
+                    //
+                    //    }
+                }
+            }
+        }
+    }
   
   private func handleAppState() {
     if let user = Auth.auth().currentUser {
-      AppController.user = user
-      let storyboard = UIStoryboard(name: "Main", bundle: nil)
-      let tabContoller = storyboard.instantiateViewController(withIdentifier: "TabBarController")
-      rootViewController = tabContoller
+        AppController.user = user
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+
+        if AppSettings.displayName != nil {
+            let tabContoller = storyboard.instantiateViewController(withIdentifier: "TabBarController")
+            rootViewController = tabContoller
+        } else {
+            let handleContoller = storyboard.instantiateViewController(withIdentifier: "HandleSelectionViewController")
+            rootViewController = handleContoller
+        }
+        
     } else {
-      let storyboard = UIStoryboard(name: "Main", bundle: nil)
-      let loginContoller = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
-      rootViewController = loginContoller
+       let storyboard = UIStoryboard(name: "Main", bundle: nil)
+       let infoContoller = storyboard.instantiateViewController(withIdentifier: "InfoViewController")
+       rootViewController = infoContoller
     }
   }
   

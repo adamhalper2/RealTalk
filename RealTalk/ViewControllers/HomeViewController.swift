@@ -195,4 +195,5 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             removePostFromTable(post)
         }
     }
+
 }
