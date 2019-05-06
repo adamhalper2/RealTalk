@@ -524,6 +524,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="heartBtn" destination="JBQ-ig-AX2" id="lpz-rm-YgJ"/>
                         <outlet property="tableView" destination="ZJK-oC-7RE" id="NBa-MQ-sSo"/>
                     </connections>
                 </viewController>

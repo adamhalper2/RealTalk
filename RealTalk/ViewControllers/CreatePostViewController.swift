@@ -77,20 +77,10 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
         let db = Firestore.firestore()
         let  postsReference =  db.collection("channels")
 
-        var author = "mrBean"
         var uid = ""
         if let user = Auth.auth().currentUser {
             uid = user.uid
-            if let username = user.displayName {
-                author = username
-            }
-
-        } else {
-            print("user is nil")
         }
-
-        print("author is \(author)")
-
         let post = Post(content: content, author: AppSettings.displayName, timestamp: NSDate(), authorID: uid)
         print(post.timestamp)
 

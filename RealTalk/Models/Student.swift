@@ -13,14 +13,14 @@ struct Student {
 
     let uid: String
     var username: String
-    var karma: [String]
+    var heartCount: Int
     var bio: String
-    var createdDate: Date
+    var createdDate: NSDate
 
-    init(uid: String, username: String, bio: String?, createdDate: Date) {
+    init(uid: String, username: String, bio: String?, createdDate: NSDate) {
         self.uid = uid
         self.username = username
-        self.karma = []
+        self.heartCount = 0
         self.bio = ""
         self.createdDate = createdDate
         
@@ -41,18 +41,25 @@ struct Student {
         guard let bio = data["bio"] as? String else {
             return nil
         }
-        guard let karma = data["karma"] as? [String] else {
+        guard let heartCount = data["heartCount"] as? String else {
             return nil
         }
-        guard let createdDate = data["createdDate"] as? Date else {
+        let heartCountInt = Int(heartCount)!
+
+        guard let createdDate = data["createdDate"] as? String else {
             return nil
         }
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yy h:mm a Z"
+        let date = dateFormatter.date(from: createdDate)! as NSDate
 
         self.uid = uid
         self.username = username
         self.bio = bio
-        self.karma = karma
-        self.createdDate = createdDate
+        self.heartCount = heartCountInt
+        self.createdDate = date
+
 
     }
     
@@ -65,8 +72,8 @@ extension Student: DatabaseRepresentation {
             "uid": uid,
             "username": username,
             "bio": bio,
-            "karma": karma,
-            "createdDate": createdDate
+            "heartCount": String(heartCount),
+            "createdDate": createdDate.toString(dateFormat: "MM/dd/yy h:mm a Z")
         ]
 
         return rep

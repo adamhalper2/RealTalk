@@ -103,7 +103,7 @@ class LoginViewController: UIViewController {
         let db = Firestore.firestore()
         let  studentsReference =  db.collection("students")
 
-        let newStudent = Student(uid: user!.uid, username: name, bio: "", createdDate: Date())
+        let newStudent = Student(uid: user!.uid, username: name, bio: "", createdDate: NSDate())
 
         studentsReference.document(newStudent.uid).setData(newStudent.representation) { error in
             if error != nil {

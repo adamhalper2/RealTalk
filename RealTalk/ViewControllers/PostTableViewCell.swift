@@ -146,6 +146,26 @@ class PostTableViewCell: UITableViewCell {
             }
         }
 
+        let userRef = db.collection("students").document(toID)
+        userRef.getDocument { (documentSnapshot, err) in
+            if let err = err {
+                print("Error getting document: \(err)")
+            } else {
+                guard let data = documentSnapshot?.data() else {return}
+                if let oldCount = data["heartCount"] as? String {
+                    print("old author heart count: \(oldCount)")
+                    let oldCountInt = Int(oldCount)!
+                    userRef.updateData(
+                        ["heartCount": String(oldCountInt + 1)]
+                    )
+                    print("updated authors heart count to \(oldCountInt + 1)")
+
+                }
+            }
+
+        }
+
+
 
     }
 
