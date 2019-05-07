@@ -268,7 +268,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RealTalk" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ALC-5e-5tJ">
-                                <rect key="frame" x="104" y="74" width="206" height="68"/>
+                                <rect key="frame" x="104" y="79" width="206" height="68"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="68" id="dQx-Qg-R25"/>
                                 </constraints>
@@ -277,9 +277,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PVW-g5-2Hr">
-                                <rect key="frame" x="35" y="167" width="344" height="249.5"/>
+                                <rect key="frame" x="35" y="162" width="344" height="389"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="337" id="Ycu-nD-Ms6"/>
+                                    <constraint firstAttribute="height" constant="389" id="e6O-eP-uH8"/>
                                 </constraints>
                                 <string key="text">Welcome to RealTalk, a platform for anonymous group discussions with your college peers.  We hope this will be your safe space to discuss the topics on your mind, whatever they may be.  By signing up, you agree to act responsibly and keep this space kind and supportive.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
@@ -287,7 +288,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Izj-hD-Xwd">
-                                <rect key="frame" x="113" y="451.5" width="188" height="58"/>
+                                <rect key="frame" x="113" y="581" width="188" height="58"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="188" id="Let-PA-QnE"/>
@@ -310,13 +311,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Dth-j6-awy" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Izj-hD-Xwd" secondAttribute="bottom" constant="30" id="1c2-Un-AAT"/>
-                            <constraint firstItem="Izj-hD-Xwd" firstAttribute="top" secondItem="PVW-g5-2Hr" secondAttribute="bottom" constant="35" id="MXr-HA-4aA"/>
-                            <constraint firstItem="PVW-g5-2Hr" firstAttribute="top" secondItem="ALC-5e-5tJ" secondAttribute="bottom" constant="25" id="OgB-VE-VI3"/>
+                            <constraint firstItem="Izj-hD-Xwd" firstAttribute="top" secondItem="PVW-g5-2Hr" secondAttribute="bottom" constant="30" id="MXr-HA-4aA"/>
+                            <constraint firstItem="PVW-g5-2Hr" firstAttribute="top" secondItem="ALC-5e-5tJ" secondAttribute="bottom" constant="15" id="OgB-VE-VI3"/>
                             <constraint firstItem="Dth-j6-awy" firstAttribute="trailing" secondItem="PVW-g5-2Hr" secondAttribute="trailing" constant="35" id="P35-hl-m5f"/>
                             <constraint firstItem="ALC-5e-5tJ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Dth-j6-awy" secondAttribute="top" id="ScA-ei-I9m"/>
                             <constraint firstItem="PVW-g5-2Hr" firstAttribute="leading" secondItem="Dth-j6-awy" secondAttribute="leading" constant="35" id="Unb-mX-bfL"/>
                             <constraint firstItem="Izj-hD-Xwd" firstAttribute="centerX" secondItem="Dth-j6-awy" secondAttribute="centerX" id="cVl-MW-Cuq"/>
-                            <constraint firstItem="ALC-5e-5tJ" firstAttribute="top" secondItem="Dth-j6-awy" secondAttribute="top" priority="100" constant="30" id="gcg-Xf-Jfe"/>
+                            <constraint firstItem="ALC-5e-5tJ" firstAttribute="top" secondItem="Dth-j6-awy" secondAttribute="top" priority="100" constant="35" id="gcg-Xf-Jfe"/>
                             <constraint firstItem="ALC-5e-5tJ" firstAttribute="centerX" secondItem="Dth-j6-awy" secondAttribute="centerX" id="hqD-Tg-pk6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Dth-j6-awy"/>
@@ -343,13 +344,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="@stanford.edu" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WB6-62-2he">
-                                <rect key="frame" x="239" y="191" width="125" height="100"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@stanford.edu" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WB6-62-2he">
+                                <rect key="frame" x="224" y="191" width="140" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="31D-8d-tjb"/>
+                                    <constraint firstAttribute="width" constant="140" id="7H0-2N-4gi"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="AVq-Kh-VUI"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -374,7 +376,7 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="200" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6cB-pX-81x">
-                                <rect key="frame" x="50" y="216" width="187" height="50"/>
+                                <rect key="frame" x="50" y="216" width="168" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="ONU-AE-mSI"/>
                                 </constraints>
