@@ -282,7 +282,7 @@
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="337" id="Ycu-nD-Ms6"/>
                                     <constraint firstAttribute="height" constant="389" id="e6O-eP-uH8"/>
                                 </constraints>
-                                <mutableString key="text">Welcome to RealTalk, a platform for anonymous group discussions with your college peers.  We hope this will be your safe space to discuss the topics on your mind, whatever they may be.  By signing up, you agree to act responsibly and keep this space kind and supportive.</mutableString>
+                                <string key="text">Welcome to RealTalk, a platform for anonymous group discussions with your college peers.  We hope this will be your safe space to discuss the topics on your mind, whatever they may be.  By signing up, you agree to act responsibly and keep this space kind and supportive.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -393,7 +393,6 @@
                             <constraint firstItem="If5-DF-i33" firstAttribute="trailing" secondItem="XOA-MY-kvN" secondAttribute="trailing" constant="50" id="REH-hJ-aJl"/>
                             <constraint firstItem="XOA-MY-kvN" firstAttribute="top" secondItem="If5-DF-i33" secondAttribute="top" constant="50" id="Zhe-ML-ZPG"/>
                             <constraint firstItem="If5-DF-i33" firstAttribute="trailing" secondItem="XOA-MY-kvN" secondAttribute="trailing" constant="50" id="b3y-Xn-Z2d"/>
-                            <constraint firstItem="If5-DF-i33" firstAttribute="bottom" secondItem="iqA-wn-ymG" secondAttribute="bottom" constant="314" id="h60-RC-WS3"/>
                             <constraint firstItem="XOA-MY-kvN" firstAttribute="leading" secondItem="If5-DF-i33" secondAttribute="leading" constant="50" id="nCY-SD-w9J"/>
                             <constraint firstItem="iqA-wn-ymG" firstAttribute="centerX" secondItem="If5-DF-i33" secondAttribute="centerX" id="or5-rF-06C"/>
                             <constraint firstItem="WB6-62-2he" firstAttribute="centerY" secondItem="6cB-pX-81x" secondAttribute="centerY" id="qOe-CW-Xa4"/>
@@ -440,7 +439,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="44"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profileIcon" translatesAutoresizingMaskIntoConstraints="NO" id="s6h-US-hJ3">
-                                        <rect key="frame" x="383" y="14" width="16" height="16"/>
+                                        <rect key="frame" x="376" y="9.5" width="23" height="25"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RealTalk" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ocu-BO-I1Z">
                                         <rect key="frame" x="162.5" y="7" width="89" height="30"/>
