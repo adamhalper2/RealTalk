@@ -97,13 +97,14 @@ class LoginViewController: UIViewController {
   }
   
   private func signIn() {
-    guard let email = displayNameField.text, !email.isEmpty else {
+    guard var email = displayNameField.text, !email.isEmpty else {
       showMissingEmailAlert()
       return
     }
     
     displayNameField.resignFirstResponder()
-    
+    email = email + "@stanford.edu"
+    print(email)
     if email.isValidEmail() && email.isCollegeEmail() {
     
         Auth.auth().sendSignInLink(toEmail:email,
