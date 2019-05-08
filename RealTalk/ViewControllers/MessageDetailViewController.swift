@@ -15,7 +15,8 @@ class MessageDetailViewController: UIViewController {
     
     @IBOutlet weak var removeButton: UIButton!
     
-    
+    @IBOutlet weak var heartLabel: UIButton!
+
     @IBOutlet weak var messageLabel: UILabel!
     
     @IBOutlet weak var handleLabel: UILabel!
@@ -36,7 +37,7 @@ class MessageDetailViewController: UIViewController {
         
         handleLabel.text = message?.sender.displayName
         messageLabel.text = message?.content
-        
+        getUserHearts()
         if !isOwner! {
             removeButton.isEnabled = false
             removeButton.alpha = 0.5;
@@ -49,6 +50,24 @@ class MessageDetailViewController: UIViewController {
             removeButton.setTitle("User Banned", for: .normal)
         }
         
+    }
+
+    func getUserHearts(){
+        guard let message = message else {return}
+        let userRef = db.collection("students").document(message.sender.id)
+        userRef.getDocument { (documentSnapshot, err) in
+            if let err = err {
+                print("Error getting document: \(err)")
+            } else {
+                guard let data = documentSnapshot?.data() else {return}
+                if let heartCount = data["heartCount"] as? String {
+                    DispatchQueue.main.async {
+                        self.heartLabel.setTitle("\(heartCount)", for: .normal)
+                    }
+                }
+            }
+        }
+
     }
     
     @IBAction func flagPressed(_ sender: Any) {
