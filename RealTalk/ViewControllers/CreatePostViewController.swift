@@ -79,7 +79,7 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
 
         var author = "mrBean"
         var uid = ""
-        if let user = Auth.auth().currentUser {
+        if let user = AppController.user {
             uid = user.uid
             if let username = user.displayName {
                 author = username
@@ -89,7 +89,7 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
             print("user is nil")
         }
 
-        print("author is \(author)")
+        print("\n\nERROR author is \(author)\n\n")
 
         let post = Post(content: content, author: AppSettings.displayName, timestamp: NSDate(), authorID: uid)
         print(post.timestamp)
@@ -100,9 +100,6 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
                     return
             }
             ProgressHUD.showSuccess("Success")
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
-                //go to feed
-            })
         }
     }
 
