@@ -37,6 +37,7 @@ struct Message: MessageType {
   let sentDate: Date
   let sender: Sender
   var reportCount: Int
+  var isActive: Bool
   
   var data: MessageData {
     if let image = image {
@@ -59,7 +60,9 @@ struct Message: MessageType {
     sentDate = Date()
     id = nil
     reportCount = 0
+    isActive = true
   }
+    
   
   init(user: User, image: UIImage) {
     sender = Sender(id: user.uid, displayName: AppSettings.displayName)
@@ -67,6 +70,7 @@ struct Message: MessageType {
     content = ""
     sentDate = Date()
     id = nil
+    isActive = true
     reportCount = 0
   }
   
@@ -87,7 +91,12 @@ struct Message: MessageType {
     guard let senderName = data["senderName"] as? String else {
       return nil
     }
-    
+
+    guard let active = data["isActive"] as? String else {
+        return nil
+    }
+    guard let isActiveBool = Bool(active) else {return nil}
+
     guard let date = data["created"] as? String else {
         return nil
     }
@@ -97,6 +106,7 @@ struct Message: MessageType {
     let sentDate = dateFormatter.date(from: date)!
     
     id = document.documentID
+    self.isActive = isActiveBool
 
     self.reportCount = reportCountInt
     
@@ -122,7 +132,9 @@ extension Message: DatabaseRepresentation {
       "created": sentDate.toString(dateFormat: "MM/dd/yy h:mm a Z"),
       "senderID": sender.id,
       "senderName": sender.displayName,
-      "reportCount": String(reportCount)
+      "reportCount": String(reportCount),
+      "isActive": String(isActive)
+        
     ]
     
     if let url = downloadURL {
