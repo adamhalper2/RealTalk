@@ -46,8 +46,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let post = posts[indexPath.row]
         let user = AppController.user
-        let vc = ChatViewController(user: user!, post: post)
-        self.navigationController?.pushViewController(vc, animated:true)
+        let userId = user?.uid
+        if !post.isLocked || (post.members.contains(userId!)) {
+            let vc = ChatViewController(user: user!, post: post)
+            self.navigationController?.pushViewController(vc, animated:true)
+        } else if post.isLocked {
+            // display locked message
+        }
     }
 
     deinit {
@@ -63,7 +68,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         refreshControl.addTarget(self, action: #selector(reloadData), for: UIControl.Event.valueChanged)
         tableView.refreshControl = refreshControl
 
-        let  postsReference =  db.collection("channels")
+        let postsReference =  db.collection("channels")
 
         postsListener =  postsReference.addSnapshotListener { querySnapshot, error in
             guard let snapshot = querySnapshot else {

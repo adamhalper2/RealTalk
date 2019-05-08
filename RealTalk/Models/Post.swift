@@ -40,6 +40,7 @@ struct Post {
   var commentCount: Int
   var heartCount: Int
   var members: [String]
+  var isLocked: Bool
 
   
     init(content: String, author: String, timestamp: NSDate, authorID: String) {
@@ -51,6 +52,7 @@ struct Post {
         self.heartCount = 0
         self.members = [authorID]
         self.authorID = authorID
+        self.isLocked = false
     }
   
   init?(document: QueryDocumentSnapshot) {
@@ -94,6 +96,14 @@ struct Post {
     }
     let heartCountInt = Int(heartCount)!
     
+    guard let isLocked = data["isLocked"] as? String else {
+        return nil
+    }
+    
+    guard let isLockedBool = Bool(isLocked) else {
+        return nil
+    }
+    
     id = document.documentID
     
     self.content = content
@@ -103,6 +113,7 @@ struct Post {
     self.timestamp = date
     self.members = members
     self.authorID = authorID
+    self.isLocked = isLockedBool
   }
 }
 
@@ -117,8 +128,8 @@ extension Post : DatabaseRepresentation {
     rep["heartCount"] = String(heartCount)
     rep["authorID"] = authorID
     rep["members"] = members.joined(separator: "-")
+    rep["isLocked"] = String(isLocked)
 
-    
     if let id = id {
       rep["id"] = id
     }

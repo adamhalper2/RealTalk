@@ -102,6 +102,7 @@ class HandleSelectionViewController: UIViewController {
 
     let db = Firestore.firestore()
     let  studentsReference =  db.collection("students")
+    
     if let user = AppController.user {
         let uid = user.uid
         let newStudent = Student(uid: uid, username: name, bio: "", createdDate: NSDate())
@@ -111,22 +112,19 @@ class HandleSelectionViewController: UIViewController {
                 return
             }
             ProgressHUD.showSuccess("Success")
-            //        /*
-            //        studentsReference.addDocument(data: newStudent.representation) { error in
-            //            if error != nil {
-            //                ProgressHUD.showError(error!.localizedDescription)
-            //                return
-            //            }
-            //            ProgressHUD.showSuccess("Success")
-            //        }
-            //        */
-            //
-            //    }
+            studentsReference.addDocument(data: newStudent.representation) { error in
+                if error != nil {
+                    ProgressHUD.showError(error!.localizedDescription)
+                        return
+                }
+                ProgressHUD.showSuccess("Success")
+            }
             
-            AppController.shared.userStateDidChange()
         }
         
+        AppController.shared.userStateDidChange()
     }
+    
     
   }
     

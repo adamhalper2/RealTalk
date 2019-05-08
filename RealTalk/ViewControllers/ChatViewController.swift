@@ -54,12 +54,13 @@ final class ChatViewController: MessagesViewController {
   }
   
   private let storage = Storage.storage().reference()
+  private var lockButton: UIBarButtonItem?
+  private var isLocked: Bool?
   
   init(user: User, post: Post) {
     self.user = user
     self.post = post
     super.init(nibName: nil, bundle: nil)
-    
     title = post.content
   }
   
@@ -116,15 +117,47 @@ final class ChatViewController: MessagesViewController {
     maintainPositionOnKeyboardFrameChanged = true
     messageInputBar.inputTextView.tintColor = .primary
     messageInputBar.sendButton.setTitleColor(.primary, for: .normal)
-    
+
     messageInputBar.delegate = self
     messagesCollectionView.messagesDataSource = self
     messagesCollectionView.messagesLayoutDelegate = self
     messagesCollectionView.messagesDisplayDelegate = self
+    
+    if self.post.authorID == self.user.uid {
+        isLocked = post.isLocked
+        lockButton = UIBarButtonItem(title: "Lock", style: .plain, target: self, action: #selector(toggleChatLock))
+        //lockButton?.setImage(#imageLiteral(resourceName: "padlock"), for: .normal)
+        if post.isLocked {
+            lockButton!.title = "Unlock"
+        }
+        self.navigationItem.rightBarButtonItem = lockButton
+    
+    }
+
   }
   
   // MARK: - Actions
-  
+  @objc private func toggleChatLock() {
+        if self.isLocked! {
+            lockButton!.title = "Lock"
+            self.isLocked = false
+        } else {
+            lockButton!.title = "Unlock"
+            self.isLocked = true
+        }
+    
+        let postRef = db.collection("channels").document(post.id!)
+        postRef.updateData([
+            "isLocked": String(self.isLocked!)
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+            }
+        }
+  }
+    
   @objc private func cameraButtonPressed() {
     let picker = UIImagePickerController()
     picker.delegate = self
