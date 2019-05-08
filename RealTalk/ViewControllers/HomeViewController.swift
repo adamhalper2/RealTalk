@@ -63,7 +63,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         refreshControl.addTarget(self, action: #selector(reloadData), for: UIControl.Event.valueChanged)
         tableView.refreshControl = refreshControl
 
-        let  postsReference =  db.collection("channels")
+        let  postsReference =  db.collection("channels").whereField("isActive", isEqualTo: "true")
 
         postsListener =  postsReference.addSnapshotListener { querySnapshot, error in
             guard let snapshot = querySnapshot else {

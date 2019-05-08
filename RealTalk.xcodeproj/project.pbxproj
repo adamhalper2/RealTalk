@@ -37,6 +37,7 @@
 		8A5AF92222743F9E00E4AC1A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF92122743F9E00E4AC1A /* HomeViewController.swift */; };
 		8A5AF9242275088A00E4AC1A /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF9232275088A00E4AC1A /* PostTableViewCell.swift */; };
 		8A5AF9282275266C00E4AC1A /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF9272275266C00E4AC1A /* CreatePostViewController.swift */; };
+		8ABB643722822FD400E33C0F /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB643622822FD400E33C0F /* Report.swift */; };
 		9F71B75505BC8C73CAEF8894 /* Pods_RealTalk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2869E8359ECA7ECECC54B28 /* Pods_RealTalk.framework */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +76,7 @@
 		8A5AF92122743F9E00E4AC1A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		8A5AF9232275088A00E4AC1A /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		8A5AF9272275266C00E4AC1A /* CreatePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
+		8ABB643622822FD400E33C0F /* Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Report.swift; sourceTree = "<group>"; };
 		A0570830AB5455B44E73DE65 /* Pods-RealTalk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealTalk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RealTalk/Pods-RealTalk.debug.xcconfig"; sourceTree = "<group>"; };
 		E2869E8359ECA7ECECC54B28 /* Pods_RealTalk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RealTalk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -137,6 +139,7 @@
 				3B1F1A9E2277B3D2001655B6 /* DatabaseRepresentation.swift */,
 				3B1F1A9C2277B131001655B6 /* Post.swift */,
 				3BC2AFED22781D5500B01F32 /* Message.swift */,
+				8ABB643622822FD400E33C0F /* Report.swift */,
 				8A1F306B227A23AC0065D370 /* Heart.swift */,
 				8A1F3075227B7F0F0065D370 /* Student.swift */,
 			);
@@ -367,6 +370,7 @@
 				3BC2AFF222781D8B00B01F32 /* UICollectionView+Additions.swift in Sources */,
 				8A5AF92222743F9E00E4AC1A /* HomeViewController.swift in Sources */,
 				8A1F306C227A23AC0065D370 /* Heart.swift in Sources */,
+				8ABB643722822FD400E33C0F /* Report.swift in Sources */,
 				3BC2AFF422781DBE00B01F32 /* UIImage+Additions.swift in Sources */,
 				3B5EA19F22798281005D9E5F /* AppSettings.swift in Sources */,
 				8A1F3076227B7F0F0065D370 /* Student.swift in Sources */,
