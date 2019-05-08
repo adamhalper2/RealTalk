@@ -507,13 +507,13 @@
                                                             </state>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2h" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Yl-wl-Zei">
-                                                            <rect key="frame" x="71.5" y="7" width="15.5" height="16"/>
+                                                            <rect key="frame" x="86.5" y="7" width="15.5" height="16"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A2I-ug-ytk" userLabel="reportButton">
-                                                            <rect key="frame" x="297" y="2.5" width="30" height="25"/>
+                                                            <rect key="frame" x="282" y="2.5" width="30" height="25"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="25" id="Mmi-Pq-EBJ"/>
                                                                 <constraint firstAttribute="width" constant="30" id="OeT-KT-K3i"/>
@@ -527,12 +527,12 @@
                                                         </button>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="A2I-ug-ytk" firstAttribute="leading" secondItem="s3n-T9-h49" secondAttribute="trailing" priority="999" constant="75" id="0Mv-ue-m1P"/>
+                                                        <constraint firstItem="A2I-ug-ytk" firstAttribute="leading" secondItem="s3n-T9-h49" secondAttribute="trailing" priority="999" constant="60" id="0Mv-ue-m1P"/>
                                                         <constraint firstAttribute="height" constant="30" id="8a1-vc-d5e"/>
                                                         <constraint firstItem="A2I-ug-ytk" firstAttribute="centerY" secondItem="EWm-d7-0E9" secondAttribute="centerY" id="AOF-6x-N5o"/>
                                                         <constraint firstItem="6Yl-wl-Zei" firstAttribute="centerY" secondItem="EWm-d7-0E9" secondAttribute="centerY" id="VtI-Ax-LFd"/>
                                                         <constraint firstItem="s3n-T9-h49" firstAttribute="centerX" secondItem="EWm-d7-0E9" secondAttribute="centerX" id="auj-7s-Mvm"/>
-                                                        <constraint firstItem="s3n-T9-h49" firstAttribute="leading" secondItem="6Yl-wl-Zei" secondAttribute="trailing" priority="999" constant="75" id="hHe-Q7-WJz"/>
+                                                        <constraint firstItem="s3n-T9-h49" firstAttribute="leading" secondItem="6Yl-wl-Zei" secondAttribute="trailing" priority="999" constant="60" id="hHe-Q7-WJz"/>
                                                         <constraint firstItem="s3n-T9-h49" firstAttribute="top" secondItem="EWm-d7-0E9" secondAttribute="top" id="i2L-BC-Nt0"/>
                                                         <constraint firstAttribute="bottom" secondItem="s3n-T9-h49" secondAttribute="bottom" id="oE8-6k-ToY"/>
                                                     </constraints>
@@ -544,7 +544,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3CK-lh-CaF">
-                                                    <rect key="frame" x="369" y="65.5" width="25" height="19"/>
+                                                    <rect key="frame" x="359" y="65.5" width="25" height="19"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="25" id="pPv-Vy-X05"/>
                                                         <constraint firstAttribute="height" constant="19" id="r14-F0-F1b"/>
@@ -556,7 +556,7 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="39" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bt7-SH-7PL">
-                                                    <rect key="frame" x="373" y="87" width="17" height="16"/>
+                                                    <rect key="frame" x="363" y="87" width="17" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -583,9 +583,9 @@
                                                 <constraint firstItem="EWm-d7-0E9" firstAttribute="leading" secondItem="Bra-FH-dJv" secondAttribute="leading" constant="15" id="3BS-oA-hlf"/>
                                                 <constraint firstItem="FT9-n9-DPB" firstAttribute="leading" secondItem="Bra-FH-dJv" secondAttribute="leadingMargin" constant="10" id="DXB-FB-30j"/>
                                                 <constraint firstAttribute="trailing" secondItem="EWm-d7-0E9" secondAttribute="trailing" constant="15" id="ENj-Pe-R6H"/>
-                                                <constraint firstItem="3CK-lh-CaF" firstAttribute="trailing" secondItem="Bra-FH-dJv" secondAttribute="trailingMargin" id="GdH-mo-lfo"/>
                                                 <constraint firstItem="EWm-d7-0E9" firstAttribute="leading" secondItem="aJg-WH-8qT" secondAttribute="leading" id="OlC-BS-4H8"/>
                                                 <constraint firstItem="FT9-n9-DPB" firstAttribute="top" secondItem="kFj-NM-sPn" secondAttribute="bottom" constant="5" id="SZf-6N-qWX"/>
+                                                <constraint firstAttribute="trailing" secondItem="3CK-lh-CaF" secondAttribute="trailing" constant="30" id="ZTB-fu-9oW"/>
                                                 <constraint firstItem="em3-OS-PKD" firstAttribute="centerY" secondItem="aJg-WH-8qT" secondAttribute="centerY" id="avh-SM-RIw"/>
                                                 <constraint firstItem="FT9-n9-DPB" firstAttribute="leading" secondItem="kFj-NM-sPn" secondAttribute="leading" id="eSX-dg-ByP"/>
                                                 <constraint firstItem="EWm-d7-0E9" firstAttribute="top" secondItem="FT9-n9-DPB" secondAttribute="bottom" constant="5" id="i8V-ZR-F0l"/>
