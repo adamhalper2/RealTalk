@@ -36,6 +36,7 @@ struct Message: MessageType {
   let content: String
   let sentDate: Date
   let sender: Sender
+  var reportCount: Int
   
   var data: MessageData {
     if let image = image {
@@ -57,6 +58,7 @@ struct Message: MessageType {
     self.content = content
     sentDate = Date()
     id = nil
+    reportCount = 0
   }
   
   init(user: User, image: UIImage) {
@@ -65,6 +67,7 @@ struct Message: MessageType {
     content = ""
     sentDate = Date()
     id = nil
+    reportCount = 0
   }
   
   init?(document: QueryDocumentSnapshot) {
@@ -72,6 +75,11 @@ struct Message: MessageType {
 //    guard let sentDate = data["created"] as? Date else {
 //      return nil
 //    }
+
+    guard let reportCount = data["reportCount"] as? String else {
+        return nil
+    }
+    let reportCountInt = Int(reportCount)!
 
     guard let senderID = data["senderID"] as? String else {
       return nil
@@ -89,6 +97,8 @@ struct Message: MessageType {
     let sentDate = dateFormatter.date(from: date)!
     
     id = document.documentID
+
+    self.reportCount = reportCountInt
     
     self.sentDate = sentDate
     sender = Sender(id: senderID, displayName: senderName)
@@ -111,7 +121,8 @@ extension Message: DatabaseRepresentation {
     var rep: [String : Any] = [
       "created": sentDate.toString(dateFormat: "MM/dd/yy h:mm a Z"),
       "senderID": sender.id,
-      "senderName": sender.displayName
+      "senderName": sender.displayName,
+      "reportCount": String(reportCount)
     ]
     
     if let url = downloadURL {
