@@ -61,6 +61,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("current uid: \(AppController.user?.uid)")
+
         tableView.delegate = self
         tableView.dataSource = self
         loadUserHearts()
@@ -69,7 +71,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.refreshControl = refreshControl
 
         let  postsReference =  db.collection("channels").whereField("isActive", isEqualTo: "true")
-
 
         postsListener =  postsReference.addSnapshotListener { querySnapshot, error in
             guard let snapshot = querySnapshot else {
@@ -98,7 +99,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     return
                 }
                 if let heartCount = data["heartCount"] as? String {
-                    print("updated heart count \(heartCount)")
                     //animation?
                     DispatchQueue.main.async {
                         self.heartBtn.setTitle(String(heartCount), for: .normal)

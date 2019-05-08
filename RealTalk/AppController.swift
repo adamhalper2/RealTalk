@@ -28,10 +28,13 @@
 
 import UIKit
 import Firebase
+import FirebaseDatabase
+import FirebaseFirestore
 
 final class AppController {
   
   static let shared = AppController()
+  let presenceManager = OnlineOfflineManager()
     
   init() {  
     NotificationCenter.default.addObserver(
@@ -121,6 +124,7 @@ final class AppController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
 
         if AppSettings.displayName != nil {
+            presenceManager.markUserOnline()
             let tabContoller = storyboard.instantiateViewController(withIdentifier: "TabBarController")
             rootViewController = tabContoller
         } else {

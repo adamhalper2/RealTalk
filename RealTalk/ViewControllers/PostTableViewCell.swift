@@ -19,6 +19,7 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet weak var heartBtn: UIButton!
     @IBOutlet weak var heartCountLabel: UILabel!
     @IBOutlet weak var reportBtn: UIButton!
+    @IBOutlet weak var onlineIndicator: UIImageView!
 
     let filledHeart = UIImage(named: "filledHeart")
     let unfilledHeart = UIImage(named: "unfilledHeart")
@@ -41,6 +42,43 @@ class PostTableViewCell: UITableViewCell {
         reportBtn.tintColor = UIColor.darkGray
         checkIfUserHearted()
         checkIfUserReported()
+        checkIfMembersOnline()
+    }
+
+    func checkIfMembersOnline() {
+        guard let post = post else {return}
+        guard let authorID = post.authorID else {return}
+        let authorRef = db.collection("students").document(authorID)
+        print("getting author ref")
+        authorRef.getDocument { (documentSnapshot, err) in
+            if let err = err {
+                print("Error getting document: \(err)")
+            } else {
+                guard let data = documentSnapshot?.data() else {
+                    print("invalid data from authors ref")
+                    return
+                }
+                print("data is \(data)")
+                guard let isOnlineStr = data["isOnline"] as? String else {
+                    print("no isOnline field")
+                    return
+                }
+                guard let isOnline = Bool(isOnlineStr) else {
+                    print("unable to convert to bool")
+                    return
+                }
+                DispatchQueue.main.async {
+                    if (isOnline) {
+                        print("setting author status to ONLINE")
+                        self.onlineIndicator.tintColor = UIColor.green
+                    } else {
+                        print("setting author status to OFFLINE")
+                        self.onlineIndicator.tintColor = UIColor.darkGray
+                    }
+                    return
+                }
+            }
+        }
     }
 
     func getMemberNames(members: [String], author: String)->String? {
