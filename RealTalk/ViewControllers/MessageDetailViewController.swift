@@ -89,6 +89,7 @@ class MessageDetailViewController: UIViewController {
         if message.reportCount > 3 {
             print("reportCount > 3! removing post from feed")
             isActive = false
+            removeUser()
         }
         let newReportCount = message.reportCount + 1
 
@@ -110,6 +111,10 @@ class MessageDetailViewController: UIViewController {
     }
 
     @IBAction func removePressed(_ sender: Any) {
+        removeUser()
+    }
+    
+    private func removeUser() {
         chatViewRef?.addBannedMember(uid: self.message!.sender.id)
         chatViewRef?.removeMember(uid: self.message!.sender.id)
         removeButton.isEnabled = false

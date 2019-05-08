@@ -97,7 +97,9 @@ final class ChatViewController: MessagesViewController {
       }
     }
     
-    let postReference =  db.collection("channels").whereField("id", isEqualTo: post.id!)
+    //let postReference = db.collection(["channels", id].joined(separator: "/"))
+    
+    let postReference =  db.collection("channels")
     
     postListener = postReference.addSnapshotListener { querySnapshot, error in
         guard let snapshot = querySnapshot else {
@@ -110,24 +112,24 @@ final class ChatViewController: MessagesViewController {
         }
     }
     
-    // 1
-    let cameraItem = InputBarButtonItem(type: .system)
-    cameraItem.tintColor = .primary
-    cameraItem.image = #imageLiteral(resourceName: "camera")
-    
-    // 2
-    cameraItem.addTarget(
-      self,
-      action: #selector(cameraButtonPressed),
-      for: .primaryActionTriggered
-    )
-    cameraItem.setSize(CGSize(width: 60, height: 30), animated: false)
-    
-    messageInputBar.leftStackView.alignment = .center
-    messageInputBar.setLeftStackViewWidthConstant(to: 50, animated: false)
-    
-    // 3
-    messageInputBar.setStackViewItems([cameraItem], forStack: .left, animated: false)
+//    // 1
+//    let cameraItem = InputBarButtonItem(type: .system)
+//    cameraItem.tintColor = .primary
+//    cameraItem.image = #imageLiteral(resourceName: "camera")
+//
+//    // 2
+//    cameraItem.addTarget(
+//      self,
+//      action: #selector(cameraButtonPressed),
+//      for: .primaryActionTriggered
+//    )
+//    cameraItem.setSize(CGSize(width: 60, height: 30), animated: false)
+//
+//    messageInputBar.leftStackView.alignment = .center
+//    messageInputBar.setLeftStackViewWidthConstant(to: 50, animated: false)
+//
+//    // 3
+//    messageInputBar.setStackViewItems([cameraItem], forStack: .left, animated: false)
     
     navigationItem.largeTitleDisplayMode = .never
     
