@@ -746,6 +746,92 @@
             </objects>
             <point key="canvasLocation" x="-2391.304347826087" y="328.79464285714283"/>
         </scene>
+        <!--Message Detail View Controller-->
+        <scene sceneID="9VY-TX-fgj">
+            <objects>
+                <viewController storyboardIdentifier="MessageDetailViewController" id="gb9-ug-gfC" customClass="MessageDetailViewController" customModule="RealTalk" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="I3F-R5-pqG">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="79m-Uu-ZYF">
+                                <rect key="frame" x="0.0" y="44" width="414" height="233"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Handle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qXh-zu-j57">
+                                        <rect key="frame" x="150.5" y="0.0" width="113" height="71"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="68" id="4Jm-k0-iBp"/>
+                                        </constraints>
+                                        <viewLayoutGuide key="safeArea" id="hWC-Fi-T1H"/>
+                                        <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="38"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Selected Message" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dgZ-Rc-1BA">
+                                        <rect key="frame" x="129" y="81" width="156.5" height="71"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="6mg-33-K7Z">
+                                        <rect key="frame" x="96" y="162" width="222" height="71"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kb2-cS-hBr">
+                                                <rect key="frame" x="0.0" y="0.0" width="106" height="49"/>
+                                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="31"/>
+                                                <state key="normal" title="Flag">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="flagPressed:" destination="gb9-ug-gfC" eventType="touchUpInside" id="nwQ-cH-ZZw"/>
+                                                </connections>
+                                            </button>
+                                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hzh-uS-o4Q">
+                                                <rect key="frame" x="116" y="0.0" width="106" height="49"/>
+                                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="31"/>
+                                                <state key="normal" title="Remove">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="removePressed:" destination="gb9-ug-gfC" eventType="touchUpInside" id="uF4-4m-dNa"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="w7N-Yr-BpV" firstAttribute="leading" secondItem="79m-Uu-ZYF" secondAttribute="leading" id="0J7-wM-nUu"/>
+                            <constraint firstItem="w7N-Yr-BpV" firstAttribute="bottom" secondItem="79m-Uu-ZYF" secondAttribute="bottom" constant="585" id="7Zl-9Z-mtz"/>
+                            <constraint firstItem="w7N-Yr-BpV" firstAttribute="trailing" secondItem="79m-Uu-ZYF" secondAttribute="trailing" id="SWW-nU-pVh"/>
+                            <constraint firstItem="79m-Uu-ZYF" firstAttribute="top" secondItem="w7N-Yr-BpV" secondAttribute="top" id="rbj-7D-20a"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="w7N-Yr-BpV"/>
+                    </view>
+                    <connections>
+                        <outlet property="flagButton" destination="Kb2-cS-hBr" id="pJE-aY-NfC"/>
+                        <outlet property="handleLabel" destination="qXh-zu-j57" id="RYr-5H-oRM"/>
+                        <outlet property="messageLabel" destination="dgZ-Rc-1BA" id="eza-13-Wwi"/>
+                        <outlet property="removeButton" destination="hzh-uS-o4Q" id="7le-Bh-gS7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9fu-Kl-jyE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2607" y="-383"/>
+        </scene>
     </scenes>
     <resources>
         <image name="barButtonItem:cmC-uI-cYd:image" width="20" height="16">

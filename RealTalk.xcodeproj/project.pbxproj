@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3B1F1A9D2277B132001655B6 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1F1A9C2277B131001655B6 /* Post.swift */; };
 		3B1F1A9F2277B3D3001655B6 /* DatabaseRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1F1A9E2277B3D2001655B6 /* DatabaseRepresentation.swift */; };
+		3B3700BF2282852300E65BF9 /* MessageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3700BE2282852300E65BF9 /* MessageDetailViewController.swift */; };
 		3B5EA19D22798269005D9E5F /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EA19C22798269005D9E5F /* AppController.swift */; };
 		3B5EA19F22798281005D9E5F /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EA19E22798281005D9E5F /* AppSettings.swift */; };
 		3B5EA1A12279829C005D9E5F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EA1A02279829C005D9E5F /* LoginViewController.swift */; };
@@ -45,6 +46,7 @@
 		3B1F1A9C2277B131001655B6 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		3B1F1A9E2277B3D2001655B6 /* DatabaseRepresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseRepresentation.swift; sourceTree = "<group>"; };
 		3B311EC7227E5F7700893EA2 /* RealTalk.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RealTalk.entitlements; sourceTree = "<group>"; };
+		3B3700BE2282852300E65BF9 /* MessageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailViewController.swift; sourceTree = "<group>"; };
 		3B5EA19C22798269005D9E5F /* AppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		3B5EA19E22798281005D9E5F /* AppSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		3B5EA1A02279829C005D9E5F /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				8A5AF9272275266C00E4AC1A /* CreatePostViewController.swift */,
 				3BAAC09422780F68007C5DCE /* ChatViewController.swift */,
 				8A5AF92122743F9E00E4AC1A /* HomeViewController.swift */,
+				3B3700BE2282852300E65BF9 /* MessageDetailViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-RealTalk/Pods-RealTalk-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/EzPopup/EzPopup.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/MessageKit/MessageKit.framework",
@@ -303,6 +307,7 @@
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EzPopup.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessageKit.framework",
@@ -372,6 +377,7 @@
 				8A1F306C227A23AC0065D370 /* Heart.swift in Sources */,
 				8ABB643722822FD400E33C0F /* Report.swift in Sources */,
 				3BC2AFF422781DBE00B01F32 /* UIImage+Additions.swift in Sources */,
+				3B3700BF2282852300E65BF9 /* MessageDetailViewController.swift in Sources */,
 				3B5EA19F22798281005D9E5F /* AppSettings.swift in Sources */,
 				8A1F3076227B7F0F0065D370 /* Student.swift in Sources */,
 			);

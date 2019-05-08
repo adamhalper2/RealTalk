@@ -3,6 +3,7 @@ use_frameworks!
 inhibit_all_warnings!
 
 target 'RealTalk' do
+ pod 'EzPopup'
   pod 'MessageKit'
   pod 'Firebase/Core'
   pod 'Firebase/Auth'

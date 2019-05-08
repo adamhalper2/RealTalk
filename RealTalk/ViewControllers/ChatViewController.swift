@@ -31,11 +31,15 @@ import Firebase
 import MessageKit
 import FirebaseFirestore
 import Photos
+import EzPopup
+
 
 private let db = Firestore.firestore()
 private var reference: CollectionReference?
 
 final class ChatViewController: MessagesViewController {
+    
+  private let messageDetailVC = MessageDetailViewController.instantiate()
 
   private var messages: [Message] = []
   private var messageListener: ListenerRegistration?
@@ -122,6 +126,8 @@ final class ChatViewController: MessagesViewController {
     messagesCollectionView.messagesDataSource = self
     messagesCollectionView.messagesLayoutDelegate = self
     messagesCollectionView.messagesDisplayDelegate = self
+    messagesCollectionView.messageCellDelegate = self
+
     
     if self.post.authorID == self.user.uid {
         isLocked = post.isLocked
@@ -307,6 +313,27 @@ final class ChatViewController: MessagesViewController {
   }
 }
 
+extension ChatViewController: MessageCellDelegate {
+    
+    func didTapMessage(in cell: MessageCollectionViewCell) {
+        guard let indexPath = messagesCollectionView.indexPath(for: cell) else { return }
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return }
+        let messageType = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        
+        let message = messages.first(where: {$0.id == messageType.messageId})
+        
+        guard let messageDetailVC = messageDetailVC else { return }
+        messageDetailVC.handleString = message?.sender.displayName
+        messageDetailVC.messageString = message?.content
+        messageDetailVC.isOwner = (message?.sender.id == user.uid)
+        
+        let popupVC = PopupViewController(contentController: messageDetailVC, popupWidth: 300, popupHeight: 400)
+        popupVC.cornerRadius = 5
+        present(popupVC, animated: true, completion: nil)
+        
+    }
+}
+
 // MARK: - MessagesDisplayDelegate
 
 extension ChatViewController: MessagesDisplayDelegate {
@@ -363,6 +390,8 @@ extension ChatViewController: MessagesLayoutDelegate {
 
 // MARK: - MessagesDataSource
 
+
+
 extension ChatViewController: MessagesDataSource {
   
   // 1
@@ -381,7 +410,8 @@ extension ChatViewController: MessagesDataSource {
     
     return messages[indexPath.section]
   }
-  
+    
+    
   // 4
   func cellTopLabelAttributedText(for message: MessageType,
                                   at indexPath: IndexPath) -> NSAttributedString? {
