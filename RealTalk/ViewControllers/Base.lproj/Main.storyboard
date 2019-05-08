@@ -759,25 +759,36 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="79m-Uu-ZYF">
-                                <rect key="frame" x="0.0" y="44" width="414" height="233"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="194"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Handle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qXh-zu-j57">
-                                        <rect key="frame" x="150.5" y="0.0" width="113" height="71"/>
+                                        <rect key="frame" x="155" y="0.0" width="104" height="41"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="68" id="4Jm-k0-iBp"/>
+                                            <constraint firstAttribute="height" constant="40" id="4Jm-k0-iBp"/>
                                         </constraints>
                                         <viewLayoutGuide key="safeArea" id="hWC-Fi-T1H"/>
-                                        <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="38"/>
+                                        <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="35"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BKw-PQ-m8j">
+                                        <rect key="frame" x="167" y="51" width="80" height="41"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="80" id="LM0-2U-1gv"/>
+                                        </constraints>
+                                        <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <inset key="imageEdgeInsets" minX="20" minY="0.0" maxX="35" maxY="0.0"/>
+                                        <state key="normal" title="213" image="heartSmall">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Selected Message" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dgZ-Rc-1BA">
-                                        <rect key="frame" x="129" y="81" width="156.5" height="71"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
+                                        <rect key="frame" x="153.5" y="102" width="107.5" height="41"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="highlightedColor" cocoaTouchSystemColor="darkTextColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="6mg-33-K7Z">
-                                        <rect key="frame" x="81" y="162" width="252" height="71"/>
+                                        <rect key="frame" x="81" y="153" width="252" height="41"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kb2-cS-hBr">
                                                 <rect key="frame" x="0.0" y="0.0" width="121" height="36"/>
@@ -812,8 +823,14 @@
                                                 </connections>
                                             </button>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="118" id="g9B-F1-nYu"/>
+                                        </constraints>
                                     </stackView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="qXh-zu-j57" firstAttribute="centerX" secondItem="79m-Uu-ZYF" secondAttribute="centerX" id="c2E-XJ-m0m"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -828,6 +845,7 @@
                     <connections>
                         <outlet property="flagButton" destination="Kb2-cS-hBr" id="pJE-aY-NfC"/>
                         <outlet property="handleLabel" destination="qXh-zu-j57" id="RYr-5H-oRM"/>
+                        <outlet property="heartLabel" destination="BKw-PQ-m8j" id="1Wi-VW-y4s"/>
                         <outlet property="messageLabel" destination="dgZ-Rc-1BA" id="eza-13-Wwi"/>
                         <outlet property="removeButton" destination="hzh-uS-o4Q" id="7le-Bh-gS7"/>
                     </connections>
