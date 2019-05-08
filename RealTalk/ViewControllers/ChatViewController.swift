@@ -441,11 +441,37 @@ extension ChatViewController: MessageInputBarDelegate {
     print("members are: \(post.members)")
     // 2.5 add new member
     addMember(uid: user.uid)
+    addChatToUserList(uid: user.uid)
 
     // 3
     inputBar.inputTextView.text = ""
   }
 
+    func addChatToUserList(uid: String) {
+        let userRef = db.collection("students").document(user.uid)
+        
+        userRef.getDocument { (documentSnapshot, err) in
+            if let err = err {
+                print("Error getting document: \(err)")
+            } else {
+                guard let data = documentSnapshot?.data() else {return}
+                if var joinedChatIDsStr = data["joinedChatIDs"] as? String {
+                    print("*~*~old joined chats: \(joinedChatIDsStr)")
+                    
+                    var joinedChatIDs = joinedChatIDsStr.components(separatedBy: "-")
+                    if (!joinedChatIDs.contains(self.post.id!)) {
+                        joinedChatIDs.append(self.post.id!)
+                    }
+                    joinedChatIDsStr = joinedChatIDs.joined(separator: "-")
+                    userRef.updateData(
+                        ["joinedChatIDs": joinedChatIDsStr]
+                    )
+                    print("*~*~updated joined chats to \(joinedChatIDsStr)")
+                }
+            }
+        }
+    }
+    
     func addMember(uid: String) {
         let postRef = db.collection("channels").document(post.id!)
         var mem = post.members
@@ -453,6 +479,7 @@ extension ChatViewController: MessageInputBarDelegate {
             print("Already contains userID")
             return
         }
+        
         mem.append(uid)
         let membersStr = mem.joined(separator: "-")
         postRef.updateData([

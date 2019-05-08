@@ -94,12 +94,38 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
         let post = Post(content: content, author: AppSettings.displayName, timestamp: NSDate(), authorID: uid)
         print(post.timestamp)
 
-        postsReference.addDocument(data: post.representation) { error in
+        var docRef: DocumentReference? = nil
+        docRef = postsReference.addDocument(data: post.representation) { error in
             if error != nil {
                 ProgressHUD.showError(error!.localizedDescription)
                     return
             }
             ProgressHUD.showSuccess("Success")
+        }
+        
+        let postID = docRef!.documentID
+        
+        let userRef = db.collection("students").document(uid)
+        
+        userRef.getDocument { (documentSnapshot, err) in
+            if let err = err {
+                print("Error getting document: \(err)")
+            } else {
+                guard let data = documentSnapshot?.data() else {return}
+                if var joinedChatIDsStr = data["joinedChatIDs"] as? String {
+                    print("*~*~old joined chats: \(joinedChatIDsStr)")
+                    
+                    var joinedChatIDs = joinedChatIDsStr.components(separatedBy: "-")
+                    if (!joinedChatIDs.contains(postID)) {
+                        joinedChatIDs.append(postID)
+                    }
+                    joinedChatIDsStr = joinedChatIDs.joined(separator: "-")
+                    userRef.updateData(
+                        ["joinedChatIDs": joinedChatIDsStr]
+                    )
+                    print("*~*~updated joined chats to \(joinedChatIDsStr)")
+                }
+            }
         }
     }
 
@@ -119,6 +145,8 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
         }
         tabBarController!.selectedIndex = 0
     }
+    
+    
     /*
     // MARK: - Navigation
 
