@@ -52,20 +52,9 @@ class MessageDetailViewController: UIViewController {
     }
     
     @IBAction func flagPressed(_ sender: Any) {
-        let refreshAlert = UIAlertController(title: "Report Message", message: "Are you sure you want to report this message?", preferredStyle: UIAlertController.Style.alert)
-
-        refreshAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
-            self.addMessageReport()
-            print("Thanks! This message is under review")
-            self.flagButton.isEnabled = false
-
-        }))
-
-        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
-        }))
-        UIApplication.shared.keyWindow?.rootViewController?.present(refreshAlert, animated: true, completion: nil)
-
-        print("flagging!")
+        self.addMessageReport()
+        self.flagButton.isEnabled = false
+        self.flagButton.alpha = 0.5
     }
 
     func addMessageReport() {
@@ -102,7 +91,7 @@ class MessageDetailViewController: UIViewController {
             if let err = err {
                 print("Error updating document: \(err)")
             } else {
-                print("updated heart count to \(newReportCount)")
+                print("updated report count to \(newReportCount)")
             }
         }
 
@@ -118,7 +107,7 @@ class MessageDetailViewController: UIViewController {
         chatViewRef?.addBannedMember(uid: self.message!.sender.id)
         chatViewRef?.removeMember(uid: self.message!.sender.id)
         removeButton.isEnabled = false
-        removeButton.alpha = 0.5;
+        removeButton.alpha = 0.5
         removeButton.setTitle("User Banned", for: .normal)
     }
 

@@ -20,7 +20,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var heartBtn: UIButton!
-    
+
     var heartCount = 0
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
