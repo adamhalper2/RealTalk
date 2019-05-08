@@ -43,6 +43,7 @@ struct Post {
   var members: [String]
   var isActive: Bool
   var isLocked: Bool
+  var bannedList: [String]
 
   
     init(content: String, author: String, timestamp: NSDate, authorID: String) {
@@ -57,7 +58,9 @@ struct Post {
         self.authorID = authorID
         self.isActive = true
         self.isLocked = false
+        self.bannedList = []
     }
+    
   
   init?(document: QueryDocumentSnapshot) {
     let data = document.data()
@@ -119,6 +122,11 @@ struct Post {
         return nil
     }
     
+    guard let bannedListStr = data["bannedList"] as? String else {
+        return nil
+    }
+    let bannedList = bannedListStr.components(separatedBy: "-")
+    
     id = document.documentID
     
     self.content = content
@@ -131,6 +139,7 @@ struct Post {
     self.authorID = authorID
     self.isActive = isActiveBool
     self.isLocked = isLockedBool
+    self.bannedList = bannedList
   }
 }
 
@@ -148,6 +157,7 @@ extension Post : DatabaseRepresentation {
     rep["members"] = members.joined(separator: "-")
     rep["isActive"] = String(isActive)
     rep["isLocked"] = String(isLocked)
+    rep["bannedList"] = bannedList.joined(separator: "-")
 
     if let id = id {
       rep["id"] = id

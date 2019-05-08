@@ -20,7 +20,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var heartBtn: UIButton!
-    
+
     var heartCount = 0
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -47,7 +47,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let post = posts[indexPath.row]
         let user = AppController.user
         let userId = user?.uid
-        if !post.isLocked || (post.members.contains(userId!)) {
+        let isPostMember = post.members.contains(userId!)
+        let isBanned = post.bannedList.contains(userId!)
+        if (!post.isLocked || isPostMember) && !isBanned {
             let vc = ChatViewController(user: user!, post: post)
             self.navigationController?.pushViewController(vc, animated:true)
         } else if post.isLocked {

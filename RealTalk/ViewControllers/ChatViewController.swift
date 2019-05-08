@@ -39,13 +39,13 @@ private var reference: CollectionReference?
 
 final class ChatViewController: MessagesViewController {
     
-  private let messageDetailVC = MessageDetailViewController.instantiate()
-
   private var messages: [Message] = []
   private var messageListener: ListenerRegistration?
+  private var postListener: ListenerRegistration?
+
   
   private let user: User
-  private let post: Post
+  private var post: Post
   
   private var isSendingPhoto = false {
     didSet {
@@ -97,24 +97,39 @@ final class ChatViewController: MessagesViewController {
       }
     }
     
-    // 1
-    let cameraItem = InputBarButtonItem(type: .system)
-    cameraItem.tintColor = .primary
-    cameraItem.image = #imageLiteral(resourceName: "camera")
+    //let postReference = db.collection(["channels", id].joined(separator: "/"))
     
-    // 2
-    cameraItem.addTarget(
-      self,
-      action: #selector(cameraButtonPressed),
-      for: .primaryActionTriggered
-    )
-    cameraItem.setSize(CGSize(width: 60, height: 30), animated: false)
+    let postReference =  db.collection("channels")
     
-    messageInputBar.leftStackView.alignment = .center
-    messageInputBar.setLeftStackViewWidthConstant(to: 50, animated: false)
+    postListener = postReference.addSnapshotListener { querySnapshot, error in
+        guard let snapshot = querySnapshot else {
+            print("Error listening for channel updates: \(error?.localizedDescription ?? "No error")")
+            return
+        }
+        
+        snapshot.documentChanges.forEach { change in
+            self.handlePostChange(change)
+        }
+    }
     
-    // 3
-    messageInputBar.setStackViewItems([cameraItem], forStack: .left, animated: false)
+//    // 1
+//    let cameraItem = InputBarButtonItem(type: .system)
+//    cameraItem.tintColor = .primary
+//    cameraItem.image = #imageLiteral(resourceName: "camera")
+//
+//    // 2
+//    cameraItem.addTarget(
+//      self,
+//      action: #selector(cameraButtonPressed),
+//      for: .primaryActionTriggered
+//    )
+//    cameraItem.setSize(CGSize(width: 60, height: 30), animated: false)
+//
+//    messageInputBar.leftStackView.alignment = .center
+//    messageInputBar.setLeftStackViewWidthConstant(to: 50, animated: false)
+//
+//    // 3
+//    messageInputBar.setStackViewItems([cameraItem], forStack: .left, animated: false)
     
     navigationItem.largeTitleDisplayMode = .never
     
@@ -269,6 +284,22 @@ final class ChatViewController: MessagesViewController {
       }
     }
   }
+    
+  private func handlePostChange(_ change: DocumentChange) {
+    
+    guard let post = Post(document: change.document) else {
+        return
+    }
+    
+    // bad solution, fix at some point
+    if post.id != self.post.id! {return}
+    
+    self.post = post
+    
+    if post.bannedList.contains(user.uid) {
+        _ = navigationController?.popViewController(animated: true)
+    }
+  }
   
   private func handleDocumentChange(_ change: DocumentChange) {
     guard var message = Message(document: change.document) else {
@@ -321,13 +352,14 @@ extension ChatViewController: MessageCellDelegate {
         let messageType = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
         
         let message = messages.first(where: {$0.id == messageType.messageId})
+        if message?.sender.id == user.uid { return }
+        let messageDetailVC = MessageDetailViewController.instantiate()
+        messageDetailVC?.isOwner = (post.authorID == user.uid)
+        messageDetailVC?.message = message
+        messageDetailVC?.chatViewRef = self
+        messageDetailVC?.post = self.post
         
-        guard let messageDetailVC = messageDetailVC else { return }
-        messageDetailVC.handleString = message?.sender.displayName
-        messageDetailVC.messageString = message?.content
-        messageDetailVC.isOwner = (message?.sender.id == user.uid)
-        
-        let popupVC = PopupViewController(contentController: messageDetailVC, popupWidth: 300, popupHeight: 400)
+        let popupVC = PopupViewController(contentController: messageDetailVC!, popupWidth: 300, popupHeight: 400)
         popupVC.cornerRadius = 5
         present(popupVC, animated: true, completion: nil)
         
@@ -462,6 +494,47 @@ extension ChatViewController: MessageInputBarDelegate {
                 print("Error updating document: \(err)")
             } else {
                 print("added member")
+            }
+        }
+    }
+
+    func removeMember(uid: String) {
+        let postRef = db.collection("channels").document(post.id!)
+        var mem = post.members
+        if !post.members.contains(user.uid) {
+            print("Doesn't contain userID")
+            return
+        }
+        mem.removeAll{$0 == uid}
+        let membersStr = mem.joined(separator: "-")
+        postRef.updateData([
+            "members": membersStr
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("removed member")
+            }
+        }
+    }
+    
+    
+    func addBannedMember(uid: String) {
+        let postRef = db.collection("channels").document(post.id!)
+        var banned = post.bannedList
+        if post.bannedList.contains(user.uid) {
+            print("Already contains userID")
+            return
+        }
+        banned.append(uid)
+        let bannedStr = banned.joined(separator: "-")
+        postRef.updateData([
+            "bannedList": bannedStr
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("added to banned list")
             }
         }
     }

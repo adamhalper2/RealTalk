@@ -16,6 +16,7 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var shareBtn: UIButton!
     @IBOutlet weak var closeBtn: UIButton!
+    @IBOutlet weak var charCountLabel: UILabel!
 
     let colors = Colors()
 
@@ -40,7 +41,7 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
             textView.resignFirstResponder()
             return false
         }
-        return true
+        return textView.text.characters.count + (text.characters.count - range.length) <= 280
     }
 
     @objc func dismissKeyboard() {
@@ -64,6 +65,8 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
     }
 
     func textViewDidChange(_ textView: UITextView) {
+        charCountLabel.text = "\(280 - textView.text.characters.count)"
+
         if textView.textColor != UIColor.lightGray && !textView.text.isEmpty {
             shareBtn.isEnabled = true
             shareBtn.setTitleColor(colors.customGreen, for: .normal)

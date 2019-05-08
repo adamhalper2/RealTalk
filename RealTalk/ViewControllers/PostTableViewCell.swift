@@ -20,6 +20,7 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet weak var heartCountLabel: UILabel!
     @IBOutlet weak var reportBtn: UIButton!
     @IBOutlet weak var onlineIndicator: UIImageView!
+    @IBOutlet weak var lockIndicator: UIImageView!
 
     let filledHeart = UIImage(named: "filledHeart")
     let unfilledHeart = UIImage(named: "unfilledHeart")
@@ -43,6 +44,16 @@ class PostTableViewCell: UITableViewCell {
         checkIfUserHearted()
         checkIfUserReported()
         checkIfMembersOnline()
+
+        lockIndicator.tintColor = UIColor.darkGray
+        print("post.isLocked is \(post.isLocked)")
+        if post.isLocked == true {
+            print("locked indicator hidden = true")
+            lockIndicator.isHidden = false
+        } else {
+            print("locked indicator hidden = false")
+            lockIndicator.isHidden = true
+        }
     }
 
     func checkIfMembersOnline() {
@@ -190,7 +201,6 @@ class PostTableViewCell: UITableViewCell {
         reportsRef.addDocument(data: newReport.representation)
 
         let reportCount = currPost.reportCount
-        let heartCount = currPost.heartCount
         var isActive = true
         reportBtn.tintColor = UIColor.red
 
