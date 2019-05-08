@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3B1F1A9D2277B132001655B6 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1F1A9C2277B131001655B6 /* Post.swift */; };
 		3B1F1A9F2277B3D3001655B6 /* DatabaseRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1F1A9E2277B3D2001655B6 /* DatabaseRepresentation.swift */; };
+		3B3700BF2282852300E65BF9 /* MessageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3700BE2282852300E65BF9 /* MessageDetailViewController.swift */; };
 		3B5EA19D22798269005D9E5F /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EA19C22798269005D9E5F /* AppController.swift */; };
 		3B5EA19F22798281005D9E5F /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EA19E22798281005D9E5F /* AppSettings.swift */; };
 		3B5EA1A12279829C005D9E5F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EA1A02279829C005D9E5F /* LoginViewController.swift */; };
@@ -37,6 +38,8 @@
 		8A5AF92222743F9E00E4AC1A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF92122743F9E00E4AC1A /* HomeViewController.swift */; };
 		8A5AF9242275088A00E4AC1A /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF9232275088A00E4AC1A /* PostTableViewCell.swift */; };
 		8A5AF9282275266C00E4AC1A /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF9272275266C00E4AC1A /* CreatePostViewController.swift */; };
+		8ABB643722822FD400E33C0F /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB643622822FD400E33C0F /* Report.swift */; };
+		8ABB64392282708100E33C0F /* OnlineOfflineManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB64382282708100E33C0F /* OnlineOfflineManager.swift */; };
 		9F71B75505BC8C73CAEF8894 /* Pods_RealTalk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2869E8359ECA7ECECC54B28 /* Pods_RealTalk.framework */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +47,7 @@
 		3B1F1A9C2277B131001655B6 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		3B1F1A9E2277B3D2001655B6 /* DatabaseRepresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseRepresentation.swift; sourceTree = "<group>"; };
 		3B311EC7227E5F7700893EA2 /* RealTalk.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RealTalk.entitlements; sourceTree = "<group>"; };
+		3B3700BE2282852300E65BF9 /* MessageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailViewController.swift; sourceTree = "<group>"; };
 		3B5EA19C22798269005D9E5F /* AppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		3B5EA19E22798281005D9E5F /* AppSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		3B5EA1A02279829C005D9E5F /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -75,6 +79,8 @@
 		8A5AF92122743F9E00E4AC1A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		8A5AF9232275088A00E4AC1A /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		8A5AF9272275266C00E4AC1A /* CreatePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
+		8ABB643622822FD400E33C0F /* Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Report.swift; sourceTree = "<group>"; };
+		8ABB64382282708100E33C0F /* OnlineOfflineManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineOfflineManager.swift; sourceTree = "<group>"; };
 		A0570830AB5455B44E73DE65 /* Pods-RealTalk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealTalk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RealTalk/Pods-RealTalk.debug.xcconfig"; sourceTree = "<group>"; };
 		E2869E8359ECA7ECECC54B28 /* Pods_RealTalk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RealTalk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -119,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				3B82425F227EB77B00C0A6CA /* HandleSelectionViewController.swift */,
+				8ABB64382282708100E33C0F /* OnlineOfflineManager.swift */,
 				3B5EA1A02279829C005D9E5F /* LoginViewController.swift */,
 				8A5AF9102273D31500E4AC1A /* Main.storyboard */,
 				8A1F3073227A57B70065D370 /* ChatPreviewTableViewCell.swift */,
@@ -127,6 +134,7 @@
 				8A5AF9272275266C00E4AC1A /* CreatePostViewController.swift */,
 				3BAAC09422780F68007C5DCE /* ChatViewController.swift */,
 				8A5AF92122743F9E00E4AC1A /* HomeViewController.swift */,
+				3B3700BE2282852300E65BF9 /* MessageDetailViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -137,6 +145,7 @@
 				3B1F1A9E2277B3D2001655B6 /* DatabaseRepresentation.swift */,
 				3B1F1A9C2277B131001655B6 /* Post.swift */,
 				3BC2AFED22781D5500B01F32 /* Message.swift */,
+				8ABB643622822FD400E33C0F /* Report.swift */,
 				8A1F306B227A23AC0065D370 /* Heart.swift */,
 				8A1F3075227B7F0F0065D370 /* Student.swift */,
 			);
@@ -285,6 +294,7 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-RealTalk/Pods-RealTalk-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/EzPopup/EzPopup.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/MessageKit/MessageKit.framework",
@@ -300,6 +310,7 @@
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EzPopup.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessageKit.framework",
@@ -356,6 +367,7 @@
 				3BC2AFF622781DC600B01F32 /* UIView+Additions.swift in Sources */,
 				8A2C8F14227536FF00188975 /* Colors.swift in Sources */,
 				8A1F3072227A48150065D370 /* MyChatsViewController.swift in Sources */,
+				8ABB64392282708100E33C0F /* OnlineOfflineManager.swift in Sources */,
 				3B5EA1A12279829C005D9E5F /* LoginViewController.swift in Sources */,
 				3B1F1A9F2277B3D3001655B6 /* DatabaseRepresentation.swift in Sources */,
 				8A5AF9282275266C00E4AC1A /* CreatePostViewController.swift in Sources */,
@@ -367,7 +379,9 @@
 				3BC2AFF222781D8B00B01F32 /* UICollectionView+Additions.swift in Sources */,
 				8A5AF92222743F9E00E4AC1A /* HomeViewController.swift in Sources */,
 				8A1F306C227A23AC0065D370 /* Heart.swift in Sources */,
+				8ABB643722822FD400E33C0F /* Report.swift in Sources */,
 				3BC2AFF422781DBE00B01F32 /* UIImage+Additions.swift in Sources */,
+				3B3700BF2282852300E65BF9 /* MessageDetailViewController.swift in Sources */,
 				3B5EA19F22798281005D9E5F /* AppSettings.swift in Sources */,
 				8A1F3076227B7F0F0065D370 /* Student.swift in Sources */,
 			);

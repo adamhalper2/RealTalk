@@ -1,15 +1,16 @@
 //
-//  Heart.swift
+//  Report.swift
 //  RealTalk
 //
-//  Created by Adam Halper on 5/1/19.
+//  Created by Adam Halper on 5/7/19.
 //  Copyright © 2019 Adam Halper. All rights reserved.
 //
 
 import UIKit
 import FirebaseFirestore
 
-struct Heart {
+struct Report {
+
     var postID: String
     var fromID: String
     var toID: String
@@ -37,7 +38,7 @@ struct Heart {
         guard let onPost = data["onPost"] as? Bool else {
             return nil
         }
-        
+
         self.postID = postID
         self.fromID = fromID
         self.toID = toID
@@ -45,7 +46,7 @@ struct Heart {
     }
 }
 
-extension Heart : DatabaseRepresentation {
+extension Report : DatabaseRepresentation {
 
     var representation: [String : Any] {
         var rep = ["postID": postID]
@@ -55,5 +56,5 @@ extension Heart : DatabaseRepresentation {
         return rep
     }
 
+    
 }
-

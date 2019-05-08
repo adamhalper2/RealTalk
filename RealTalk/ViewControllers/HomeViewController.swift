@@ -46,8 +46,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let post = posts[indexPath.row]
         let user = AppController.user
-        let vc = ChatViewController(user: user!, post: post)
-        self.navigationController?.pushViewController(vc, animated:true)
+        let userId = user?.uid
+        if !post.isLocked || (post.members.contains(userId!)) {
+            let vc = ChatViewController(user: user!, post: post)
+            self.navigationController?.pushViewController(vc, animated:true)
+        } else if post.isLocked {
+            // display locked message
+        }
     }
 
     deinit {
@@ -56,6 +61,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("current uid: \(AppController.user?.uid)")
+
         tableView.delegate = self
         tableView.dataSource = self
         loadUserHearts()
@@ -63,7 +70,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         refreshControl.addTarget(self, action: #selector(reloadData), for: UIControl.Event.valueChanged)
         tableView.refreshControl = refreshControl
 
-        let  postsReference =  db.collection("channels")
+        let  postsReference =  db.collection("channels").whereField("isActive", isEqualTo: "true")
 
         postsListener =  postsReference.addSnapshotListener { querySnapshot, error in
             guard let snapshot = querySnapshot else {
@@ -92,7 +99,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     return
                 }
                 if let heartCount = data["heartCount"] as? String {
-                    print("updated heart count \(heartCount)")
                     //animation?
                     DispatchQueue.main.async {
                         self.heartBtn.setTitle(String(heartCount), for: .normal)

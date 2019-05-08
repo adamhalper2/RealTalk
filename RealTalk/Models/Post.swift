@@ -39,7 +39,10 @@ struct Post {
   let timestamp: NSDate
   var commentCount: Int
   var heartCount: Int
+  var reportCount: Int
   var members: [String]
+  var isActive: Bool
+  var isLocked: Bool
 
   
     init(content: String, author: String, timestamp: NSDate, authorID: String) {
@@ -49,8 +52,11 @@ struct Post {
         self.timestamp = timestamp
         self.commentCount = 0
         self.heartCount = 0
+        self.reportCount = 0
         self.members = [authorID]
         self.authorID = authorID
+        self.isActive = true
+        self.isLocked = false
     }
   
   init?(document: QueryDocumentSnapshot) {
@@ -93,6 +99,25 @@ struct Post {
         return nil
     }
     let heartCountInt = Int(heartCount)!
+
+    guard let reportCount = data["reportCount"] as? String else {
+        return nil
+    }
+    let reportCountInt = Int(reportCount)!
+
+    guard let active = data["isActive"] as? String else {
+        return nil
+    }
+
+    guard let isActiveBool = Bool(active) else {return nil}
+    
+    guard let isLocked = data["isLocked"] as? String else {
+        return nil
+    }
+    
+    guard let isLockedBool = Bool(isLocked) else {
+        return nil
+    }
     
     id = document.documentID
     
@@ -100,9 +125,12 @@ struct Post {
     self.author = author
     self.commentCount = commentCountInt
     self.heartCount = heartCountInt
+    self.reportCount = reportCountInt
     self.timestamp = date
     self.members = members
     self.authorID = authorID
+    self.isActive = isActiveBool
+    self.isLocked = isLockedBool
   }
 }
 
@@ -115,10 +143,12 @@ extension Post : DatabaseRepresentation {
     rep["timestamp"] = timestamp.toString(dateFormat: "MM/dd/yy h:mm a Z")
     rep["commentCount"] = String(commentCount)
     rep["heartCount"] = String(heartCount)
+    rep["reportCount"] = String(heartCount)
     rep["authorID"] = authorID
     rep["members"] = members.joined(separator: "-")
+    rep["isActive"] = String(isActive)
+    rep["isLocked"] = String(isLocked)
 
-    
     if let id = id {
       rep["id"] = id
     }

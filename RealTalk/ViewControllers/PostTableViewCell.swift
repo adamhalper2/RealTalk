@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseFirestore
+import ProgressHUD
 
 class PostTableViewCell: UITableViewCell {
 
@@ -15,15 +16,16 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var commentBtn: UIButton!
-    @IBOutlet weak var reportBtn: UIImageView!
     @IBOutlet weak var heartBtn: UIButton!
     @IBOutlet weak var heartCountLabel: UILabel!
+    @IBOutlet weak var reportBtn: UIButton!
+    @IBOutlet weak var onlineIndicator: UIImageView!
 
     let filledHeart = UIImage(named: "filledHeart")
     let unfilledHeart = UIImage(named: "unfilledHeart")
     var post: Post?
     private let db = Firestore.firestore()
-
+    let user = AppController.user!
 
     func setCell(post: Post) {
 
@@ -34,11 +36,49 @@ class PostTableViewCell: UITableViewCell {
         let date = post.timestamp
         let timestamp = timeAgoSinceDate(date: date, numericDates: true)
         timeLabel.text = timestamp
-        print("comment count at table view: \(post.commentCount)")
         commentBtn.setTitle(String(post.commentCount), for: .normal)
         heartCountLabel.text = String(post.heartCount)
         selectionStyle = UITableViewCell.SelectionStyle.none
+        reportBtn.tintColor = UIColor.darkGray
         checkIfUserHearted()
+        checkIfUserReported()
+        checkIfMembersOnline()
+    }
+
+    func checkIfMembersOnline() {
+        guard let post = post else {return}
+        guard let authorID = post.authorID else {return}
+        let authorRef = db.collection("students").document(authorID)
+        print("getting author ref")
+        authorRef.getDocument { (documentSnapshot, err) in
+            if let err = err {
+                print("Error getting document: \(err)")
+            } else {
+                guard let data = documentSnapshot?.data() else {
+                    print("invalid data from authors ref")
+                    return
+                }
+                print("data is \(data)")
+                guard let isOnlineStr = data["isOnline"] as? String else {
+                    print("no isOnline field")
+                    return
+                }
+                guard let isOnline = Bool(isOnlineStr) else {
+                    print("unable to convert to bool")
+                    return
+                }
+                DispatchQueue.main.async {
+                    if (isOnline) {
+                        print("setting author status to ONLINE")
+                        self.onlineIndicator.tintColor = UIColor.green
+                    } else {
+                        print("setting author status to OFFLINE")
+                        self.onlineIndicator.tintColor = UIColor.darkGray
+                    }
+                    return
+                }
+            }
+        }
     }
 
     func getMemberNames(members: [String], author: String)->String? {
@@ -59,6 +99,7 @@ class PostTableViewCell: UITableViewCell {
 
     override func prepareForReuse() {
         heartBtn.setImage(unfilledHeart, for: .normal)
+        reportBtn.tintColor = UIColor.darkGray
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -68,42 +109,110 @@ class PostTableViewCell: UITableViewCell {
     }
 
     func checkIfUserHearted() {
-        print("check if user hearted called")
-        guard let currUser = AppController.user else {return}
         guard let post = post else {return}
         guard let id = post.id else {return}
-        print("post id is \(id)")
 
-        let heartsRef = db.collection("hearts").whereField("postID", isEqualTo: id).whereField("fromID", isEqualTo: currUser.uid)
-            //.whereField("onChat", isEqualTo: "true").whereField("fromID", isEqualTo: currUser.uid)
+        let heartsRef = db.collection("hearts").whereField("postID", isEqualTo: id).whereField("fromID", isEqualTo: user.uid).whereField("onPost", isEqualTo: "true")
         heartsRef.getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
                 for document in querySnapshot!.documents {
                     if document.exists {
-                        print("heart from query: \(document.documentID) => \(document.data())")
-                        DispatchQueue.main.asyncAfter(deadline: .now()) {
+                        DispatchQueue.main.async {
                             self.heartBtn.isEnabled = false
                             self.heartBtn.setImage(self.filledHeart, for: .normal)
                             return
                         }
                     } else {
-                        DispatchQueue.main.asyncAfter(deadline: .now()) {
+                        DispatchQueue.main.async {
                             self.heartBtn.isEnabled = true
                             self.heartBtn.setImage(self.unfilledHeart, for: .normal)
                             return
                         }
-
-                        }
+                    }
                 }
             }
         }
-
-
-        // 1. Get all hearts on postID...where on post = true...where current userID matches from ID
-        // 2. Check if currenet user ID matches fromID
     }
+
+    func checkIfUserReported() {
+        guard let post = post else {return}
+        guard let id = post.id else {return}
+
+        let reportsRef = db.collection("reports").whereField("postID", isEqualTo: id).whereField("fromID", isEqualTo: user.uid)
+        //.whereField("onPost", isEqualTo: "true")
+        reportsRef.getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    if document.exists {
+                        DispatchQueue.main.async {
+                            self.reportBtn.tintColor = UIColor.red
+                            self.reportBtn.isEnabled = false
+                            return
+                        }
+                    } else {
+                        return
+                    }
+                }
+            }
+        }
+    }
+
+    @IBAction func reportTapped(_ sender: Any) {
+
+        reportBtn.isEnabled = false
+        let refreshAlert = UIAlertController(title: "Report Post", message: "Are you sure you want to report this post?", preferredStyle: UIAlertController.Style.alert)
+
+        refreshAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
+            self.addReport()
+
+            print("Thanks! This post is under review")
+        }))
+
+        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+            self.reportBtn.isEnabled = true
+        }))
+        UIApplication.shared.keyWindow?.rootViewController?.present(refreshAlert, animated: true, completion: nil)
+    }
+
+
+    func addReport() {
+        guard let currPost = post else {return}
+        guard let postID = currPost.id else {return}
+        guard let toID = currPost.authorID else {return}
+        let fromID = user.uid
+
+        let newReport = Report(postID: postID, fromID: fromID, toID: toID, onPost: true)
+        let reportsRef = db.collection("reports")
+        reportsRef.addDocument(data: newReport.representation)
+
+        let reportCount = currPost.reportCount
+        let heartCount = currPost.heartCount
+        var isActive = true
+        reportBtn.tintColor = UIColor.red
+
+        if reportCount > 3 {
+            print("reportCount > 3! removing post from feed")
+            isActive = false
+        }
+
+        let postRef = db.collection("channels").document(postID)
+        let newReportCount = reportCount + 1
+        postRef.updateData([
+            "reportCount": String(reportCount + 1),
+            "isActive": String(isActive)
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("updated report count to \(newReportCount)")
+            }
+        }
+    }
+
     @IBAction func heartTapped(_ sender: Any) {
         if heartBtn.image(for: .normal) == unfilledHeart {
             UIView.animate(withDuration: 0.01, animations: {
@@ -132,8 +241,7 @@ class PostTableViewCell: UITableViewCell {
         let  heartsRef =  db.collection("hearts")
         heartsRef.addDocument(data: newHeart.representation) //add heart to firestore
 
-        let newHeartCount = Int(currPost.heartCount) + 1
-
+        let newHeartCount = currPost.heartCount + 1
 
         let postRef = db.collection("channels").document(postID) //update post's heart count in firestore
         postRef.updateData([
@@ -159,13 +267,9 @@ class PostTableViewCell: UITableViewCell {
                         ["heartCount": String(oldCountInt + 1)]
                     )
                     print("updated authors heart count to \(oldCountInt + 1)")
-
                 }
             }
-
         }
-
-
     }
 
     func timeAgoSinceDate(date:NSDate, numericDates:Bool) -> String {
@@ -228,7 +332,5 @@ class PostTableViewCell: UITableViewCell {
         } else {
             return "Just now"
         }
-
     }
-
 }
