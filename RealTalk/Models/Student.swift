@@ -16,6 +16,7 @@ struct Student {
     var heartCount: Int
     var bio: String
     var createdDate: NSDate
+    var isOnline: Bool
 
     init(uid: String, username: String, bio: String?, createdDate: NSDate) {
         self.uid = uid
@@ -23,6 +24,7 @@ struct Student {
         self.heartCount = 0
         self.bio = ""
         self.createdDate = createdDate
+        self.isOnline = true
         
         if let userBio = bio {
             self.bio = userBio
@@ -35,12 +37,21 @@ struct Student {
         guard let uid = data["uid"] as? String else {
             return nil
         }
+
         guard let username = data["username"] as? String else {
             return nil
         }
+
         guard let bio = data["bio"] as? String else {
             return nil
         }
+
+        guard let isOnline = data["isOnline"] as? String else {
+            return nil
+        }
+
+        guard let isOnlineBool = Bool(isOnline) else {return nil}
+
         guard let heartCount = data["heartCount"] as? String else {
             return nil
         }
@@ -57,6 +68,7 @@ struct Student {
         self.uid = uid
         self.username = username
         self.bio = bio
+        self.isOnline = isOnlineBool
         self.heartCount = heartCountInt
         self.createdDate = date
 
@@ -72,6 +84,7 @@ extension Student: DatabaseRepresentation {
             "uid": uid,
             "username": username,
             "bio": bio,
+            "isOnline": String(isOnline),
             "heartCount": String(heartCount),
             "createdDate": createdDate.toString(dateFormat: "MM/dd/yy h:mm a Z")
 
