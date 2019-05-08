@@ -19,9 +19,10 @@ class MessageDetailViewController: UIViewController {
     
     @IBOutlet weak var handleLabel: UILabel!
     
-    var handleString: String?
-    var messageString: String?
     var isOwner: Bool?
+    var message: Message?
+    var chatViewRef: ChatViewController?
+    var post: Post?
     
     static func instantiate() -> MessageDetailViewController? {
         return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MessageDetailViewController") as? MessageDetailViewController
@@ -30,13 +31,19 @@ class MessageDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        handleLabel.text = handleString
-        messageLabel.text = messageString
+        handleLabel.text = message?.sender.displayName
+        messageLabel.text = message?.content
         
         if !isOwner! {
             removeButton.isEnabled = false
             removeButton.alpha = 0.5;
 
+        }
+        let banned = post?.bannedList.contains(message!.sender.id)
+        if banned! {
+            removeButton.isEnabled = false
+            removeButton.alpha = 0.5;
+            removeButton.setTitle("User Banned", for: .normal)
         }
         
     }
@@ -46,18 +53,11 @@ class MessageDetailViewController: UIViewController {
     }
     
     @IBAction func removePressed(_ sender: Any) {
-        print("removing!")
+        chatViewRef?.addBannedMember(uid: self.message!.sender.id)
+        chatViewRef?.removeMember(uid: self.message!.sender.id)
+        removeButton.isEnabled = false
+        removeButton.alpha = 0.5;
+        removeButton.setTitle("User Banned", for: .normal)
     }
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
