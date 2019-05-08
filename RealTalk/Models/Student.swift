@@ -17,6 +17,7 @@ struct Student {
     var bio: String
     var createdDate: NSDate
     var isOnline: Bool
+    var joinedChatIDs: [String]
 
     init(uid: String, username: String, bio: String?, createdDate: NSDate) {
         self.uid = uid
@@ -25,7 +26,7 @@ struct Student {
         self.bio = ""
         self.createdDate = createdDate
         self.isOnline = true
-        
+        self.joinedChatIDs = [""]
         if let userBio = bio {
             self.bio = userBio
         }
@@ -60,6 +61,11 @@ struct Student {
         guard let createdDate = data["createdDate"] as? String else {
             return nil
         }
+        
+        guard let joinedChatIDsString = data["joinedChatIDs"] as? String else {
+            return nil
+        }
+        let joinedChatIDs = joinedChatIDsString.components(separatedBy: "-")
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yy h:mm a Z"
@@ -71,7 +77,7 @@ struct Student {
         self.isOnline = isOnlineBool
         self.heartCount = heartCountInt
         self.createdDate = date
-
+        self.joinedChatIDs = joinedChatIDs
 
     }
     
@@ -86,8 +92,8 @@ extension Student: DatabaseRepresentation {
             "bio": bio,
             "isOnline": String(isOnline),
             "heartCount": String(heartCount),
-            "createdDate": createdDate.toString(dateFormat: "MM/dd/yy h:mm a Z")
-
+            "createdDate": createdDate.toString(dateFormat: "MM/dd/yy h:mm a Z"),
+            "joinedChatIDs": joinedChatIDs.joined(separator: "-")
         ]
 
         return rep
