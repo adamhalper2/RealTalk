@@ -109,7 +109,7 @@ struct Post {
         return nil
     }
 
-    let isActiveBool = Bool(active)!
+    guard let isActiveBool = Bool(active) else {return nil}
     
     guard let isLocked = data["isLocked"] as? String else {
         return nil

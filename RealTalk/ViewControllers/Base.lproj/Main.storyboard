@@ -560,8 +560,9 @@
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onlineIcon" translatesAutoresizingMaskIntoConstraints="NO" id="aJg-WH-8qT">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="offlineIcon" translatesAutoresizingMaskIntoConstraints="NO" id="aJg-WH-8qT">
                                                     <rect key="frame" x="15" y="15" width="8" height="8"/>
+                                                    <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="8" id="MJj-cz-67h"/>
                                                         <constraint firstAttribute="width" constant="8" id="r8U-8B-Ndc"/>
@@ -593,6 +594,7 @@
                                             <outlet property="contentLabel" destination="FT9-n9-DPB" id="yOP-KJ-19r"/>
                                             <outlet property="heartBtn" destination="3CK-lh-CaF" id="TcR-R1-Dhg"/>
                                             <outlet property="heartCountLabel" destination="bt7-SH-7PL" id="hoh-zx-LT1"/>
+                                            <outlet property="onlineIndicator" destination="aJg-WH-8qT" id="unj-JU-niq"/>
                                             <outlet property="reportBtn" destination="A2I-ug-ytk" id="CA4-1A-2RQ"/>
                                             <outlet property="timeLabel" destination="6Yl-wl-Zei" id="whN-1u-OG4"/>
                                         </connections>
@@ -967,6 +969,7 @@ dRt4G4UbihuSG5UbmhuiG6Ubtxu6G78AAAAAAAACAQAAAAAAAABZAAAAAAAAAAAAAAAAAAAbwQ
         <image name="heartSmall" width="20" height="16"/>
         <image name="homeIcon" width="26" height="25"/>
         <image name="newChatIcon" width="28" height="28"/>
+        <image name="offlineIcon" width="8" height="8"/>
         <image name="onlineIcon" width="8" height="8"/>
         <image name="photoIcon" width="30" height="25"/>
         <image name="profileIcon" width="23" height="25"/>
