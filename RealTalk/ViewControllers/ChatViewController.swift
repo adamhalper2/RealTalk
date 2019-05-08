@@ -495,7 +495,7 @@ extension ChatViewController: MessageInputBarDelegate {
             }
         }
     }
-    
+
     func removeMember(uid: String) {
         let postRef = db.collection("channels").document(post.id!)
         var mem = post.members

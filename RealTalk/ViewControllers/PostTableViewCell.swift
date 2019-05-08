@@ -190,7 +190,6 @@ class PostTableViewCell: UITableViewCell {
         reportsRef.addDocument(data: newReport.representation)
 
         let reportCount = currPost.reportCount
-        let heartCount = currPost.heartCount
         var isActive = true
         reportBtn.tintColor = UIColor.red
 
