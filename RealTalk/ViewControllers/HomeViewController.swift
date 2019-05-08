@@ -54,6 +54,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.navigationController?.pushViewController(vc, animated:true)
         } else if post.isLocked {
             // display locked message
+        } else if isBanned {
+            // display is banned message
         }
     }
 
