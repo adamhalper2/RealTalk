@@ -234,8 +234,8 @@ class PostTableViewCell: UITableViewCell {
         }
     }
 
-    func pushNotifyAuthor(toID: String) {
-        print("load user token called")
+    func pushNotifyHeart(toID: String) {
+        //print("load user token called. display name: \(AppSettings.displayName)")
         db.collection("students").document(toID)
             .getDocument { documentSnapshot, error in
                 guard let document = documentSnapshot else {
@@ -247,18 +247,13 @@ class PostTableViewCell: UITableViewCell {
                     return
                 }
 
-                guard let authorName = data["username"] as? String else {return}
-                print("author name is \(authorName)")
-
                 guard let content = self.post?.content else {return}
+                guard let token = data["fcmToken"] as? String else {return}
 
-                if let token = data["fcmToken"] as? String {
-                    let sender = PushNotificationSender()
-                    sender.sendPushNotification(to: token, title: "\(authorName) liked your post", body: "\(content)")
-                    print("notif sent")
-                }
+                let sender = PushNotificationSender()
+                sender.sendPushNotification(to: token, title: "\(AppSettings.displayName) liked your post", body: "\(content)")
+                print("notif sent")
         }
-    
     }
 
     func addHeartToPost() {
@@ -269,7 +264,7 @@ class PostTableViewCell: UITableViewCell {
         guard let postID = currPost.id else {return}
         guard let toID = currPost.authorID else {return}
 
-        pushNotifyAuthor(toID: toID)
+        pushNotifyHeart(toID: toID)
 
 
         let newHeart = Heart(postID: postID, fromID: fromID, toID: toID, onPost: true)

@@ -248,6 +248,27 @@ final class ChatViewController: MessagesViewController {
         }
         let delta = 1
         updateCommentCount(delta: delta)
+        if let toID = post.authorID {
+            pushNotifyComment(toID: toID)
+        }
+    }
+
+    func pushNotifyComment(toID: String) {
+        db.collection("students").document(toID)
+            .getDocument { documentSnapshot, error in
+                guard let document = documentSnapshot else {
+                    print("Error fetching document: \(error!)")
+                    return
+                }
+                guard let data = document.data() else {
+                    print("Document data was empty.")
+                    return
+                }
+                guard let token = data["fcmToken"] as? String else {return}
+                let sender = PushNotificationSender()
+                sender.sendPushNotification(to: token, title: "\(AppSettings.displayName) sent you a message", body: "On your post:  \(self.post.content)")
+                print("notif sent")
+        }
     }
 
     func updateCommentCount(delta: Int) {
