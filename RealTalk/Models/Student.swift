@@ -18,6 +18,7 @@ struct Student {
     var createdDate: NSDate
     var isOnline: Bool
     var joinedChatIDs: [String]
+    var fcmToken: String
 
     init(uid: String, username: String, bio: String?, createdDate: NSDate) {
         self.uid = uid
@@ -30,6 +31,7 @@ struct Student {
         if let userBio = bio {
             self.bio = userBio
         }
+        self.fcmToken = ""
     }
 
     init?(document: QueryDocumentSnapshot) {
@@ -40,6 +42,10 @@ struct Student {
         }
 
         guard let username = data["username"] as? String else {
+            return nil
+        }
+
+        guard let fcmToken = data["fcmToken"] as? String else {
             return nil
         }
 
@@ -73,6 +79,7 @@ struct Student {
 
         self.uid = uid
         self.username = username
+        self.fcmToken = fcmToken
         self.bio = bio
         self.isOnline = isOnlineBool
         self.heartCount = heartCountInt
@@ -89,6 +96,7 @@ extension Student: DatabaseRepresentation {
         var rep: [String : Any] = [
             "uid": uid,
             "username": username,
+            "fcmToken": fcmToken,
             "bio": bio,
             "isOnline": String(isOnline),
             "heartCount": String(heartCount),
