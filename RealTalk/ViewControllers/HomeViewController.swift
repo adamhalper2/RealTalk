@@ -15,6 +15,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     private var posts = [Post]()
     private var postsListener: ListenerRegistration?
     private let db = Firestore.firestore()
+    private let user = Auth.auth().currentUser!
 
     var refreshControl = UIRefreshControl()
 
@@ -67,6 +68,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidLoad()
         print("current uid: \(AppController.user?.uid)")
 
+        let pushManager = PushNotificationManager(userID: user.uid)
+        pushManager.registerForPushNotifications()
+
         tableView.delegate = self
         tableView.dataSource = self
         loadUserHearts()
@@ -89,10 +93,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func loadUserHearts() {
-        guard let currUser = Auth.auth().currentUser else {return}
-        let userID = currUser.uid
 
-        db.collection("students").document(userID)
+        db.collection("students").document(user.uid)
             .addSnapshotListener { documentSnapshot, error in
                 guard let document = documentSnapshot else {
                     print("Error fetching document: \(error!)")
@@ -102,15 +104,24 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     print("Document data was empty.")
                     return
                 }
+                
                 if let heartCount = data["heartCount"] as? String {
                     //animation?
                     DispatchQueue.main.async {
                         self.heartBtn.setTitle(String(heartCount), for: .normal)
                     }
-
                 }
+
         }
     }
+
+
+    @IBAction func heartBtnTapped(_ sender: Any) {
+
+        
+    }
+
+
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

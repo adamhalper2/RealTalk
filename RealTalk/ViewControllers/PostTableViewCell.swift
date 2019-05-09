@@ -66,24 +66,18 @@ class PostTableViewCell: UITableViewCell {
                 print("Error getting document: \(err)")
             } else {
                 guard let data = documentSnapshot?.data() else {
-                    print("invalid data from authors ref")
                     return
                 }
-                print("data is \(data)")
                 guard let isOnlineStr = data["isOnline"] as? String else {
-                    print("no isOnline field")
                     return
                 }
                 guard let isOnline = Bool(isOnlineStr) else {
-                    print("unable to convert to bool")
                     return
                 }
                 DispatchQueue.main.async {
                     if (isOnline) {
-                        print("setting author status to ONLINE")
                         self.onlineIndicator.tintColor = UIColor.green
                     } else {
-                        print("setting author status to OFFLINE")
                         self.onlineIndicator.tintColor = UIColor.darkGray
                     }
                     return
@@ -224,6 +218,7 @@ class PostTableViewCell: UITableViewCell {
     }
 
     @IBAction func heartTapped(_ sender: Any) {
+
         if heartBtn.image(for: .normal) == unfilledHeart {
             UIView.animate(withDuration: 0.01, animations: {
                 self.heartBtn.alpha = 0.0
@@ -239,6 +234,33 @@ class PostTableViewCell: UITableViewCell {
         }
     }
 
+    func pushNotifyAuthor(toID: String) {
+        print("load user token called")
+        db.collection("students").document(toID)
+            .getDocument { documentSnapshot, error in
+                guard let document = documentSnapshot else {
+                    print("Error fetching document: \(error!)")
+                    return
+                }
+                guard let data = document.data() else {
+                    print("Document data was empty.")
+                    return
+                }
+
+                guard let authorName = data["username"] as? String else {return}
+                print("author name is \(authorName)")
+
+                guard let content = self.post?.content else {return}
+
+                if let token = data["fcmToken"] as? String {
+                    let sender = PushNotificationSender()
+                    sender.sendPushNotification(to: token, title: "\(authorName) liked your post", body: "\(content)")
+                    print("notif sent")
+                }
+        }
+    
+    }
+
     func addHeartToPost() {
         guard let currUser = AppController.user else {return}
         let fromID = currUser.uid
@@ -246,6 +268,9 @@ class PostTableViewCell: UITableViewCell {
         guard let currPost = post else {return}
         guard let postID = currPost.id else {return}
         guard let toID = currPost.authorID else {return}
+
+        pushNotifyAuthor(toID: toID)
+
 
         let newHeart = Heart(postID: postID, fromID: fromID, toID: toID, onPost: true)
         let  heartsRef =  db.collection("hearts")
