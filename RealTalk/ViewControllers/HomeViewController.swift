@@ -68,9 +68,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidLoad()
         print("current uid: \(AppController.user?.uid)")
 
-        let pushManager = PushNotificationManager(userID: user.uid)
-        pushManager.registerForPushNotifications()
-
+        if let pushManager = PushNotificationManager(userID: user.uid) {
+            pushManager.registerForPushNotifications()
+        }
         tableView.delegate = self
         tableView.dataSource = self
         loadUserHearts()
@@ -117,8 +117,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
 
     @IBAction func heartBtnTapped(_ sender: Any) {
-
-        
+        guard let user = AppController.user else {return}
+        if let manager = PushNotificationManager(userID: user.uid) {
+            manager.getPendingNotifs()
+        }
     }
 
 

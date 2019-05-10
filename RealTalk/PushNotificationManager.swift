@@ -13,11 +13,16 @@ import UserNotifications
 
 
 class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCenterDelegate {
-    let userID: String
-    init(userID: String) {
+    var userID: String?
+
+    init?(userID: String) {
         self.userID = userID
+    }
+
+    override init() {
         super.init()
     }
+
     func registerForPushNotifications() {
         if #available(iOS 10.0, *) {
             // For iOS 10 display notification (sent via APNS)
@@ -34,13 +39,13 @@ class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCe
             UIApplication.shared.registerUserNotificationSettings(settings)
         }
         UIApplication.shared.registerForRemoteNotifications()
-        updateFirestorePushTokenIfNeeded()
     }
     
     func updateFirestorePushTokenIfNeeded() {
+        guard let uid = userID else {return}
         print("updating push token called")
         if let token = Messaging.messaging().fcmToken {
-            let usersRef = Firestore.firestore().collection("students").document(userID)
+            let usersRef = Firestore.firestore().collection("students").document(uid)
             usersRef.setData(["fcmToken": token], merge: true)
             print("updating user token")
         }
@@ -53,12 +58,20 @@ class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCe
         updateFirestorePushTokenIfNeeded()
     }
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+
+
         print(response)
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void)
     {
         completionHandler([.alert, .badge, .sound])
+    }
+
+    func getPendingNotifs() {
+        UNUserNotificationCenter.current().getDeliveredNotifications { (notifications) in
+            print(notifications)
+        }
     }
 
 }
