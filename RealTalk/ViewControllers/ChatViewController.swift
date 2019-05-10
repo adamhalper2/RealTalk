@@ -97,20 +97,26 @@ final class ChatViewController: MessagesViewController {
       }
     }
     
-    //let postReference = db.collection(["channels", id].joined(separator: "/"))
     
-    let postReference =  db.collection("channels")
-    
-    postListener = postReference.addSnapshotListener { querySnapshot, error in
-        guard let snapshot = querySnapshot else {
-            print("Error listening for channel updates: \(error?.localizedDescription ?? "No error")")
-            return
-        }
-        
-        snapshot.documentChanges.forEach { change in
-            self.handlePostChange(change)
-        }
+    db.collection("channels").document(post.id!)
+        .addSnapshotListener { documentSnapshot, error in
+            guard let document = documentSnapshot else {
+                print("Error fetching document: \(error!)")
+                return
+            }
+            guard let data = document.data() else {
+                print("Document data was empty.")
+                return
+            }
+            
+            
+            DispatchQueue.main.async {
+                self.handlePostChange(data: data, docId: document.documentID)
+            }
+            
+            
     }
+    
     
 //    // 1
 //    let cameraItem = InputBarButtonItem(type: .system)
@@ -306,9 +312,9 @@ final class ChatViewController: MessagesViewController {
     }
   }
     
-  private func handlePostChange(_ change: DocumentChange) {
+    private func handlePostChange(data: [String: Any], docId: String) {
     
-    guard let post = Post(document: change.document) else {
+    guard let post = Post(data: data, docId: docId) else {
         return
     }
     

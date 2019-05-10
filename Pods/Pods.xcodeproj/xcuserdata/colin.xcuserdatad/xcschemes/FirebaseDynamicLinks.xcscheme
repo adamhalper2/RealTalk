@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FCF8E403D9585AC3F754557B947BAFEF"
+               BlueprintIdentifier = "8693A0BF5F08F05139D655B3CDAE8FE9"
                BuildableName = "FirebaseDynamicLinks.framework"
                BlueprintName = "FirebaseDynamicLinks"
                ReferencedContainer = "container:Pods.xcodeproj">
