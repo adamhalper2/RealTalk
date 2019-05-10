@@ -64,7 +64,7 @@ final class AppController {
       fatalError("Cannot layout app with a nil window.")
     }
     
-    FirebaseApp.configure()
+    //FirebaseApp.configure()
     
     // TODO: remove this once logout is handled
     do {
@@ -125,6 +125,10 @@ final class AppController {
 
         if AppSettings.displayName != nil {
             presenceManager.markUserOnline()
+
+            if let manager = PushNotificationManager(userID: user.uid) {
+                manager.updateFirestorePushTokenIfNeeded()
+            }
             let tabContoller = storyboard.instantiateViewController(withIdentifier: "TabBarController")
             rootViewController = tabContoller
         } else {

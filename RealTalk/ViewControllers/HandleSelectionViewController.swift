@@ -112,6 +112,7 @@ class HandleSelectionViewController: UIViewController {
                 return
             }
             ProgressHUD.showSuccess("Success")
+            /*
             studentsReference.addDocument(data: newStudent.representation) { error in
                 if error != nil {
                     ProgressHUD.showError(error!.localizedDescription)
@@ -119,6 +120,7 @@ class HandleSelectionViewController: UIViewController {
                 }
                 ProgressHUD.showSuccess("Success")
             }
+            */
             
         }
         

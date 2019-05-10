@@ -446,6 +446,9 @@
                                         <state key="normal" title="932" image="heartSmall">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="heartBtnTapped:" destination="4RN-qI-wZC" eventType="touchUpInside" id="nGd-q4-xln"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>

@@ -10,6 +10,8 @@ import UIKit
 import CoreData
 import Firebase
 import FirebaseFirestore
+import UserNotifications
+import FirebaseMessaging
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        FirebaseApp.configure()
+        let pushManager = PushNotificationManager()
+        pushManager.registerForPushNotifications()
         AppController.shared.show(in: UIWindow(frame: UIScreen.main.bounds))
         return true
     }
@@ -52,6 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         presenceManager.markUserOffline()
         self.saveContext()
     }
+
     
     // MARK: - Handle Dynamic links
     

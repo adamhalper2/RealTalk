@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -23,6 +23,7 @@
 		3BC2AFF422781DBE00B01F32 /* UIImage+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC2AFF322781DBE00B01F32 /* UIImage+Additions.swift */; };
 		3BC2AFF622781DC600B01F32 /* UIView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC2AFF522781DC600B01F32 /* UIView+Additions.swift */; };
 		3BC2AFFE227826E300B01F32 /* NSDate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC2AFFD227826E300B01F32 /* NSDate+Additions.swift */; };
+		8A05A91F2283E64A00B3F60B /* PushNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A05A91E2283E64900B3F60B /* PushNotificationManager.swift */; };
 		8A1F306A227A18050065D370 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8A1F3069227A18050065D370 /* GoogleService-Info.plist */; };
 		8A1F306C227A23AC0065D370 /* Heart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1F306B227A23AC0065D370 /* Heart.swift */; };
 		8A1F306E227A27020065D370 /* TabBar+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1F306D227A27020065D370 /* TabBar+Additions.swift */; };
@@ -62,6 +63,7 @@
 		3BC2AFF522781DC600B01F32 /* UIView+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Additions.swift"; sourceTree = "<group>"; };
 		3BC2AFFD227826E300B01F32 /* NSDate+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDate+Additions.swift"; sourceTree = "<group>"; };
 		51901FD10A1D8ADCECBB9236 /* Pods-RealTalk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealTalk.release.xcconfig"; path = "Pods/Target Support Files/Pods-RealTalk/Pods-RealTalk.release.xcconfig"; sourceTree = "<group>"; };
+		8A05A91E2283E64900B3F60B /* PushNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PushNotificationManager.swift; path = /Users/adamhalper/Desktop/Projects/RealTalk/RealTalk/PushNotificationManager.swift; sourceTree = "<absolute>"; };
 		8A1F3069227A18050065D370 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8A1F306B227A23AC0065D370 /* Heart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heart.swift; sourceTree = "<group>"; };
 		8A1F306D227A27020065D370 /* TabBar+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabBar+Additions.swift"; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 		8A5AF90B2273D31500E4AC1A /* RealTalk */ = {
 			isa = PBXGroup;
 			children = (
+				8A05A91E2283E64900B3F60B /* PushNotificationManager.swift */,
 				3B311EC7227E5F7700893EA2 /* RealTalk.entitlements */,
 				3B5EA19C22798269005D9E5F /* AppController.swift */,
 				3B5EA19E22798281005D9E5F /* AppSettings.swift */,
@@ -244,6 +247,9 @@
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 0;
 							};
+							com.apple.Push = {
+								enabled = 1;
+							};
 							com.apple.SafariKeychain = {
 								enabled = 1;
 							};
@@ -290,36 +296,11 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RealTalk/Pods-RealTalk-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
-				"${BUILT_PRODUCTS_DIR}/EzPopup/EzPopup.framework",
-				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
-				"${BUILT_PRODUCTS_DIR}/MessageKit/MessageKit.framework",
-				"${BUILT_PRODUCTS_DIR}/ProgressHUD/ProgressHUD.framework",
-				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
-				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-RealTalk/Pods-RealTalk-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EzPopup.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessageKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProgressHUD.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-RealTalk/Pods-RealTalk-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -367,6 +348,7 @@
 				3BC2AFF622781DC600B01F32 /* UIView+Additions.swift in Sources */,
 				8A2C8F14227536FF00188975 /* Colors.swift in Sources */,
 				8A1F3072227A48150065D370 /* MyChatsViewController.swift in Sources */,
+				8A05A91F2283E64A00B3F60B /* PushNotificationManager.swift in Sources */,
 				8ABB64392282708100E33C0F /* OnlineOfflineManager.swift in Sources */,
 				3B5EA1A12279829C005D9E5F /* LoginViewController.swift in Sources */,
 				3B1F1A9F2277B3D3001655B6 /* DatabaseRepresentation.swift in Sources */,
