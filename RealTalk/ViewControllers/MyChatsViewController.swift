@@ -18,6 +18,7 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
     private let db = Firestore.firestore()
     private var joinedChatIDs: [String]?
     private var uid = ""
+
     
     var refreshControl = UIRefreshControl()
     
@@ -50,9 +51,65 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let post = posts[indexPath.row]
         let user = AppController.user
-        let userId = user?.uid
         let vc = ChatViewController(user: user!, post: post)
         self.navigationController?.pushViewController(vc, animated:true)
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let post = posts[indexPath.row]
+            removeChatToUserList(postId: post.id!)
+            removeMember(post: post)
+            posts.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+        }
+    }
+    
+    func removeMember(post: Post) {
+        let uid = AppController.user?.uid
+        let postRef = db.collection("channels").document(post.id!)
+        var mem = post.members
+        if !post.members.contains(uid!) {
+            print("Doesn't contain userID")
+            return
+        }
+        mem.removeAll{$0 == uid}
+        let membersStr = mem.joined(separator: "-")
+        postRef.updateData([
+            "members": membersStr
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("removed member")
+            }
+        }
+    }
+    
+    func removeChatToUserList(postId: String) {
+        let user = AppController.user
+        let userRef = db.collection("students").document(user!.uid)
+        
+        userRef.getDocument { (documentSnapshot, err) in
+            if let err = err {
+                print("Error getting document: \(err)")
+            } else {
+                guard let data = documentSnapshot?.data() else {return}
+                if var joinedChatIDsStr = data["joinedChatIDs"] as? String {
+                    print("*~*~old joined chats: \(joinedChatIDsStr)")
+                    
+                    var joinedChatIDs = joinedChatIDsStr.components(separatedBy: "-")
+                    joinedChatIDs.removeAll{$0 == postId}
+                    joinedChatIDsStr = joinedChatIDs.joined(separator: "-")
+                    userRef.updateData(
+                        ["joinedChatIDs": joinedChatIDsStr]
+                    )
+                    print("*~*~updated joined chats to \(joinedChatIDsStr)")
+                }
+            }
+        }
     }
     
     deinit {
@@ -61,6 +118,8 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+//        view.addGestureRecognizer(tap)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -73,6 +132,11 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
+    
+    @objc func dismissKeyboard() {
+        self.searchBar.endEditing(true)
+    }
+
     
     @objc func reloadData() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -165,6 +229,7 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     override func viewDidAppear(_ animated: Bool) {
+    
         let currUser = AppController.user!
         uid = currUser.uid
         
