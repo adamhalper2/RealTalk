@@ -870,7 +870,7 @@
         <!--Notifications-->
         <scene sceneID="rNu-ZN-16y">
             <objects>
-                <viewController id="8x2-oO-O6A" customClass="NotificationsViewController" customModule="RealTalk" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="notifVC" id="8x2-oO-O6A" customClass="NotificationsViewController" customModule="RealTalk" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="t9v-rx-Qrf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

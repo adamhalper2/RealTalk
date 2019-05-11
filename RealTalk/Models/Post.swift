@@ -78,7 +78,11 @@ struct Post {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yy h:mm a Z"
 
-        let date = dateFormatter.date(from: timestamp)! as NSDate
+        var date = NSDate()
+        if let realDate = dateFormatter.date(from: timestamp) as? NSDate {
+            print("date = realDate")
+            date = realDate
+        }
 
         guard let authorID = data["authorID"] as? String else {
             return nil

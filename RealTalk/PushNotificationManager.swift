@@ -28,13 +28,22 @@ class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCe
     var formatted: CustomNotif?
 
 
-    init?(userID: String) {
-        self.userID = userID
+
+    static let shared = PushNotificationManager()
+
+
+    override private init() {
+        super.init()
+        //dont do anything
     }
 
-    override init() {
-        super.init()
-    }
+//    private init(userID: String) {
+//        self.userID = userID
+//    }
+
+//    override init() {
+//        super.init()
+//    }
 
     func registerForPushNotifications() {
         if #available(iOS 10.0, *) {
@@ -51,6 +60,7 @@ class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCe
                 UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
             UIApplication.shared.registerUserNotificationSettings(settings)
         }
+        UNUserNotificationCenter.current().delegate = self
         UIApplication.shared.registerForRemoteNotifications()
         setCategories()
     }
@@ -85,44 +95,80 @@ class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCe
         let notificationCenter = UNUserNotificationCenter.current()
         notificationCenter.setNotificationCategories([heartCategory, messageOPCategory])
     }
-    
+
     func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
         print("remote message is \(remoteMessage.appData)")
+        
     }
 
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
         updateFirestorePushTokenIfNeeded()
     }
+
+
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-
-
+        print("did receive response")
         print(response)
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void)
     {
+
+
+        /*
+        let body = notification.request.content.body
+        let title = notification.request.content.title
+        let type = notification.request.content.categoryIdentifier
+        let timestamp = notification.date
+        let userInfo = notification.request.content.userInfo
+
+        guard let postID = userInfo["gcm.notification.postID"] as? String else {return}
+
+        let notif = CustomNotif(body: body, timestamp: timestamp as NSDate, type: type, title: title, postID: postID, read: true)
+        save(notif)
+
+        print(notification.request.content)
+        */
         completionHandler([.alert, .badge, .sound])
     }
-
-    func getPendingNotifs() {
-        UNUserNotificationCenter.current().getDeliveredNotifications { (notifications) in
-            self.notifications = notifications
-
-        }
-    }
-
 }
 
 class PushNotificationSender {
 
+    private let db = Firestore.firestore()
+    private var reference: CollectionReference?
 
-    func sendPushNotification(to token: String, title: String, body: String, postID: String) {
+    private func save(_ notif: CustomNotif, userID: String) {
+
+        reference = db.collection(["students", userID, "notifications"].joined(separator: "/"))
+
+        reference?.addDocument(data: notif.representation) { error in
+            if let e = error {
+                print("Error sending message: \(e.localizedDescription)")
+                return
+            }
+        }
+    }
+
+
+    func sendPushNotification(to token: String, title: String, body: String, postID: String, type: String, userID: String) {
+
+        let body = body
+        let title = title
+        let type = type
+        let timestamp = NSDate()
+        let postID = postID
+        let notifID = UUID().uuidString
+
+        let notif = CustomNotif(body: body, timestamp: timestamp, type: type, title: title, postID: postID, read: false, notifID: notifID)
+        self.save(notif, userID: userID)
+
 
         let urlString = "https://fcm.googleapis.com/fcm/send"
         let url = NSURL(string: urlString)!
         let paramString: [String : Any] = ["to" : token,
-                                           "notification" : ["title" : title, "body" : postID, "subtitle": body],
-                                           "data" : ["test-data": "postID"]
+                                           "notification" : ["title" : title, "body" : body, "click-action": type, "postID": postID, "notifID": notifID],
+                                           "userInfo" : ["postID": postID]
         ]
         let request = NSMutableURLRequest(url: url as URL)
         request.httpMethod = "POST"
@@ -143,3 +189,5 @@ class PushNotificationSender {
         task.resume()
     }
 }
+
+
