@@ -67,7 +67,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         print("current uid: \(AppController.user?.uid)")
-
         if let pushManager = PushNotificationManager(userID: user.uid) {
             pushManager.registerForPushNotifications()
         }
@@ -141,33 +140,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.tableView.reloadData()
             self.tableView.refreshControl?.endRefreshing()
         }
-        //I think unnecessary?
-        /*
-        let db = Firestore.firestore()
-        let  postsReference =  db.collection("channels")
-
-        for post in posts {
-            if let id = post.id {
-                let postRef = postsReference.document(id)
-                postRef.getDocument { (documentSnapshot, err) in
-                    if let err = err {
-                        print("Error getting document: \(err)")
-                    } else {
-
-                        let docId = documentSnapshot?.documentID
-                        let commentCount = documentSnapshot?.get("commentCount") as! String
-                        let commentCountInt = Int(commentCount)!
-                        print("after reload, comment count: \(commentCountInt)")
-                    }
-
-                }
-            }
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.tableView.reloadData()
-            self.tableView.refreshControl?.endRefreshing()
-        }
-        */
     }
     
     private func addPostToTable(_ post: Post) {

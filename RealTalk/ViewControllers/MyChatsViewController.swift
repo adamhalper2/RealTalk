@@ -16,7 +16,7 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
     private var posts = [Post]()
     private var postsListener: ListenerRegistration?
     private let db = Firestore.firestore()
-    private var joinedChatIDs = [""]
+    private var joinedChatIDs: [String]?
     private var uid = ""
     
     var refreshControl = UIRefreshControl()
@@ -140,6 +140,13 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
         tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
     }
     
+    private func handleDocumentChange2(data: [String: Any], id: String) {
+        guard let post = Post(data: data, docId: id) else {
+            return
+        }
+        print(id)
+    }
+    
     private func handleDocumentChange(_ change: DocumentChange) {
         guard let post = Post(document: change.document) else {
             return
@@ -171,6 +178,7 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 if let joinedChatIDsStr = data["joinedChatIDs"] as? String {
                     print("*~*~users' joined chats: \(joinedChatIDsStr)")
                     self.joinedChatIDs = joinedChatIDsStr.components(separatedBy: "-")
+                    self.addChatListeners()
                 }
             }
         }
@@ -199,18 +207,23 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
                     print("\(source) data: \(document.data() ?? [:])")
                 }
         }*/
-            let postsReference =  db.collection("channels")
-            let query = postsReference
-                .whereField("isActive", isEqualTo: "true")
+        
+        }
     
-            postsListener =  query.addSnapshotListener { querySnapshot, error in
-            guard let snapshot = querySnapshot else {
-                print("Error listening for channel updates: \(error?.localizedDescription ?? "No error")")
-                return
-            }
-            
-            snapshot.documentChanges.forEach { change in
-                self.handleDocumentChange(change)
+    private func addChatListeners() {
+        let postsReference =  self.db.collection("channels").whereField("isActive", isEqualTo: "true")
+        for postID in self.joinedChatIDs! {
+            if postID == "" { continue }
+            postsReference.whereField(Firebase.FieldPath.documentID(), isEqualTo: postID)
+                .addSnapshotListener { querySnapshot, error in
+                    guard let snapshot = querySnapshot else {
+                        print("Error listening for channel updates: \(error?.localizedDescription ?? "No error")")
+                        return
+                    }
+
+                    snapshot.documentChanges.forEach { change in
+                        self.handleDocumentChange(change)
+                    }
             }
         }
     }

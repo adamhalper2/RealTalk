@@ -113,8 +113,6 @@ final class ChatViewController: MessagesViewController {
             DispatchQueue.main.async {
                 self.handlePostChange(data: data, docId: document.documentID)
             }
-            
-            
     }
     
     
