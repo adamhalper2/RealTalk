@@ -24,6 +24,9 @@
 		3BC2AFF622781DC600B01F32 /* UIView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC2AFF522781DC600B01F32 /* UIView+Additions.swift */; };
 		3BC2AFFE227826E300B01F32 /* NSDate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC2AFFD227826E300B01F32 /* NSDate+Additions.swift */; };
 		8A05A91F2283E64A00B3F60B /* PushNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A05A91E2283E64900B3F60B /* PushNotificationManager.swift */; };
+		8A05A9232285154D00B3F60B /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A05A9222285154D00B3F60B /* NotificationsViewController.swift */; };
+		8A05A9252285250600B3F60B /* CustomNotif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A05A9242285250600B3F60B /* CustomNotif.swift */; };
+		8A05A9272285296400B3F60B /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A05A9262285296400B3F60B /* DateHelper.swift */; };
 		8A1F306A227A18050065D370 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8A1F3069227A18050065D370 /* GoogleService-Info.plist */; };
 		8A1F306C227A23AC0065D370 /* Heart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1F306B227A23AC0065D370 /* Heart.swift */; };
 		8A1F306E227A27020065D370 /* TabBar+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1F306D227A27020065D370 /* TabBar+Additions.swift */; };
@@ -64,6 +67,9 @@
 		3BC2AFFD227826E300B01F32 /* NSDate+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDate+Additions.swift"; sourceTree = "<group>"; };
 		51901FD10A1D8ADCECBB9236 /* Pods-RealTalk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealTalk.release.xcconfig"; path = "Pods/Target Support Files/Pods-RealTalk/Pods-RealTalk.release.xcconfig"; sourceTree = "<group>"; };
 		8A05A91E2283E64900B3F60B /* PushNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PushNotificationManager.swift; path = /Users/adamhalper/Desktop/Projects/RealTalk/RealTalk/PushNotificationManager.swift; sourceTree = "<absolute>"; };
+		8A05A9222285154D00B3F60B /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
+		8A05A9242285250600B3F60B /* CustomNotif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNotif.swift; sourceTree = "<group>"; };
+		8A05A9262285296400B3F60B /* DateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		8A1F3069227A18050065D370 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8A1F306B227A23AC0065D370 /* Heart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heart.swift; sourceTree = "<group>"; };
 		8A1F306D227A27020065D370 /* TabBar+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabBar+Additions.swift"; sourceTree = "<group>"; };
@@ -133,10 +139,12 @@
 				8A1F3073227A57B70065D370 /* ChatPreviewTableViewCell.swift */,
 				8A1F3071227A48150065D370 /* MyChatsViewController.swift */,
 				8A5AF9232275088A00E4AC1A /* PostTableViewCell.swift */,
+				8A05A9262285296400B3F60B /* DateHelper.swift */,
 				8A5AF9272275266C00E4AC1A /* CreatePostViewController.swift */,
 				3BAAC09422780F68007C5DCE /* ChatViewController.swift */,
 				8A5AF92122743F9E00E4AC1A /* HomeViewController.swift */,
 				3B3700BE2282852300E65BF9 /* MessageDetailViewController.swift */,
+				8A05A9222285154D00B3F60B /* NotificationsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -150,6 +158,7 @@
 				8ABB643622822FD400E33C0F /* Report.swift */,
 				8A1F306B227A23AC0065D370 /* Heart.swift */,
 				8A1F3075227B7F0F0065D370 /* Student.swift */,
+				8A05A9242285250600B3F60B /* CustomNotif.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -339,10 +348,13 @@
 				3BC2AFFE227826E300B01F32 /* NSDate+Additions.swift in Sources */,
 				8A1F306E227A27020065D370 /* TabBar+Additions.swift in Sources */,
 				3B82425C227EA0CC00C0A6CA /* String+Additions.swift in Sources */,
+				8A05A9232285154D00B3F60B /* NotificationsViewController.swift in Sources */,
 				3B824262227F6DE400C0A6CA /* Date+Additions.swift in Sources */,
 				3B1F1A9D2277B132001655B6 /* Post.swift in Sources */,
 				3B824260227EB77B00C0A6CA /* HandleSelectionViewController.swift in Sources */,
+				8A05A9252285250600B3F60B /* CustomNotif.swift in Sources */,
 				3BC2AFF022781D7A00B01F32 /* UIColor+Additions.swift in Sources */,
+				8A05A9272285296400B3F60B /* DateHelper.swift in Sources */,
 				3BAAC09522780F68007C5DCE /* ChatViewController.swift in Sources */,
 				8A1F3074227A57B70065D370 /* ChatPreviewTableViewCell.swift in Sources */,
 				3BC2AFF622781DC600B01F32 /* UIView+Additions.swift in Sources */,

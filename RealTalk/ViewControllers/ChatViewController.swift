@@ -254,6 +254,8 @@ final class ChatViewController: MessagesViewController {
     }
 
     func pushNotifyComment(toID: String) {
+
+        guard let postID = post.id else {return}
         db.collection("students").document(toID)
             .getDocument { documentSnapshot, error in
                 guard let document = documentSnapshot else {
@@ -266,7 +268,8 @@ final class ChatViewController: MessagesViewController {
                 }
                 guard let token = data["fcmToken"] as? String else {return}
                 let sender = PushNotificationSender()
-                sender.sendPushNotification(to: token, title: "\(AppSettings.displayName) sent you a message", body: "On your post:  \(self.post.content)")
+                guard let displayName = AppSettings.displayName else {return}
+                sender.sendPushNotification(to: token, title: "\(displayName) sent you a message", body: "On your post:  \(self.post.content)", postID: postID)
                 print("notif sent")
         }
     }

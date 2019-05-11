@@ -21,6 +21,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var heartBtn: UIButton!
+    @IBOutlet weak var notifBtn: UIButton!
 
     var heartCount = 0
 
@@ -115,6 +116,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
 
+
+    @IBAction func notifBtnTapped(_ sender: Any) {
+        
+    }
 
     @IBAction func heartBtnTapped(_ sender: Any) {
         guard let user = AppController.user else {return}

@@ -12,8 +12,21 @@ import UIKit
 import UserNotifications
 
 
+enum UserNotifs: String {
+    case heart
+    case messageOP
+    case messageMembers
+
+    func type()->String {
+        return self.rawValue
+    }
+}
+
 class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCenterDelegate {
     var userID: String?
+    var notifications: [UNNotification]?
+    var formatted: CustomNotif?
+
 
     init?(userID: String) {
         self.userID = userID
@@ -39,6 +52,7 @@ class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCe
             UIApplication.shared.registerUserNotificationSettings(settings)
         }
         UIApplication.shared.registerForRemoteNotifications()
+        setCategories()
     }
     
     func updateFirestorePushTokenIfNeeded() {
@@ -50,10 +64,32 @@ class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCe
             print("updating user token")
         }
     }
+
+    func setCategories() {
+
+        let heartCategory =
+            UNNotificationCategory(identifier: UserNotifs.heart.type(),
+                                   actions: [],
+                                   intentIdentifiers: [],
+                                   hiddenPreviewsBodyPlaceholder: "",
+                                   options: .customDismissAction)
+
+        let messageOPCategory =
+            UNNotificationCategory(identifier: UserNotifs.messageOP.type(),
+                                   actions: [],
+                                   intentIdentifiers: [],
+                                   hiddenPreviewsBodyPlaceholder: "",
+                                   options: .customDismissAction)
+
+        // Register the notification type.
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.setNotificationCategories([heartCategory, messageOPCategory])
+    }
     
     func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
-        print(remoteMessage.appData)
+        print("remote message is \(remoteMessage.appData)")
     }
+
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
         updateFirestorePushTokenIfNeeded()
     }
@@ -70,19 +106,23 @@ class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCe
 
     func getPendingNotifs() {
         UNUserNotificationCenter.current().getDeliveredNotifications { (notifications) in
-            print(notifications)
+            self.notifications = notifications
+
         }
     }
 
 }
 
 class PushNotificationSender {
-    func sendPushNotification(to token: String, title: String, body: String) {
+
+
+    func sendPushNotification(to token: String, title: String, body: String, postID: String) {
+
         let urlString = "https://fcm.googleapis.com/fcm/send"
         let url = NSURL(string: urlString)!
         let paramString: [String : Any] = ["to" : token,
-                                           "notification" : ["title" : title, "body" : body],
-                                           "data" : ["user" : "test_id"]
+                                           "notification" : ["title" : title, "body" : postID, "subtitle": body],
+                                           "data" : ["test-data": "postID"]
         ]
         let request = NSMutableURLRequest(url: url as URL)
         request.httpMethod = "POST"
