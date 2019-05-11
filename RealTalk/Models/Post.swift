@@ -31,21 +31,21 @@ import FirebaseFirestore
 import FirebaseAuth
 
 struct Post {
-  
-  let id: String?
-  let authorID: String?
-  let author: String
-  let content: String
-  let timestamp: NSDate
-  var commentCount: Int
-  var heartCount: Int
-  var reportCount: Int
-  var members: [String]
-  var isActive: Bool
-  var isLocked: Bool
-  var bannedList: [String]
 
-  
+    let id: String?
+    let authorID: String?
+    let author: String
+    let content: String
+    let timestamp: NSDate
+    var commentCount: Int
+    var heartCount: Int
+    var reportCount: Int
+    var members: [String]
+    var isActive: Bool
+    var isLocked: Bool
+    var bannedList: [String]
+
+
     init(content: String, author: String, timestamp: NSDate, authorID: String) {
         id = nil
         self.content = content
@@ -60,122 +60,202 @@ struct Post {
         self.isLocked = false
         self.bannedList = []
     }
-    
-  
-  init?(document: QueryDocumentSnapshot) {
-    let data = document.data()
-    
-    
-    guard let content = data["content"] as? String else {
-        return nil
-    }
 
-    guard let author = data["author"] as? String else {
-        return nil
-    }
-    
-    guard let timestamp = data["timestamp"] as? String else {
-        return nil
-    }
+    init?(data: [String: Any], docId: String) {
 
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "MM/dd/yy h:mm a Z"
-    
-    let date = dateFormatter.date(from: timestamp)! as NSDate
+        guard let content = data["content"] as? String else {
+            return nil
+        }
 
-    guard let authorID = data["authorID"] as? String else {
-        return nil
-    }
+        guard let author = data["author"] as? String else {
+            return nil
+        }
 
-    guard let membersStr = data["members"] as? String else {
-        return nil
-    }
-    let members = membersStr.components(separatedBy: "-")
+        guard let timestamp = data["timestamp"] as? String else {
+            return nil
+        }
 
-    guard let commentCount = data["commentCount"] as? String else {
-        return nil
-    }
-    let commentCountInt = Int(commentCount)!
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yy h:mm a Z"
+
+        let date = dateFormatter.date(from: timestamp)! as NSDate
+
+        guard let authorID = data["authorID"] as? String else {
+            return nil
+        }
+
+        guard let membersStr = data["members"] as? String else {
+            return nil
+        }
+        let members = membersStr.components(separatedBy: "-")
+
+        guard let commentCount = data["commentCount"] as? String else {
+            return nil
+        }
+        let commentCountInt = Int(commentCount)!
 
 
-    guard let heartCount = data["heartCount"] as? String else {
-        return nil
-    }
-    let heartCountInt = Int(heartCount)!
+        guard let heartCount = data["heartCount"] as? String else {
+            return nil
+        }
+        let heartCountInt = Int(heartCount)!
 
-    guard let reportCount = data["reportCount"] as? String else {
-        return nil
-    }
-    let reportCountInt = Int(reportCount)!
+        guard let reportCount = data["reportCount"] as? String else {
+            return nil
+        }
+        let reportCountInt = Int(reportCount)!
 
-    guard let active = data["isActive"] as? String else {
-        return nil
+        guard let active = data["isActive"] as? String else {
+            return nil
+        }
+
+        guard let isActiveBool = Bool(active) else {return nil}
+
+        guard let isLocked = data["isLocked"] as? String else {
+            return nil
+        }
+
+        guard let isLockedBool = Bool(isLocked) else {
+            return nil
+        }
+
+        guard let bannedListStr = data["bannedList"] as? String else {
+            return nil
+        }
+        let bannedList = bannedListStr.components(separatedBy: "-")
+
+        id = docId
+
+        self.content = content
+        self.author = author
+        self.commentCount = commentCountInt
+        self.heartCount = heartCountInt
+        self.reportCount = reportCountInt
+        self.timestamp = date
+        self.members = members
+        self.authorID = authorID
+        self.isActive = isActiveBool
+        self.isLocked = isLockedBool
+        self.bannedList = bannedList
     }
 
-    guard let isActiveBool = Bool(active) else {return nil}
-    
-    guard let isLocked = data["isLocked"] as? String else {
-        return nil
+    init?(document: QueryDocumentSnapshot) {
+        let data = document.data()
+
+
+        guard let content = data["content"] as? String else {
+            return nil
+        }
+
+        guard let author = data["author"] as? String else {
+            return nil
+        }
+
+        guard let timestamp = data["timestamp"] as? String else {
+            return nil
+        }
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yy h:mm a Z"
+
+        var date = NSDate()
+        if let realDate = dateFormatter.date(from: timestamp) as? NSDate {
+            print("date = realDate")
+            date = realDate
+        }
+        guard let authorID = data["authorID"] as? String else {
+            return nil
+        }
+
+        guard let membersStr = data["members"] as? String else {
+            return nil
+        }
+        let members = membersStr.components(separatedBy: "-")
+
+        guard let commentCount = data["commentCount"] as? String else {
+            return nil
+        }
+        let commentCountInt = Int(commentCount)!
+
+
+        guard let heartCount = data["heartCount"] as? String else {
+            return nil
+        }
+        let heartCountInt = Int(heartCount)!
+
+        guard let reportCount = data["reportCount"] as? String else {
+            return nil
+        }
+        let reportCountInt = Int(reportCount)!
+
+        guard let active = data["isActive"] as? String else {
+            return nil
+        }
+
+        guard let isActiveBool = Bool(active) else {return nil}
+
+        guard let isLocked = data["isLocked"] as? String else {
+            return nil
+        }
+
+        guard let isLockedBool = Bool(isLocked) else {
+            return nil
+        }
+
+        guard let bannedListStr = data["bannedList"] as? String else {
+            return nil
+        }
+        let bannedList = bannedListStr.components(separatedBy: "-")
+
+        id = document.documentID
+
+        self.content = content
+        self.author = author
+        self.commentCount = commentCountInt
+        self.heartCount = heartCountInt
+        self.reportCount = reportCountInt
+        self.timestamp = date
+        self.members = members
+        self.authorID = authorID
+        self.isActive = isActiveBool
+        self.isLocked = isLockedBool
+        self.bannedList = bannedList
     }
-    
-    guard let isLockedBool = Bool(isLocked) else {
-        return nil
-    }
-    
-    guard let bannedListStr = data["bannedList"] as? String else {
-        return nil
-    }
-    let bannedList = bannedListStr.components(separatedBy: "-")
-    
-    id = document.documentID
-    
-    self.content = content
-    self.author = author
-    self.commentCount = commentCountInt
-    self.heartCount = heartCountInt
-    self.reportCount = reportCountInt
-    self.timestamp = date
-    self.members = members
-    self.authorID = authorID
-    self.isActive = isActiveBool
-    self.isLocked = isLockedBool
-    self.bannedList = bannedList
-  }
 }
 
 extension Post : DatabaseRepresentation {
 
-  
-  var representation: [String : Any] {
-    var rep = ["content": content]
-    rep["author"] = author
-    rep["timestamp"] = timestamp.toString(dateFormat: "MM/dd/yy h:mm a Z")
-    rep["commentCount"] = String(commentCount)
-    rep["heartCount"] = String(heartCount)
-    rep["reportCount"] = String(heartCount)
-    rep["authorID"] = authorID
-    rep["members"] = members.joined(separator: "-")
-    rep["isActive"] = String(isActive)
-    rep["isLocked"] = String(isLocked)
-    rep["bannedList"] = bannedList.joined(separator: "-")
 
-    if let id = id {
-      rep["id"] = id
+    var representation: [String : Any] {
+        var rep = ["content": content]
+        rep["author"] = author
+        rep["timestamp"] = timestamp.toString(dateFormat: "MM/dd/yy h:mm a Z")
+        rep["commentCount"] = String(commentCount)
+        rep["heartCount"] = String(heartCount)
+        rep["reportCount"] = String(heartCount)
+        rep["authorID"] = authorID
+        rep["members"] = members.joined(separator: "-")
+        rep["isActive"] = String(isActive)
+        rep["isLocked"] = String(isLocked)
+        rep["bannedList"] = bannedList.joined(separator: "-")
+
+        if let id = id {
+            rep["id"] = id
+        }
+
+        return rep
     }
-    
-    return rep
-  }
-  
+
 }
 
 extension Post: Comparable {
-  
-  static func == (lhs: Post, rhs: Post) -> Bool {
-    return lhs.id == rhs.id
-  }
-  
-  static func < (lhs: Post, rhs: Post) -> Bool {
-    return rhs.timestamp < lhs.timestamp
-  }
+
+    static func == (lhs: Post, rhs: Post) -> Bool {
+        return lhs.id == rhs.id
+    }
+
+    static func < (lhs: Post, rhs: Post) -> Bool {
+        return rhs.timestamp < lhs.timestamp
+    }
 
 }
