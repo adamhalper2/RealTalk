@@ -29,15 +29,25 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     var heartCount : Int = 0 {
         didSet {
-            heartButton.setTitle(String(heartCount), for: .normal)
-            //heartButton.sizeToFit()
-            //self.navigationItem.leftBarButtonItem?.title = String(heartCount)
+            DispatchQueue.main.async {
+                self.heartButton.setTitle(String(self.heartCount), for: .normal)
+            }
         }
     }
     var unreadNotifCount : Int = 0 {
         didSet {
             if notificationButton != nil {
-                notificationButton?.badge = "\(unreadNotifCount)"
+
+                DispatchQueue.main.async {
+                    if self.unreadNotifCount == 0 {
+                        self.notificationButton?.badgeBackgroundColor = UIColor.clear
+                        self.notificationButton?.badgeTextColor = UIColor.clear
+                    } else if self.notificationButton?.badgeBackgroundColor == UIColor.clear {
+                        self.notificationButton?.badgeBackgroundColor = UIColor.customPurple
+                        self.notificationButton?.badgeTextColor = UIColor.white
+                    }
+                    self.notificationButton?.badge = "\(self.unreadNotifCount)"
+                }
             }
         }
     }

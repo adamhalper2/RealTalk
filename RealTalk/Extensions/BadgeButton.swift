@@ -11,6 +11,7 @@ import UIKit
 class BadgeButton: UIButton {
 
     var badgeLabel = UILabel()
+    let colors = Colors()
 
     var badge: String? {
         didSet {
@@ -18,7 +19,7 @@ class BadgeButton: UIButton {
         }
     }
 
-    public var badgeBackgroundColor = UIColor.red {
+    public var badgeBackgroundColor = UIColor.customPurple {
         didSet {
             badgeLabel.backgroundColor = badgeBackgroundColor
         }

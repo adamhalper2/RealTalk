@@ -129,7 +129,7 @@ class PostTableViewCell: UITableViewCell {
                         DispatchQueue.main.async {
                             self.heartBtn.isEnabled = false
                             print("heart button disabled for post \(post.content)")
-                            self.heartBtn.tintColor = UIColor.green
+                            self.heartBtn.tintColor = UIColor.customPurple.withAlphaComponent(0.5)
                             return
                         }
                     } else {
@@ -223,7 +223,7 @@ class PostTableViewCell: UITableViewCell {
 
     @IBAction func heartTapped(_ sender: Any) {
         print("heart tapped")
-        heartBtn.tintColor = UIColor.green
+        heartBtn.tintColor = UIColor.customPurple.withAlphaComponent(0.5)
         heartBtn.isEnabled = false
         addHeartToPost()
         /*
