@@ -18,8 +18,6 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
     private var notifications: [CustomNotif] = []
 
 
-
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return notifications.count
     }
@@ -28,11 +26,21 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
         let cell = tableView.dequeueReusableCell(withIdentifier: "notifCell") as! NotificationTableViewCell
 
         let currNotif = notifications[indexPath.row]
-
-        var notifStr = "\(currNotif.title) \"\(currNotif.body)"
+        let notifStr = "\(currNotif.title) \"\(currNotif.body)\""
 
         cell.bodyLabel.text = notifStr
-        //cell.dateLabel.text = currNotif.timestamp
+
+        let dateHelp = DateHelper()
+        cell.dateLabel.text = dateHelp.timeAgoSinceDate(date: currNotif.timestamp, numericDates: true)
+
+        let colors = Colors()
+        if (!currNotif.read) {
+            cell.backgroundColor = UIColor.blue.withAlphaComponent(0.1)
+        } else {
+            cell.backgroundColor = UIColor.white
+        }
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
+
         return cell
     }
 
@@ -42,6 +50,7 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     @IBOutlet weak var tableView: UITableView!
+
 
     override func viewDidLoad() {
 
@@ -92,6 +101,7 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         loadNotifications()
         // Do any additional setup after loading the view.
     }
@@ -113,12 +123,29 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
 
     }
 
+    deinit {
+        notificationListener?.remove()
+    }
+
+    func updateReadStatus(notification: CustomNotif) {
+        guard let userID = AppController.user?.uid else {return}
+        if reference == nil {
+            reference = db.collection(["students", userID, "notifications"].joined(separator: "/"))
+        }
+
+        guard let notifID = notification.notifID else {return}
+        let read = true
+        reference?.document(notifID).updateData([
+            "read": String(read)
+        ])
+    }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
         let notif = notifications[indexPath.row]
-        let user = AppController.user
+        guard let user = AppController.user else {return}
+        updateReadStatus(notification: notif)
 
-
-        guard let userID = user?.uid else {return}
         guard let postID = notif.postID else {return}
 
         let postReference =  db.collection("channels").document(postID)
@@ -128,7 +155,9 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
             } else {
                 guard let data = documentSnapshot?.data() else {return}
                 guard let post = Post(data: data, docId: documentSnapshot!.documentID) else {return}
-                let vc = ChatViewController(user: user!, post: post)
+                let cell = tableView.cellForRow(at: indexPath)
+                cell?.backgroundColor = UIColor.white
+                let vc = ChatViewController(user: user, post: post)
                 self.navigationController?.pushViewController(vc, animated:true)
 
                 print(post)
@@ -140,7 +169,6 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
         guard !notifications.contains(notification) else {
             return
         }
-        print("calling add post to table")
         notifications.append(notification)
         notifications.sort()
 
@@ -161,8 +189,6 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
 
 
     private func handleDocumentChange(_ change: DocumentChange) {
-        print("calling handle document change")
-
         guard var notification = CustomNotif(document: change.document) else {
             return
         }
@@ -194,7 +220,10 @@ class NotificationTableViewCell: UITableViewCell {
 
     @IBOutlet weak var bodyLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var onlineIndicator: UIImageView!
+
+    override func prepareForReuse() {
+        self.backgroundColor = UIColor.white
+    }
 
 
 }

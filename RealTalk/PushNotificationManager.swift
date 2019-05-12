@@ -25,7 +25,8 @@ enum UserNotifs: String {
 class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCenterDelegate {
     var userID: String?
     var notifications: [UNNotification]?
-    var formatted: CustomNotif?
+    private let db = Firestore.firestore()
+    private var reference: CollectionReference?
 
 
 
@@ -107,8 +108,24 @@ class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCe
 
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        print("did receive response")
+
+        let notification = response.notification
+        let userInfo = notification.request.content.userInfo
+        guard let notifID = userInfo["gcm.notification.notifID"] as? String else {return}
+        updateReadStatus(notifID: notifID)
         print(response)
+    }
+
+    func updateReadStatus(notifID: String) {
+        guard let userID = AppController.user?.uid else {return}
+        if reference == nil {
+            reference = db.collection(["students", userID, "notifications"].joined(separator: "/"))
+        }
+
+        let read = String(true)
+        reference?.document(notifID).updateData([
+            "read": String(read)
+        ])
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void)
@@ -142,7 +159,8 @@ class PushNotificationSender {
 
         reference = db.collection(["students", userID, "notifications"].joined(separator: "/"))
 
-        reference?.addDocument(data: notif.representation) { error in
+        guard let notifID = notif.notifID else {return}
+        reference?.document(notifID).setData(notif.representation) { error in
             if let e = error {
                 print("Error sending message: \(e.localizedDescription)")
                 return
@@ -168,7 +186,7 @@ class PushNotificationSender {
         let url = NSURL(string: urlString)!
         let paramString: [String : Any] = ["to" : token,
                                            "notification" : ["title" : title, "body" : body, "click-action": type, "postID": postID, "notifID": notifID],
-                                           "userInfo" : ["postID": postID]
+                                           "userInfo" : []
         ]
         let request = NSMutableURLRequest(url: url as URL)
         request.httpMethod = "POST"

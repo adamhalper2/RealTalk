@@ -27,6 +27,7 @@
 		8A05A9232285154D00B3F60B /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A05A9222285154D00B3F60B /* NotificationsViewController.swift */; };
 		8A05A9252285250600B3F60B /* CustomNotif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A05A9242285250600B3F60B /* CustomNotif.swift */; };
 		8A05A9272285296400B3F60B /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A05A9262285296400B3F60B /* DateHelper.swift */; };
+		8A05A9292287A04500B3F60B /* BadgeNotificationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A05A9282287A04500B3F60B /* BadgeNotificationButton.swift */; };
 		8A1F306A227A18050065D370 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8A1F3069227A18050065D370 /* GoogleService-Info.plist */; };
 		8A1F306C227A23AC0065D370 /* Heart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1F306B227A23AC0065D370 /* Heart.swift */; };
 		8A1F306E227A27020065D370 /* TabBar+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1F306D227A27020065D370 /* TabBar+Additions.swift */; };
@@ -70,6 +71,7 @@
 		8A05A9222285154D00B3F60B /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		8A05A9242285250600B3F60B /* CustomNotif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNotif.swift; sourceTree = "<group>"; };
 		8A05A9262285296400B3F60B /* DateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
+		8A05A9282287A04500B3F60B /* BadgeNotificationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeNotificationButton.swift; sourceTree = "<group>"; };
 		8A1F3069227A18050065D370 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8A1F306B227A23AC0065D370 /* Heart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heart.swift; sourceTree = "<group>"; };
 		8A1F306D227A27020065D370 /* TabBar+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabBar+Additions.swift"; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 		3BC2AFF722781DCD00B01F32 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				8A05A9262285296400B3F60B /* DateHelper.swift */,
 				3BC2AFF322781DBE00B01F32 /* UIImage+Additions.swift */,
 				3BC2AFF522781DC600B01F32 /* UIView+Additions.swift */,
 				3B82425B227EA0CC00C0A6CA /* String+Additions.swift */,
@@ -125,6 +128,7 @@
 				3BC2AFFD227826E300B01F32 /* NSDate+Additions.swift */,
 				8A1F306D227A27020065D370 /* TabBar+Additions.swift */,
 				3B824261227F6DE400C0A6CA /* Date+Additions.swift */,
+				8A05A9282287A04500B3F60B /* BadgeNotificationButton.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -139,7 +143,6 @@
 				8A1F3073227A57B70065D370 /* ChatPreviewTableViewCell.swift */,
 				8A1F3071227A48150065D370 /* MyChatsViewController.swift */,
 				8A5AF9232275088A00E4AC1A /* PostTableViewCell.swift */,
-				8A05A9262285296400B3F60B /* DateHelper.swift */,
 				8A5AF9272275266C00E4AC1A /* CreatePostViewController.swift */,
 				3BAAC09422780F68007C5DCE /* ChatViewController.swift */,
 				8A5AF92122743F9E00E4AC1A /* HomeViewController.swift */,
@@ -356,6 +359,7 @@
 				3BC2AFF022781D7A00B01F32 /* UIColor+Additions.swift in Sources */,
 				8A05A9272285296400B3F60B /* DateHelper.swift in Sources */,
 				3BAAC09522780F68007C5DCE /* ChatViewController.swift in Sources */,
+				8A05A9292287A04500B3F60B /* BadgeNotificationButton.swift in Sources */,
 				8A1F3074227A57B70065D370 /* ChatPreviewTableViewCell.swift in Sources */,
 				3BC2AFF622781DC600B01F32 /* UIView+Additions.swift in Sources */,
 				8A2C8F14227536FF00188975 /* Colors.swift in Sources */,
