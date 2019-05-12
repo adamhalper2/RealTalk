@@ -31,7 +31,9 @@ import UIKit
 extension UIColor {
   
   static var primary: UIColor {
-    return UIColor(red: 1 / 255, green: 93 / 255, blue: 48 / 255, alpha: 1)
+    //return UIColor(red: 1 / 255, green: 93 / 255, blue: 48 / 255, alpha: 1)
+    //return UIColor(red: 144/255, green: 19/255, blue: 254/255, alpha: 1)
+    return UIColor(red: 62/255, green: 62/255, blue: 62/255, alpha: 1)
   }
   
   static var incomingMessage: UIColor {
@@ -41,5 +43,8 @@ extension UIColor {
     static var customPurple: UIColor {
         return UIColor(red: 144/255, green: 19/255, blue: 254/255, alpha: 1)
     }
-  
+
+    static var greenHighlight: UIColor {
+        return UIColor(red: 101/255, green: 200/255, blue: 122/255, alpha: 1)
+    }
 }

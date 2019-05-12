@@ -110,6 +110,8 @@ class PostTableViewCell: UITableViewCell {
         heartBtn.tintColor = UIColor.groupTableViewBackground
         heartBtn.isEnabled = true
         reportBtn.tintColor = UIColor.darkGray
+        reportBtn.isEnabled = true
+
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

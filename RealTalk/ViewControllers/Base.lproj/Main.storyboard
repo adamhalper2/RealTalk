@@ -146,40 +146,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s6y-5O-bkJ">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="85"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v2S-Q3-uKS" userLabel="xButton">
-                                        <rect key="frame" x="16" y="49.5" width="16" height="16"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="16" id="DrR-Cd-cXX"/>
-                                            <constraint firstAttribute="width" constant="16" id="God-bh-XL6"/>
-                                        </constraints>
-                                        <state key="normal" image="xIcon"/>
-                                        <connections>
-                                            <action selector="closeTapped:" destination="1Z8-qz-R3a" eventType="touchUpInside" id="R5c-ac-rJE"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="io8-Gk-klw">
-                                        <rect key="frame" x="351" y="41" width="47" height="33"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
-                                        <state key="normal" title="Share">
-                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="shareTapped:" destination="1Z8-qz-R3a" eventType="touchUpInside" id="8KH-kO-tTa"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="85" id="P6I-zw-bJe"/>
-                                    <constraint firstItem="v2S-Q3-uKS" firstAttribute="leading" secondItem="s6y-5O-bkJ" secondAttribute="leading" constant="16" id="RV4-3I-E0e"/>
-                                    <constraint firstItem="v2S-Q3-uKS" firstAttribute="centerY" secondItem="s6y-5O-bkJ" secondAttribute="centerY" constant="15" id="VMO-9J-4Nt"/>
-                                    <constraint firstItem="io8-Gk-klw" firstAttribute="centerY" secondItem="v2S-Q3-uKS" secondAttribute="centerY" id="hEn-90-Hdg"/>
-                                    <constraint firstAttribute="trailing" secondItem="io8-Gk-klw" secondAttribute="trailing" constant="16" id="t0j-IQ-qk8"/>
-                                </constraints>
-                            </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="I wanna talk with someone about..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="kcq-5Y-tpP" userLabel="postTextView">
                                 <rect key="frame" x="16" y="93" width="382" height="260"/>
                                 <constraints>
@@ -222,21 +188,44 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="s6y-5O-bkJ" firstAttribute="trailing" secondItem="Zsv-g1-gze" secondAttribute="trailing" id="1fu-0j-h9M"/>
+                            <constraint firstItem="kcq-5Y-tpP" firstAttribute="top" secondItem="Zsv-g1-gze" secondAttribute="top" constant="5" id="4GU-te-5do"/>
                             <constraint firstItem="kcq-5Y-tpP" firstAttribute="leading" secondItem="Zsv-g1-gze" secondAttribute="leading" constant="16" id="65H-2X-Xtu"/>
                             <constraint firstItem="Zsv-g1-gze" firstAttribute="trailing" secondItem="kcq-5Y-tpP" secondAttribute="trailing" constant="16" id="Afv-R8-eEj"/>
                             <constraint firstItem="OeG-Z6-xlL" firstAttribute="top" secondItem="kcq-5Y-tpP" secondAttribute="bottom" id="N8L-Ai-atE"/>
                             <constraint firstItem="Zsv-g1-gze" firstAttribute="trailing" secondItem="OeG-Z6-xlL" secondAttribute="trailing" constant="16" id="R3u-Qb-RCH"/>
-                            <constraint firstItem="kcq-5Y-tpP" firstAttribute="top" secondItem="s6y-5O-bkJ" secondAttribute="bottom" constant="8" id="Xtp-mT-3J9"/>
-                            <constraint firstItem="s6y-5O-bkJ" firstAttribute="leading" secondItem="Zsv-g1-gze" secondAttribute="leading" id="fei-oS-LHI"/>
-                            <constraint firstItem="s6y-5O-bkJ" firstAttribute="top" secondItem="vb6-f5-bJu" secondAttribute="top" id="hJ5-rh-jt8"/>
                             <constraint firstItem="OeG-Z6-xlL" firstAttribute="leading" secondItem="Zsv-g1-gze" secondAttribute="leading" constant="16" id="sct-ff-eCb"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Zsv-g1-gze"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="createPostIcon" selectedImage="createPostIcon" id="9FX-4D-St7" userLabel="Post" customClass="TabB">
-                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
-                    </tabBarItem>
+                    <navigationItem key="navigationItem" title="New Chat" id="sVO-ML-Jz0">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="f5T-gN-6VI">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="v2S-Q3-uKS" userLabel="xButton">
+                                <rect key="frame" x="20" y="9.5" width="26" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="16" id="DrR-Cd-cXX"/>
+                                    <constraint firstAttribute="width" constant="16" id="God-bh-XL6"/>
+                                </constraints>
+                                <state key="normal" image="xIcon"/>
+                                <connections>
+                                    <action selector="closeTapped:" destination="1Z8-qz-R3a" eventType="touchUpInside" id="R5c-ac-rJE"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="Bbx-zP-0s5">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="io8-Gk-klw">
+                                <rect key="frame" x="339" y="5.5" width="55" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                                <state key="normal" title="Create">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="shareTapped:" destination="1Z8-qz-R3a" eventType="touchUpInside" id="8KH-kO-tTa"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="charCountLabel" destination="48l-ka-klG" id="DS3-4P-6dC"/>
                         <outlet property="closeBtn" destination="v2S-Q3-uKS" id="kjq-MM-FRL"/>
@@ -246,7 +235,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p3p-6W-wOe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1413" y="983"/>
+            <point key="canvasLocation" x="579.71014492753625" y="1287.7232142857142"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="qbt-MV-2UB">
@@ -452,7 +441,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EWm-d7-0E9">
                                                     <rect key="frame" x="15" y="115" width="384" height="30"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s3n-T9-h49">
+                                                        <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s3n-T9-h49">
                                                             <rect key="frame" x="162" y="0.0" width="60" height="30"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="60" id="DOI-JF-eER"/>
@@ -611,7 +600,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="wHL-La-ZHU" kind="relationship" relationship="viewControllers" id="jua-7w-xaT"/>
-                        <segue destination="1Z8-qz-R3a" kind="relationship" relationship="viewControllers" id="CgK-4S-baH"/>
+                        <segue destination="SVM-9V-K5b" kind="relationship" relationship="viewControllers" id="CgK-4S-baH"/>
                         <segue destination="jOp-sA-I2j" kind="relationship" relationship="viewControllers" id="gYR-YQ-5Ak"/>
                     </connections>
                 </tabBarController>
@@ -887,6 +876,27 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AqE-hu-YYR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2681" y="-1100"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="S4J-Hc-rgB">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="SVM-9V-K5b" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="createPostIcon" selectedImage="createPostIcon" id="9FX-4D-St7" userLabel="Post" customClass="TabB">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
+                    </tabBarItem>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="WoB-mt-eo0">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="1Z8-qz-R3a" kind="relationship" relationship="rootViewController" id="FvU-NX-l6H"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CMH-FN-pF6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-330.43478260869568" y="1287.7232142857142"/>
         </scene>
     </scenes>
     <resources>
