@@ -56,14 +56,53 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let post = posts[indexPath.row]
         if editingStyle == .delete {
-            let post = posts[indexPath.row]
-            removeChatToUserList(postId: post.id!)
-            removeMember(post: post)
-            posts.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            if post.authorID == AppController.user?.uid {
+                deactivateChat(post: post)
+                posts.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            } else {
+                removeChatToUserList(postId: post.id!)
+                removeMember(post: post)
+                posts.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let post = posts[indexPath.row]
+        if post.authorID == AppController.user?.uid {
+            let deleteButton = UITableViewRowAction(style: .default, title: "Delete Chat") { (action, indexPath) in
+                self.tableView.dataSource?.tableView!(self.tableView, commit: .delete, forRowAt: indexPath)
+                return
+            }
+            deleteButton.backgroundColor = UIColor.red
+            return [deleteButton]
+            
+        } else {
+            let deleteButton = UITableViewRowAction(style: .default, title: "Leave Chat") { (action, indexPath) in
+                self.tableView.dataSource?.tableView!(self.tableView, commit: .delete, forRowAt: indexPath)
+                return
+            }
+            deleteButton.backgroundColor = UIColor.black
+            return [deleteButton]
+        }
+    }
+    
+    func deactivateChat(post: Post) {
+        let postRef = db.collection("channels").document(post.id!)
+        postRef.updateData([
+            "isActive": String(false)
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+            }
         }
     }
     
