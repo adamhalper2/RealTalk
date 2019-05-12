@@ -39,6 +39,10 @@
 		8A5AF92222743F9E00E4AC1A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF92122743F9E00E4AC1A /* HomeViewController.swift */; };
 		8A5AF9242275088A00E4AC1A /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF9232275088A00E4AC1A /* PostTableViewCell.swift */; };
 		8A5AF9282275266C00E4AC1A /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF9272275266C00E4AC1A /* CreatePostViewController.swift */; };
+		8AB7D7AB2287C5F100DBBC04 /* CustomNotif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB7D7AA2287C5F100DBBC04 /* CustomNotif.swift */; };
+		8AB7D7AF2287C6AD00DBBC04 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB7D7AE2287C6AD00DBBC04 /* DateHelper.swift */; };
+		8AB7D7B12287C93600DBBC04 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB7D7B02287C93600DBBC04 /* NotificationsViewController.swift */; };
+		8AB7D7B32287CAF900DBBC04 /* BadgeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB7D7B22287CAF900DBBC04 /* BadgeButton.swift */; };
 		8ABB643722822FD400E33C0F /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB643622822FD400E33C0F /* Report.swift */; };
 		8ABB64392282708100E33C0F /* OnlineOfflineManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB64382282708100E33C0F /* OnlineOfflineManager.swift */; };
 		9F71B75505BC8C73CAEF8894 /* Pods_RealTalk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2869E8359ECA7ECECC54B28 /* Pods_RealTalk.framework */; };
@@ -81,6 +85,10 @@
 		8A5AF92122743F9E00E4AC1A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		8A5AF9232275088A00E4AC1A /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		8A5AF9272275266C00E4AC1A /* CreatePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
+		8AB7D7AA2287C5F100DBBC04 /* CustomNotif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNotif.swift; sourceTree = "<group>"; };
+		8AB7D7AE2287C6AD00DBBC04 /* DateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
+		8AB7D7B02287C93600DBBC04 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
+		8AB7D7B22287CAF900DBBC04 /* BadgeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeButton.swift; sourceTree = "<group>"; };
 		8ABB643622822FD400E33C0F /* Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Report.swift; sourceTree = "<group>"; };
 		8ABB64382282708100E33C0F /* OnlineOfflineManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineOfflineManager.swift; sourceTree = "<group>"; };
 		A0570830AB5455B44E73DE65 /* Pods-RealTalk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealTalk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RealTalk/Pods-RealTalk.debug.xcconfig"; sourceTree = "<group>"; };
@@ -119,6 +127,8 @@
 				3BC2AFFD227826E300B01F32 /* NSDate+Additions.swift */,
 				8A1F306D227A27020065D370 /* TabBar+Additions.swift */,
 				3B824261227F6DE400C0A6CA /* Date+Additions.swift */,
+				8AB7D7AE2287C6AD00DBBC04 /* DateHelper.swift */,
+				8AB7D7B22287CAF900DBBC04 /* BadgeButton.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -137,6 +147,7 @@
 				3BAAC09422780F68007C5DCE /* ChatViewController.swift */,
 				8A5AF92122743F9E00E4AC1A /* HomeViewController.swift */,
 				3B3700BE2282852300E65BF9 /* MessageDetailViewController.swift */,
+				8AB7D7B02287C93600DBBC04 /* NotificationsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -150,6 +161,7 @@
 				8ABB643622822FD400E33C0F /* Report.swift */,
 				8A1F306B227A23AC0065D370 /* Heart.swift */,
 				8A1F3075227B7F0F0065D370 /* Student.swift */,
+				8AB7D7AA2287C5F100DBBC04 /* CustomNotif.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -341,9 +353,13 @@
 				3B82425C227EA0CC00C0A6CA /* String+Additions.swift in Sources */,
 				3B824262227F6DE400C0A6CA /* Date+Additions.swift in Sources */,
 				3B1F1A9D2277B132001655B6 /* Post.swift in Sources */,
+				8AB7D7AB2287C5F100DBBC04 /* CustomNotif.swift in Sources */,
 				3B824260227EB77B00C0A6CA /* HandleSelectionViewController.swift in Sources */,
+				8AB7D7B32287CAF900DBBC04 /* BadgeButton.swift in Sources */,
 				3BC2AFF022781D7A00B01F32 /* UIColor+Additions.swift in Sources */,
 				3BAAC09522780F68007C5DCE /* ChatViewController.swift in Sources */,
+				8AB7D7B12287C93600DBBC04 /* NotificationsViewController.swift in Sources */,
+				8AB7D7AF2287C6AD00DBBC04 /* DateHelper.swift in Sources */,
 				8A1F3074227A57B70065D370 /* ChatPreviewTableViewCell.swift in Sources */,
 				3BC2AFF622781DC600B01F32 /* UIView+Additions.swift in Sources */,
 				8A2C8F14227536FF00188975 /* Colors.swift in Sources */,

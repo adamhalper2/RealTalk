@@ -126,9 +126,9 @@ final class AppController {
         if AppSettings.displayName != nil {
             presenceManager.markUserOnline()
 
-            if let manager = PushNotificationManager(userID: user.uid) {
-                manager.updateFirestorePushTokenIfNeeded()
-            }
+            PushNotificationManager.shared.userID = user.uid
+            PushNotificationManager.shared.updateFirestorePushTokenIfNeeded()
+            
             let tabContoller = storyboard.instantiateViewController(withIdentifier: "TabBarController")
             rootViewController = tabContoller
         } else {

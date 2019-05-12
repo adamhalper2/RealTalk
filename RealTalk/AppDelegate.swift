@@ -23,8 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
-        let pushManager = PushNotificationManager()
-        pushManager.registerForPushNotifications()
+        PushNotificationManager.shared.registerForPushNotifications()
+        UNUserNotificationCenter.current().delegate = PushNotificationManager.shared
         AppController.shared.show(in: UIWindow(frame: UIScreen.main.bounds))
         return true
     }
