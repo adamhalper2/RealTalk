@@ -23,18 +23,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
-//        let pushManager = PushNotificationManager()
-
-
-        PushNotificationManager.shared.registerForPushNotifications()
-        UNUserNotificationCenter.current().delegate = PushNotificationManager.shared
-
-//        pushManager.registerForPushNotifications()
+        let pushManager = PushNotificationManager()
+        pushManager.registerForPushNotifications()
         AppController.shared.show(in: UIWindow(frame: UIScreen.main.bounds))
         return true
     }
-
-    
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -65,6 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.saveContext()
     }
 
+    
     // MARK: - Handle Dynamic links
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity,
