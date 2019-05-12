@@ -43,9 +43,9 @@ final class AppSettings {
       let key = SettingKey.displayName.rawValue
       
       if let name = newValue {
-        defaults.set(name, forKey: key)
+            defaults.set(name, forKey: key)
       } else {
-        defaults.removeObject(forKey: key)
+            defaults.removeObject(forKey: key)
       }
     }
   }

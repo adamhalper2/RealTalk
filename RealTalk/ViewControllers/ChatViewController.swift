@@ -97,20 +97,24 @@ final class ChatViewController: MessagesViewController {
       }
     }
     
-    //let postReference = db.collection(["channels", id].joined(separator: "/"))
     
-    let postReference =  db.collection("channels")
-    
-    postListener = postReference.addSnapshotListener { querySnapshot, error in
-        guard let snapshot = querySnapshot else {
-            print("Error listening for channel updates: \(error?.localizedDescription ?? "No error")")
-            return
-        }
-        
-        snapshot.documentChanges.forEach { change in
-            self.handlePostChange(change)
-        }
+    db.collection("channels").document(post.id!)
+        .addSnapshotListener { documentSnapshot, error in
+            guard let document = documentSnapshot else {
+                print("Error fetching document: \(error!)")
+                return
+            }
+            guard let data = document.data() else {
+                print("Document data was empty.")
+                return
+            }
+            
+            
+            DispatchQueue.main.async {
+                self.handlePostChange(data: data, docId: document.documentID)
+            }
     }
+    
     
 //    // 1
 //    let cameraItem = InputBarButtonItem(type: .system)
@@ -309,9 +313,9 @@ final class ChatViewController: MessagesViewController {
     }
   }
     
-  private func handlePostChange(_ change: DocumentChange) {
+    private func handlePostChange(data: [String: Any], docId: String) {
     
-    guard let post = Post(document: change.document) else {
+    guard let post = Post(data: data, docId: docId) else {
         return
     }
     
@@ -497,13 +501,13 @@ extension ChatViewController: MessageInputBarDelegate {
     print("members are: \(post.members)")
     // 2.5 add new member
     addMember(uid: user.uid)
-    addChatToUserList(uid: user.uid)
+    addChatToUserList()
 
     // 3
     inputBar.inputTextView.text = ""
   }
 
-    func addChatToUserList(uid: String) {
+    func addChatToUserList() {
         let userRef = db.collection("students").document(user.uid)
         
         userRef.getDocument { (documentSnapshot, err) in
@@ -565,6 +569,30 @@ extension ChatViewController: MessageInputBarDelegate {
                 print("Error updating document: \(err)")
             } else {
                 print("removed member")
+            }
+        }
+    }
+    
+    func removeChatToUserList() {
+        let user = AppController.user
+        let userRef = db.collection("students").document(user!.uid)
+        
+        userRef.getDocument { (documentSnapshot, err) in
+            if let err = err {
+                print("Error getting document: \(err)")
+            } else {
+                guard let data = documentSnapshot?.data() else {return}
+                if var joinedChatIDsStr = data["joinedChatIDs"] as? String {
+                    print("*~*~old joined chats: \(joinedChatIDsStr)")
+                    
+                    var joinedChatIDs = joinedChatIDsStr.components(separatedBy: "-")
+                    joinedChatIDs.removeAll{$0 == self.post.id!}
+                    joinedChatIDsStr = joinedChatIDs.joined(separator: "-")
+                    userRef.updateData(
+                        ["joinedChatIDs": joinedChatIDsStr]
+                    )
+                    print("*~*~updated joined chats to \(joinedChatIDsStr)")
+                }
             }
         }
     }

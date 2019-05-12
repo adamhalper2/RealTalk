@@ -47,7 +47,7 @@ struct Post {
 
 
     init(content: String, author: String, timestamp: NSDate, authorID: String) {
-        id = nil
+        self.id = nil
         self.content = content
         self.author = author
         self.timestamp = timestamp

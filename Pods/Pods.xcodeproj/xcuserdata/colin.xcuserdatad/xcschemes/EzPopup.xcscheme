@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F4C077553837A742F4666C704E677436"
+               BlueprintIdentifier = "08A1D84C2FADBB24163DC3D193767386"
                BuildableName = "EzPopup.framework"
                BlueprintName = "EzPopup"
                ReferencedContainer = "container:Pods.xcodeproj">

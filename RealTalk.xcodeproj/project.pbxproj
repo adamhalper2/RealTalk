@@ -207,7 +207,7 @@
 		8A5AF90B2273D31500E4AC1A /* RealTalk */ = {
 			isa = PBXGroup;
 			children = (
-				8A05A91E2283E64900B3F60B /* PushNotificationManager.swift */,
+				8A05A91F2283E64A00B3F60B /* PushNotificationManager.swift */,
 				3B311EC7227E5F7700893EA2 /* RealTalk.entitlements */,
 				3B5EA19C22798269005D9E5F /* AppController.swift */,
 				3B5EA19E22798281005D9E5F /* AppSettings.swift */,
@@ -364,7 +364,6 @@
 				3BC2AFF622781DC600B01F32 /* UIView+Additions.swift in Sources */,
 				8A2C8F14227536FF00188975 /* Colors.swift in Sources */,
 				8A1F3072227A48150065D370 /* MyChatsViewController.swift in Sources */,
-				8A05A91F2283E64A00B3F60B /* PushNotificationManager.swift in Sources */,
 				8ABB64392282708100E33C0F /* OnlineOfflineManager.swift in Sources */,
 				3B5EA1A12279829C005D9E5F /* LoginViewController.swift in Sources */,
 				3B1F1A9F2277B3D3001655B6 /* DatabaseRepresentation.swift in Sources */,
@@ -380,6 +379,7 @@
 				8ABB643722822FD400E33C0F /* Report.swift in Sources */,
 				3BC2AFF422781DBE00B01F32 /* UIImage+Additions.swift in Sources */,
 				3B3700BF2282852300E65BF9 /* MessageDetailViewController.swift in Sources */,
+				8A05A91F2283E64A00B3F60B /* PushNotificationManager.swift in Sources */,
 				3B5EA19F22798281005D9E5F /* AppSettings.swift in Sources */,
 				8A1F3076227B7F0F0065D370 /* Student.swift in Sources */,
 			);
