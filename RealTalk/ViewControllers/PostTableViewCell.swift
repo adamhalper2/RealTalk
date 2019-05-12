@@ -22,8 +22,8 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet weak var onlineIndicator: UIImageView!
     @IBOutlet weak var lockIndicator: UIImageView!
 
-    let filledHeart = UIImage(named: "filledHeart")
-    let unfilledHeart = UIImage(named: "unfilledHeart")
+    //let filledHeart = UIImage(named: "filledHeart")
+   // let unfilledHeart = UIImage(named: "unfilledHeart")
     var post: Post?
     private let db = Firestore.firestore()
     let user = AppController.user!
@@ -103,7 +103,8 @@ class PostTableViewCell: UITableViewCell {
     }
 
     override func prepareForReuse() {
-        heartBtn.setImage(unfilledHeart, for: .normal)
+        heartBtn.tintColor = UIColor.groupTableViewBackground
+        heartBtn.isEnabled = true
         reportBtn.tintColor = UIColor.darkGray
     }
 
@@ -123,16 +124,19 @@ class PostTableViewCell: UITableViewCell {
                 print("Error getting documents: \(err)")
             } else {
                 for document in querySnapshot!.documents {
+
                     if document.exists {
                         DispatchQueue.main.async {
                             self.heartBtn.isEnabled = false
-                            self.heartBtn.setImage(self.filledHeart, for: .normal)
+                            print("heart button disabled for post \(post.content)")
+                            self.heartBtn.tintColor = UIColor.green
                             return
                         }
                     } else {
                         DispatchQueue.main.async {
                             self.heartBtn.isEnabled = true
-                            self.heartBtn.setImage(self.unfilledHeart, for: .normal)
+                            print("heart button enabled for post \(post.content)")
+                            self.heartBtn.tintColor = UIColor.groupTableViewBackground
                             return
                         }
                     }
@@ -218,7 +222,11 @@ class PostTableViewCell: UITableViewCell {
     }
 
     @IBAction func heartTapped(_ sender: Any) {
-
+        print("heart tapped")
+        heartBtn.tintColor = UIColor.green
+        heartBtn.isEnabled = false
+        addHeartToPost()
+        /*
         if heartBtn.image(for: .normal) == unfilledHeart {
             UIView.animate(withDuration: 0.01, animations: {
                 self.heartBtn.alpha = 0.0
@@ -228,10 +236,10 @@ class PostTableViewCell: UITableViewCell {
                     self.heartBtn.alpha = 1.0
                 },completion:nil)
             })
+            */
             //heartBtn.setImage(filledHeart, for: .normal)
             //heartBtn.isEnabled = false
-            addHeartToPost()
-        }
+
     }
 
     func pushNotifyHeart(toID: String) {
@@ -248,10 +256,12 @@ class PostTableViewCell: UITableViewCell {
                 }
 
                 guard let content = self.post?.content else {return}
+                guard let postID = self.post?.id else {return}
                 guard let token = data["fcmToken"] as? String else {return}
 
                 let sender = PushNotificationSender()
-                sender.sendPushNotification(to: token, title: "\(AppSettings.displayName) liked your post", body: "\(content)")
+                guard let displayName = AppSettings.displayName else {return}
+                sender.sendPushNotification(to: token, title: "\(displayName) liked your post", body: "\(content)", postID: postID, type: UserNotifs.heart.type(), userID: toID)
                 print("notif sent")
         }
     }
