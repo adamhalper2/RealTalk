@@ -59,6 +59,7 @@ final class ChatViewController: MessagesViewController {
   
   private let storage = Storage.storage().reference()
   private var lockButton: UIBarButtonItem?
+  private var lockUIbtn = UIButton()
   private var isLocked: Bool?
   
   init(user: User, post: Post) {
@@ -150,11 +151,16 @@ final class ChatViewController: MessagesViewController {
     
     if self.post.authorID == self.user.uid {
         isLocked = post.isLocked
-        lockButton = UIBarButtonItem(title: "Lock", style: .plain, target: self, action: #selector(toggleChatLock))
-        //lockButton?.setImage(#imageLiteral(resourceName: "padlock"), for: .normal)
+
+        let btn = UIButton(type: .custom)
+        btn.setImage(UIImage(named: "padlock-unlock"), for: .normal)
+        btn.addTarget(self, action: #selector(toggleChatLock), for: .touchUpInside)
+        btn.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
+        lockButton = UIBarButtonItem(customView: btn)
         if post.isLocked {
-            lockButton!.title = "Unlock"
+            btn.setImage(UIImage(named: "padlock"), for: .normal)
         }
+        self.lockUIbtn = btn
         self.navigationItem.rightBarButtonItem = lockButton
     
     }
@@ -164,10 +170,10 @@ final class ChatViewController: MessagesViewController {
   // MARK: - Actions
   @objc private func toggleChatLock() {
         if self.isLocked! {
-            lockButton!.title = "Lock"
+            lockUIbtn.setImage(UIImage(named: "padlock-unlock"), for: .normal)
             self.isLocked = false
         } else {
-            lockButton!.title = "Unlock"
+            lockUIbtn.setImage(UIImage(named: "padlock"), for: .normal)
             self.isLocked = true
         }
     
