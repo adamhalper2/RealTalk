@@ -23,4 +23,8 @@ target 'RealTalk' do
   pod 'ProgressHUD'
   pod 'Firebase/DynamicLinks'
   pod 'Firebase/Messaging'
+  pod 'Firebase/AdMob'
+  pod 'Google-Mobile-Ads-SDK'
+
+
 end

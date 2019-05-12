@@ -37,7 +37,11 @@ class PostTableViewCell: UITableViewCell {
         let date = post.timestamp
         let timestamp = timeAgoSinceDate(date: date, numericDates: true)
         timeLabel.text = timestamp
-        commentBtn.setTitle(String(post.commentCount), for: .normal)
+        if post.commentCount == 0 {
+            commentBtn.setTitle(" ", for: .normal)
+        } else {
+            commentBtn.setTitle(String(post.commentCount), for: .normal)
+        }
         heartCountLabel.text = String(post.heartCount)
         selectionStyle = UITableViewCell.SelectionStyle.none
         reportBtn.tintColor = UIColor.darkGray

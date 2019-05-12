@@ -9,8 +9,10 @@
 import UIKit
 import Firebase
 import FirebaseFirestore
+import GoogleMobileAds
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate {
 
     private var posts = [Post]()
     private var postsListener: ListenerRegistration?
@@ -18,6 +20,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     private var heartsListener: ListenerRegistration?
     private let db = Firestore.firestore()
     private let user = Auth.auth().currentUser!
+
+    lazy var adBannerView: GADBannerView = {
+        let adBannerView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
+        adBannerView.adUnitID = "ca-app-pub-3243429236269107/6069914982"
+        adBannerView.delegate = self
+        adBannerView.rootViewController = self
+        return adBannerView
+    }()
 
     var refreshControl = UIRefreshControl()
 
@@ -120,7 +130,28 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.handlePostDocumentChange(change)
             }
         }
+        adBannerView.load(GADRequest())
+
     }
+
+    func adViewDidReceiveAd(_ bannerView: GADBannerView!) {
+        print("banner loaded successfully")
+
+        let translateTransform = CGAffineTransform(translationX: 0, y: -bannerView.bounds.size.height)
+        bannerView.transform = translateTransform
+
+        UIView.animate(withDuration: 0.5) {
+            self.tableView.tableHeaderView?.frame = bannerView.frame
+            bannerView.transform = CGAffineTransform.identity
+            self.tableView.tableHeaderView = bannerView
+        }
+    }
+
+    func adView(_ bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
+        print("Fail to receive ads")
+        print(error)
+    }
+
 
 
     func setNavBar() {
