@@ -147,10 +147,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s6y-5O-bkJ">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="85"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v2S-Q3-uKS" userLabel="xButton">
-                                        <rect key="frame" x="16" y="43" width="16" height="16"/>
+                                        <rect key="frame" x="16" y="49.5" width="16" height="16"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="16" id="DrR-Cd-cXX"/>
                                             <constraint firstAttribute="width" constant="16" id="God-bh-XL6"/>
@@ -161,7 +161,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="io8-Gk-klw">
-                                        <rect key="frame" x="351" y="34.5" width="47" height="33"/>
+                                        <rect key="frame" x="351" y="41" width="47" height="33"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
                                         <state key="normal" title="Share">
                                             <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -173,15 +173,15 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="P6I-zw-bJe"/>
+                                    <constraint firstAttribute="height" constant="85" id="P6I-zw-bJe"/>
                                     <constraint firstItem="v2S-Q3-uKS" firstAttribute="leading" secondItem="s6y-5O-bkJ" secondAttribute="leading" constant="16" id="RV4-3I-E0e"/>
-                                    <constraint firstItem="v2S-Q3-uKS" firstAttribute="centerY" secondItem="s6y-5O-bkJ" secondAttribute="centerY" constant="11" id="VMO-9J-4Nt"/>
+                                    <constraint firstItem="v2S-Q3-uKS" firstAttribute="centerY" secondItem="s6y-5O-bkJ" secondAttribute="centerY" constant="15" id="VMO-9J-4Nt"/>
                                     <constraint firstItem="io8-Gk-klw" firstAttribute="centerY" secondItem="v2S-Q3-uKS" secondAttribute="centerY" id="hEn-90-Hdg"/>
                                     <constraint firstAttribute="trailing" secondItem="io8-Gk-klw" secondAttribute="trailing" constant="16" id="t0j-IQ-qk8"/>
                                 </constraints>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="I wanna talk with someone about..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="kcq-5Y-tpP" userLabel="postTextView">
-                                <rect key="frame" x="16" y="88" width="382" height="260"/>
+                                <rect key="frame" x="16" y="93" width="382" height="260"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="260" id="GqV-6I-eSd"/>
                                 </constraints>
@@ -190,7 +190,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OeG-Z6-xlL">
-                                <rect key="frame" x="16" y="348" width="382" height="40"/>
+                                <rect key="frame" x="16" y="353" width="382" height="40"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="280" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="48l-ka-klG">
                                         <rect key="frame" x="357" y="4" width="25" height="16"/>

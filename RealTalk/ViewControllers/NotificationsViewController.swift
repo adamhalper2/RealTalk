@@ -49,6 +49,20 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
         return 80
     }
 
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            guard let notifID = notifications[indexPath.row].notifID else {return}
+            guard let userID = AppController.user?.uid else {return}
+            let notifRef = db.collection(["students", userID, "notifications"].joined(separator: "/")).document(notifID)
+            notifRef.delete()
+            // handle delete (by removing the data from your array and updating the tableview)
+        }
+    }
+
     @IBOutlet weak var tableView: UITableView!
 
 
