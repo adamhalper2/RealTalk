@@ -11,6 +11,4 @@ import UIKit
 struct Colors {
 
     let customGreen = UIColor(red: 101/255, green: 200/255, blue: 122/255, alpha: 1)
-    let customLightGreen = UIColor(red: 101/255, green: 200/255, blue: 122/255, alpha: 0.3)
-
 }

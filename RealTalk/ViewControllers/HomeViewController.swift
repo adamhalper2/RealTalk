@@ -14,8 +14,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     private var posts = [Post]()
     private var postsListener: ListenerRegistration?
-    private var notificationsListener: ListenerRegistration?
-    private var heartsListener: ListenerRegistration?
     private let db = Firestore.firestore()
     private let user = Auth.auth().currentUser!
 
@@ -24,23 +22,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var heartBtn: UIButton!
 
-    var heartButton = UIButton()
-    var notificationButton: BadgeNotificationButton?
-
-    var heartCount : Int = 0 {
-        didSet {
-            heartButton.setTitle(String(heartCount), for: .normal)
-            //heartButton.sizeToFit()
-            //self.navigationItem.leftBarButtonItem?.title = String(heartCount)
-        }
-    }
-    var unreadNotifCount : Int = 0 {
-        didSet {
-            if notificationButton != nil {
-                notificationButton?.badge = "\(unreadNotifCount)"
-            }
-        }
-    }
+    var heartCount = 0
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
@@ -80,19 +62,16 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     deinit {
         postsListener?.remove()
-        notificationsListener?.remove()
-        heartsListener?.remove()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        PushNotificationManager.shared.userID = user.uid
-        PushNotificationManager.shared.registerForPushNotifications()
-
+        print("current uid: \(AppController.user?.uid)")
+        if let pushManager = PushNotificationManager(userID: user.uid) {
+            pushManager.registerForPushNotifications()
+        }
         tableView.delegate = self
         tableView.dataSource = self
-        setNavBar()
-        loadUnreadNotifs()
         loadUserHearts()
         var refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(reloadData), for: UIControl.Event.valueChanged)
@@ -107,74 +86,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             
             snapshot.documentChanges.forEach { change in
-                self.handlePostDocumentChange(change)
+                self.handleDocumentChange(change)
             }
         }
     }
 
-
-    func setNavBar() {
-        //1. customize title font
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "DIN Alternate", size: 25)!]
-
-
-        //2. add heart
-        let heartButton = UIButton(type: .system)
-        heartButton.setImage(UIImage(named: "heartIconSmall"), for: .normal)
-        heartButton.setImage(UIImage(named: "heartIconSmall")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        heartButton.frame = CGRect(x: 0, y: 0, width: 60, height: 44)
-        heartButton.tintColor = UIColor.black
-        heartButton.contentHorizontalAlignment = .left
-        heartButton.titleEdgeInsets.left = 5
-        //heartButton.sizeToFit()
-
-        self.heartButton = heartButton
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: heartButton)
-
-        //3. add notifs
-        let notificationButton = BadgeNotificationButton()
-        notificationButton.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
-        notificationButton.tintColor = UIColor.black
-        notificationButton.setImage(UIImage(named: "notificationIcon")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        notificationButton.badgeEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 15)
-        notificationButton.badge = "0"
-
-        notificationButton.addTarget(self, action: #selector(notifTapped), for: .touchUpInside)
-        self.notificationButton = notificationButton
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: notificationButton)
-
-    }
-
-    /*
-    func addBadge(itemvalue: String) {
-
-        let notificationButton = BadgeNotificationButton()
-        notificationButton.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
-        notificationButton.tintColor = UIColor.black
-        notificationButton.setImage(UIImage(named: "notificationIcon")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        notificationButton.badgeEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 15)
-        notificationButton.badge = itemvalue
-
-        notificationButton.addTarget(self, action: #selector(notifTapped), for: .touchUpInside)
-        self.notificationButton = notificationButton
-
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: notificationButton)
-        //self.navigationItem.rightBarButtonItem?.customView!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(notifTapped)))
-        
-    }
-    */
-
-    @objc func notifTapped() {
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let notifVC = storyBoard.instantiateViewController(withIdentifier: "notifVC") as! NotificationsViewController
-        //self.present(notifVC, animated: true, completion: nil)
-
-        self.navigationController?.pushViewController(notifVC, animated:true)
-    }
-
     func loadUserHearts() {
-        let userRef = db.collection("students").document(user.uid)
-        heartsListener = userRef.addSnapshotListener { documentSnapshot, error in
+
+        db.collection("students").document(user.uid)
+            .addSnapshotListener { documentSnapshot, error in
                 guard let document = documentSnapshot else {
                     print("Error fetching document: \(error!)")
                     return
@@ -185,51 +105,21 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 }
                 
                 if let heartCount = data["heartCount"] as? String {
-                    if let heartCountInt = Int(heartCount) {
-                        self.heartCount = heartCountInt
+                    //animation?
+                    DispatchQueue.main.async {
+                        self.heartBtn.setTitle(String(heartCount), for: .normal)
                     }
                 }
+
         }
     }
 
-    func loadUnreadNotifs() {
-
-        let notifRef = db.collection(["students", user.uid, "notifications"].joined(separator: "/")).whereField("read", isEqualTo: "false")
-        notificationsListener = notifRef.addSnapshotListener { querySnapshot, error in
-            guard let snapshot = querySnapshot else {
-                print("Error listening for channel updates: \(error?.localizedDescription ?? "No error")")
-                return
-            }
-            snapshot.documentChanges.forEach { change in
-                self.handleNotifDocumentChange(change)
-            }
-        }
-    }
-
-
-    private func handleNotifDocumentChange(_ change: DocumentChange) {
-
-        switch change.type {
-        case .added:
-            self.unreadNotifCount += 1
-            break
-        case .modified:
-            break
-        case .removed:
-            self.unreadNotifCount -= 1
-            break
-        }
-    }
-
-
-
-
-    @IBAction func notifBtnTapped(_ sender: Any) {
-        
-    }
 
     @IBAction func heartBtnTapped(_ sender: Any) {
-
+        guard let user = AppController.user else {return}
+        if let manager = PushNotificationManager(userID: user.uid) {
+            manager.getPendingNotifs()
+        }
     }
 
 
@@ -237,12 +127,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = false
-        //navigationController?.setNavigationBarHidden(true, animated: animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        //navigationController?.setNavigationBarHidden(false, animated: animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 
     @objc func reloadData() {
@@ -284,7 +174,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
     }
     
-    private func handlePostDocumentChange(_ change: DocumentChange) {
+    private func handleDocumentChange(_ change: DocumentChange) {
         guard let post = Post(document: change.document) else {
             return
         }
@@ -300,4 +190,5 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             removePostFromTable(post)
         }
     }
+
 }
