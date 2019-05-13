@@ -22,8 +22,8 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet weak var onlineIndicator: UIImageView!
     @IBOutlet weak var lockIndicator: UIImageView!
 
-    let filledHeart = UIImage(named: "filledHeart")
-    let unfilledHeart = UIImage(named: "unfilledHeart")
+    //let filledHeart = UIImage(named: "filledHeart")
+    // let unfilledHeart = UIImage(named: "unfilledHeart")
     var post: Post?
     private let db = Firestore.firestore()
     let user = AppController.user!
@@ -37,7 +37,11 @@ class PostTableViewCell: UITableViewCell {
         let date = post.timestamp
         let timestamp = timeAgoSinceDate(date: date, numericDates: true)
         timeLabel.text = timestamp
-        commentBtn.setTitle(String(post.commentCount), for: .normal)
+        if post.commentCount == 0 {
+            commentBtn.setTitle(" ", for: .normal)
+        } else {
+            commentBtn.setTitle(String(post.commentCount), for: .normal)
+        }
         heartCountLabel.text = String(post.heartCount)
         selectionStyle = UITableViewCell.SelectionStyle.none
         reportBtn.tintColor = UIColor.darkGray
@@ -66,24 +70,18 @@ class PostTableViewCell: UITableViewCell {
                 print("Error getting document: \(err)")
             } else {
                 guard let data = documentSnapshot?.data() else {
-                    print("invalid data from authors ref")
                     return
                 }
-                print("data is \(data)")
                 guard let isOnlineStr = data["isOnline"] as? String else {
-                    print("no isOnline field")
                     return
                 }
                 guard let isOnline = Bool(isOnlineStr) else {
-                    print("unable to convert to bool")
                     return
                 }
                 DispatchQueue.main.async {
                     if (isOnline) {
-                        print("setting author status to ONLINE")
                         self.onlineIndicator.tintColor = UIColor.green
                     } else {
-                        print("setting author status to OFFLINE")
                         self.onlineIndicator.tintColor = UIColor.darkGray
                     }
                     return
@@ -102,15 +100,18 @@ class PostTableViewCell: UITableViewCell {
         }
         return memberLabel
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
 
     override func prepareForReuse() {
-        heartBtn.setImage(unfilledHeart, for: .normal)
+        heartBtn.tintColor = UIColor.groupTableViewBackground
+        heartBtn.isEnabled = true
         reportBtn.tintColor = UIColor.darkGray
+        reportBtn.isEnabled = true
+
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -129,16 +130,19 @@ class PostTableViewCell: UITableViewCell {
                 print("Error getting documents: \(err)")
             } else {
                 for document in querySnapshot!.documents {
+
                     if document.exists {
                         DispatchQueue.main.async {
                             self.heartBtn.isEnabled = false
-                            self.heartBtn.setImage(self.filledHeart, for: .normal)
+                            print("heart button disabled for post \(post.content)")
+                            self.heartBtn.tintColor = UIColor.customPurple.withAlphaComponent(0.5)
                             return
                         }
                     } else {
                         DispatchQueue.main.async {
                             self.heartBtn.isEnabled = true
-                            self.heartBtn.setImage(self.unfilledHeart, for: .normal)
+                            print("heart button enabled for post \(post.content)")
+                            self.heartBtn.tintColor = UIColor.groupTableViewBackground
                             return
                         }
                     }
@@ -224,18 +228,46 @@ class PostTableViewCell: UITableViewCell {
     }
 
     @IBAction func heartTapped(_ sender: Any) {
-        if heartBtn.image(for: .normal) == unfilledHeart {
-            UIView.animate(withDuration: 0.01, animations: {
-                self.heartBtn.alpha = 0.0
-            }, completion:{(finished) in
-                self.heartBtn.setImage(self.filledHeart, for: .normal)
-                UIView.animate(withDuration: 0.1,animations:{
-                    self.heartBtn.alpha = 1.0
-                },completion:nil)
-            })
-            //heartBtn.setImage(filledHeart, for: .normal)
-            //heartBtn.isEnabled = false
-            addHeartToPost()
+        print("heart tapped")
+        heartBtn.tintColor = UIColor.customPurple.withAlphaComponent(0.5)
+        heartBtn.isEnabled = false
+        addHeartToPost()
+        /*
+         if heartBtn.image(for: .normal) == unfilledHeart {
+         UIView.animate(withDuration: 0.01, animations: {
+         self.heartBtn.alpha = 0.0
+         }, completion:{(finished) in
+         self.heartBtn.setImage(self.filledHeart, for: .normal)
+         UIView.animate(withDuration: 0.1,animations:{
+         self.heartBtn.alpha = 1.0
+         },completion:nil)
+         })
+         */
+        //heartBtn.setImage(filledHeart, for: .normal)
+        //heartBtn.isEnabled = false
+    }
+
+    func pushNotifyHeart(toID: String) {
+        //print("load user token called. display name: \(AppSettings.displayName)")
+        db.collection("students").document(toID)
+            .getDocument { documentSnapshot, error in
+                guard let document = documentSnapshot else {
+                    print("Error fetching document: \(error!)")
+                    return
+                }
+                guard let data = document.data() else {
+                    print("Document data was empty.")
+                    return
+                }
+
+                guard let content = self.post?.content else {return}
+                guard let postID = self.post?.id else {return}
+                guard let token = data["fcmToken"] as? String else {return}
+
+                let sender = PushNotificationSender()
+                guard let displayName = AppSettings.displayName else {return}
+                sender.sendPushNotification(to: token, title: "\(displayName) liked your post", body: "\(content)", postID: postID, type: UserNotifs.heart.type(), userID: toID)
+                print("notif sent")
         }
     }
 
@@ -247,10 +279,12 @@ class PostTableViewCell: UITableViewCell {
         guard let postID = currPost.id else {return}
         guard let toID = currPost.authorID else {return}
 
+        pushNotifyHeart(toID: toID)
+
+
         let newHeart = Heart(postID: postID, fromID: fromID, toID: toID, onPost: true)
         let  heartsRef =  db.collection("hearts")
         heartsRef.addDocument(data: newHeart.representation) //add heart to firestore
-
         let newHeartCount = currPost.heartCount + 1
 
         let postRef = db.collection("channels").document(postID) //update post's heart count in firestore

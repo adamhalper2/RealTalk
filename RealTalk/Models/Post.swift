@@ -47,7 +47,7 @@ struct Post {
 
   
     init(content: String, author: String, timestamp: NSDate, authorID: String) {
-        id = nil
+        self.id = nil
         self.content = content
         self.author = author
         self.timestamp = timestamp
@@ -61,7 +61,88 @@ struct Post {
         self.bannedList = []
     }
     
-  
+    init?(data: [String: Any], docId: String) {
+    
+        guard let content = data["content"] as? String else {
+            return nil
+        }
+        
+        guard let author = data["author"] as? String else {
+            return nil
+        }
+        
+        guard let timestamp = data["timestamp"] as? String else {
+            return nil
+        }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yy h:mm a Z"
+        
+        var date = NSDate()
+        if let realDate = dateFormatter.date(from: timestamp) as? NSDate {
+            print("date = realDate")
+            date = realDate
+        }
+        
+        guard let authorID = data["authorID"] as? String else {
+            return nil
+        }
+        
+        guard let membersStr = data["members"] as? String else {
+            return nil
+        }
+        let members = membersStr.components(separatedBy: "-")
+        
+        guard let commentCount = data["commentCount"] as? String else {
+            return nil
+        }
+        let commentCountInt = Int(commentCount)!
+        
+        
+        guard let heartCount = data["heartCount"] as? String else {
+            return nil
+        }
+        let heartCountInt = Int(heartCount)!
+        
+        guard let reportCount = data["reportCount"] as? String else {
+            return nil
+        }
+        let reportCountInt = Int(reportCount)!
+        
+        guard let active = data["isActive"] as? String else {
+            return nil
+        }
+        
+        guard let isActiveBool = Bool(active) else {return nil}
+        
+        guard let isLocked = data["isLocked"] as? String else {
+            return nil
+        }
+        
+        guard let isLockedBool = Bool(isLocked) else {
+            return nil
+        }
+        
+        guard let bannedListStr = data["bannedList"] as? String else {
+            return nil
+        }
+        let bannedList = bannedListStr.components(separatedBy: "-")
+        
+        self.id = docId
+        
+        self.content = content
+        self.author = author
+        self.commentCount = commentCountInt
+        self.heartCount = heartCountInt
+        self.reportCount = reportCountInt
+        self.timestamp = date
+        self.members = members
+        self.authorID = authorID
+        self.isActive = isActiveBool
+        self.isLocked = isLockedBool
+        self.bannedList = bannedList
+    }
+    
   init?(document: QueryDocumentSnapshot) {
     let data = document.data()
     

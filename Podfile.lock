@@ -6,6 +6,9 @@ PODS:
     - BoringSSL-GRPC/Interface (= 0.0.2)
   - BoringSSL-GRPC/Interface (0.0.2)
   - EzPopup (1.1)
+  - Firebase/AdMob (5.20.2):
+    - Firebase/Core
+    - Google-Mobile-Ads-SDK (~> 7.42)
   - Firebase/Auth (5.20.2):
     - Firebase/CoreOnly
     - FirebaseAuth (= 5.4.2)
@@ -23,6 +26,9 @@ PODS:
   - Firebase/Firestore (5.20.2):
     - Firebase/CoreOnly
     - FirebaseFirestore (= 1.2.1)
+  - Firebase/Messaging (5.20.2):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (= 3.5.0)
   - Firebase/Storage (5.20.2):
     - Firebase/CoreOnly
     - FirebaseStorage (= 3.1.1)
@@ -72,10 +78,20 @@ PODS:
     - FirebaseCore (~> 5.2)
     - GoogleUtilities/Environment (~> 5.2)
     - GoogleUtilities/UserDefaults (~> 5.2)
+  - FirebaseMessaging (3.5.0):
+    - FirebaseAnalyticsInterop (~> 1.1)
+    - FirebaseCore (~> 5.2)
+    - FirebaseInstanceID (~> 3.6)
+    - GoogleUtilities/Environment (~> 5.3)
+    - GoogleUtilities/Reachability (~> 5.3)
+    - GoogleUtilities/UserDefaults (~> 5.3)
+    - Protobuf (~> 3.1)
   - FirebaseStorage (3.1.1):
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 5.2)
     - GTMSessionFetcher/Core (~> 1.1)
+  - Google-Mobile-Ads-SDK (7.43.0):
+    - GoogleAppMeasurement (~> 5.7)
   - GoogleAppMeasurement (5.8.1):
     - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
     - GoogleUtilities/MethodSwizzler (~> 5.2)
@@ -129,12 +145,15 @@ PODS:
 
 DEPENDENCIES:
   - EzPopup
+  - Firebase/AdMob
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
   - Firebase/DynamicLinks
   - Firebase/Firestore
+  - Firebase/Messaging
   - Firebase/Storage
+  - Google-Mobile-Ads-SDK
   - MessageKit
   - ProgressHUD
 
@@ -152,7 +171,9 @@ SPEC REPOS:
     - FirebaseDynamicLinks
     - FirebaseFirestore
     - FirebaseInstanceID
+    - FirebaseMessaging
     - FirebaseStorage
+    - Google-Mobile-Ads-SDK
     - GoogleAppMeasurement
     - GoogleUtilities
     - "gRPC-C++"
@@ -177,7 +198,9 @@ SPEC CHECKSUMS:
   FirebaseDynamicLinks: f7a8717e2c7ea652923882a2d60b0045d6fd99d5
   FirebaseFirestore: faca891c0f0d1d6c10c793473e2f6a29d75014b5
   FirebaseInstanceID: a122b0c258720cf250551bb2bedf48c699f80d90
+  FirebaseMessaging: 4235f949ce1c4e827aeb19705ba5c53f9b85aa10
   FirebaseStorage: 6162ef4322502b818d9de0ec552f5226d283de43
+  Google-Mobile-Ads-SDK: e911f5544fc6488f8372a183627a802c8bdb5e36
   GoogleAppMeasurement: ffe513e90551844a739e7bcbb1d2aca1c28a4338
   GoogleUtilities: 04fce34bcd5620c1ee76fb79172105c74a4df335
   "gRPC-C++": e76441995900ac90e9bd98644ab4733f12521edf
@@ -189,6 +212,6 @@ SPEC CHECKSUMS:
   ProgressHUD: 4e4efbaf4f5de8bd32e0c4c3b6644a90ea1a8c3e
   Protobuf: 7a877b7f3e5964e3fce995e2eb323dbc6831bb5a
 
-PODFILE CHECKSUM: 25120e6d510d8c271c3e4e0e98fc921432e952ba
+PODFILE CHECKSUM: 8d33f99375e365814c18495fd22f9a2025745a3c
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.7.0.rc.1

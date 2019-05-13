@@ -24,6 +24,7 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
         super.viewDidLoad()
         textView.delegate = self
         textView.textColor = UIColor.lightGray
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "DIN Alternate", size: 25)!]
     }
 
     override func viewDidAppear(_ animated: Bool) {

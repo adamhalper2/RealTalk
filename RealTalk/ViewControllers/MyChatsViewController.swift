@@ -16,8 +16,9 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
     private var posts = [Post]()
     private var postsListener: ListenerRegistration?
     private let db = Firestore.firestore()
-    private var joinedChatIDs = [""]
+    private var joinedChatIDs: [String]?
     private var uid = ""
+
     
     var refreshControl = UIRefreshControl()
     
@@ -50,9 +51,104 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let post = posts[indexPath.row]
         let user = AppController.user
-        let userId = user?.uid
         let vc = ChatViewController(user: user!, post: post)
         self.navigationController?.pushViewController(vc, animated:true)
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let post = posts[indexPath.row]
+        if editingStyle == .delete {
+            if post.authorID == AppController.user?.uid {
+                deactivateChat(post: post)
+                posts.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            } else {
+                removeChatToUserList(postId: post.id!)
+                removeMember(post: post)
+                posts.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let post = posts[indexPath.row]
+        if post.authorID == AppController.user?.uid {
+            let deleteButton = UITableViewRowAction(style: .default, title: "Delete Chat") { (action, indexPath) in
+                self.tableView.dataSource?.tableView!(self.tableView, commit: .delete, forRowAt: indexPath)
+                return
+            }
+            deleteButton.backgroundColor = UIColor.red
+            return [deleteButton]
+            
+        } else {
+            let deleteButton = UITableViewRowAction(style: .default, title: "Leave Chat") { (action, indexPath) in
+                self.tableView.dataSource?.tableView!(self.tableView, commit: .delete, forRowAt: indexPath)
+                return
+            }
+            deleteButton.backgroundColor = UIColor.black
+            return [deleteButton]
+        }
+    }
+    
+    func deactivateChat(post: Post) {
+        let postRef = db.collection("channels").document(post.id!)
+        postRef.updateData([
+            "isActive": String(false)
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+            }
+        }
+    }
+    
+    func removeMember(post: Post) {
+        let uid = AppController.user?.uid
+        let postRef = db.collection("channels").document(post.id!)
+        var mem = post.members
+        if !post.members.contains(uid!) {
+            print("Doesn't contain userID")
+            return
+        }
+        mem.removeAll{$0 == uid}
+        let membersStr = mem.joined(separator: "-")
+        postRef.updateData([
+            "members": membersStr
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("removed member")
+            }
+        }
+    }
+    
+    func removeChatToUserList(postId: String) {
+        let user = AppController.user
+        let userRef = db.collection("students").document(user!.uid)
+        
+        userRef.getDocument { (documentSnapshot, err) in
+            if let err = err {
+                print("Error getting document: \(err)")
+            } else {
+                guard let data = documentSnapshot?.data() else {return}
+                if var joinedChatIDsStr = data["joinedChatIDs"] as? String {
+                    print("*~*~old joined chats: \(joinedChatIDsStr)")
+                    
+                    var joinedChatIDs = joinedChatIDsStr.components(separatedBy: "-")
+                    joinedChatIDs.removeAll{$0 == postId}
+                    joinedChatIDsStr = joinedChatIDs.joined(separator: "-")
+                    userRef.updateData(
+                        ["joinedChatIDs": joinedChatIDsStr]
+                    )
+                    print("*~*~updated joined chats to \(joinedChatIDsStr)")
+                }
+            }
+        }
     }
     
     deinit {
@@ -61,6 +157,8 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+//        view.addGestureRecognizer(tap)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -73,6 +171,11 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
+    
+    @objc func dismissKeyboard() {
+        self.searchBar.endEditing(true)
+    }
+
     
     @objc func reloadData() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -140,6 +243,13 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
         tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
     }
     
+    private func handleDocumentChange2(data: [String: Any], id: String) {
+        guard let post = Post(data: data, docId: id) else {
+            return
+        }
+        print(id)
+    }
+    
     private func handleDocumentChange(_ change: DocumentChange) {
         guard let post = Post(document: change.document) else {
             return
@@ -158,6 +268,7 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     override func viewDidAppear(_ animated: Bool) {
+    
         let currUser = AppController.user!
         uid = currUser.uid
         
@@ -171,6 +282,7 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 if let joinedChatIDsStr = data["joinedChatIDs"] as? String {
                     print("*~*~users' joined chats: \(joinedChatIDsStr)")
                     self.joinedChatIDs = joinedChatIDsStr.components(separatedBy: "-")
+                    self.addChatListeners()
                 }
             }
         }
@@ -199,18 +311,23 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
                     print("\(source) data: \(document.data() ?? [:])")
                 }
         }*/
-            let postsReference =  db.collection("channels")
-            let query = postsReference
-                .whereField("isActive", isEqualTo: "true")
+        
+        }
     
-            postsListener =  query.addSnapshotListener { querySnapshot, error in
-            guard let snapshot = querySnapshot else {
-                print("Error listening for channel updates: \(error?.localizedDescription ?? "No error")")
-                return
-            }
-            
-            snapshot.documentChanges.forEach { change in
-                self.handleDocumentChange(change)
+    private func addChatListeners() {
+        let postsReference =  self.db.collection("channels").whereField("isActive", isEqualTo: "true")
+        for postID in self.joinedChatIDs! {
+            if postID == "" { continue }
+            postsReference.whereField(Firebase.FieldPath.documentID(), isEqualTo: postID)
+                .addSnapshotListener { querySnapshot, error in
+                    guard let snapshot = querySnapshot else {
+                        print("Error listening for channel updates: \(error?.localizedDescription ?? "No error")")
+                        return
+                    }
+
+                    snapshot.documentChanges.forEach { change in
+                        self.handleDocumentChange(change)
+                    }
             }
         }
     }

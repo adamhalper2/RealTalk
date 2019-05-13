@@ -59,6 +59,7 @@ final class ChatViewController: MessagesViewController {
   
   private let storage = Storage.storage().reference()
   private var lockButton: UIBarButtonItem?
+  private var lockUIbtn = UIButton()
   private var isLocked: Bool?
   
   init(user: User, post: Post) {
@@ -79,6 +80,7 @@ final class ChatViewController: MessagesViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.tabBarController?.tabBar.isHidden = true
+
     guard let id = post.id else {
       navigationController?.popViewController(animated: true)
       return
@@ -97,20 +99,24 @@ final class ChatViewController: MessagesViewController {
       }
     }
     
-    //let postReference = db.collection(["channels", id].joined(separator: "/"))
     
-    let postReference =  db.collection("channels")
-    
-    postListener = postReference.addSnapshotListener { querySnapshot, error in
-        guard let snapshot = querySnapshot else {
-            print("Error listening for channel updates: \(error?.localizedDescription ?? "No error")")
-            return
-        }
-        
-        snapshot.documentChanges.forEach { change in
-            self.handlePostChange(change)
-        }
+    db.collection("channels").document(post.id!)
+        .addSnapshotListener { documentSnapshot, error in
+            guard let document = documentSnapshot else {
+                print("Error fetching document: \(error!)")
+                return
+            }
+            guard let data = document.data() else {
+                print("Document data was empty.")
+                return
+            }
+            
+            
+            DispatchQueue.main.async {
+                self.handlePostChange(data: data, docId: document.documentID)
+            }
     }
+    
     
 //    // 1
 //    let cameraItem = InputBarButtonItem(type: .system)
@@ -146,11 +152,16 @@ final class ChatViewController: MessagesViewController {
     
     if self.post.authorID == self.user.uid {
         isLocked = post.isLocked
-        lockButton = UIBarButtonItem(title: "Lock", style: .plain, target: self, action: #selector(toggleChatLock))
-        //lockButton?.setImage(#imageLiteral(resourceName: "padlock"), for: .normal)
+
+        let btn = UIButton(type: .custom)
+        btn.setImage(UIImage(named: "padlock-unlock"), for: .normal)
+        btn.addTarget(self, action: #selector(toggleChatLock), for: .touchUpInside)
+        btn.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
+        lockButton = UIBarButtonItem(customView: btn)
         if post.isLocked {
-            lockButton!.title = "Unlock"
+            btn.setImage(UIImage(named: "padlock"), for: .normal)
         }
+        self.lockUIbtn = btn
         self.navigationItem.rightBarButtonItem = lockButton
     
     }
@@ -160,10 +171,10 @@ final class ChatViewController: MessagesViewController {
   // MARK: - Actions
   @objc private func toggleChatLock() {
         if self.isLocked! {
-            lockButton!.title = "Lock"
+            lockUIbtn.setImage(UIImage(named: "padlock-unlock"), for: .normal)
             self.isLocked = false
         } else {
-            lockButton!.title = "Unlock"
+            lockUIbtn.setImage(UIImage(named: "padlock"), for: .normal)
             self.isLocked = true
         }
     
@@ -248,6 +259,30 @@ final class ChatViewController: MessagesViewController {
         }
         let delta = 1
         updateCommentCount(delta: delta)
+        if let toID = post.authorID {
+            pushNotifyComment(toID: toID)
+        }
+    }
+
+    func pushNotifyComment(toID: String) {
+        guard let postID = post.id else {return}
+
+        db.collection("students").document(toID)
+            .getDocument { documentSnapshot, error in
+                guard let document = documentSnapshot else {
+                    print("Error fetching document: \(error!)")
+                    return
+                }
+                guard let data = document.data() else {
+                    print("Document data was empty.")
+                    return
+                }
+                guard let token = data["fcmToken"] as? String else {return}
+                let sender = PushNotificationSender()
+                guard let displayName = AppSettings.displayName else {return}
+                sender.sendPushNotification(to: token, title: "\(displayName) sent you a message", body: "\(self.post.content)", postID: postID, type: UserNotifs.messageOP.type(), userID: toID)
+                print("notif sent")
+        }
     }
 
     func updateCommentCount(delta: Int) {
@@ -285,9 +320,9 @@ final class ChatViewController: MessagesViewController {
     }
   }
     
-  private func handlePostChange(_ change: DocumentChange) {
+    private func handlePostChange(data: [String: Any], docId: String) {
     
-    guard let post = Post(document: change.document) else {
+    guard let post = Post(data: data, docId: docId) else {
         return
     }
     
@@ -473,13 +508,13 @@ extension ChatViewController: MessageInputBarDelegate {
     print("members are: \(post.members)")
     // 2.5 add new member
     addMember(uid: user.uid)
-    addChatToUserList(uid: user.uid)
+    addChatToUserList()
 
     // 3
     inputBar.inputTextView.text = ""
   }
 
-    func addChatToUserList(uid: String) {
+    func addChatToUserList() {
         let userRef = db.collection("students").document(user.uid)
         
         userRef.getDocument { (documentSnapshot, err) in
@@ -541,6 +576,30 @@ extension ChatViewController: MessageInputBarDelegate {
                 print("Error updating document: \(err)")
             } else {
                 print("removed member")
+            }
+        }
+    }
+    
+    func removeChatToUserList() {
+        let user = AppController.user
+        let userRef = db.collection("students").document(user!.uid)
+        
+        userRef.getDocument { (documentSnapshot, err) in
+            if let err = err {
+                print("Error getting document: \(err)")
+            } else {
+                guard let data = documentSnapshot?.data() else {return}
+                if var joinedChatIDsStr = data["joinedChatIDs"] as? String {
+                    print("*~*~old joined chats: \(joinedChatIDsStr)")
+                    
+                    var joinedChatIDs = joinedChatIDsStr.components(separatedBy: "-")
+                    joinedChatIDs.removeAll{$0 == self.post.id!}
+                    joinedChatIDsStr = joinedChatIDs.joined(separator: "-")
+                    userRef.updateData(
+                        ["joinedChatIDs": joinedChatIDsStr]
+                    )
+                    print("*~*~updated joined chats to \(joinedChatIDsStr)")
+                }
             }
         }
     }
