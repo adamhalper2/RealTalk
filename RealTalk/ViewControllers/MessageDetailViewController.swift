@@ -21,6 +21,8 @@ class MessageDetailViewController: UIViewController {
     
     @IBOutlet weak var handleLabel: UILabel!
     
+    @IBOutlet weak var heartButton: UIButton!
+    
     var isOwner: Bool?
     var message: Message?
     var chatViewRef: ChatViewController?
@@ -34,7 +36,7 @@ class MessageDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        checkIfUserReported()
         handleLabel.text = message?.sender.displayName
         messageLabel.text = message?.content
         getUserHearts()
@@ -72,10 +74,44 @@ class MessageDetailViewController: UIViewController {
     
     @IBAction func flagPressed(_ sender: Any) {
         self.addMessageReport()
-        self.flagButton.isEnabled = false
-        self.flagButton.alpha = 0.5
+        setReportedButton()
     }
 
+    func setReportedButton() {
+        self.flagButton.isEnabled = false
+        self.flagButton.alpha = 1.0
+        self.flagButton.backgroundColor = UIColor.lightGray
+        self.flagButton.setTitle("Messaged reported.", for: .normal)
+        self.flagButton.tintColor = UIColor.red
+    }
+
+    func checkIfUserReported() {
+        guard let post = post else {return}
+        guard let id = post.id else {return}
+        guard let message = message else {return}
+        guard let user = AppController.user else {return}
+
+        let reportsRef = db.collection("reports").whereField("postID", isEqualTo: message.id).whereField("fromID", isEqualTo: user.uid)
+        reportsRef.getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    if document.exists {
+                        DispatchQueue.main.async {
+                            self.setReportedButton()
+                            return
+                        }
+                    } else {
+                        return
+                    }
+                }
+            }
+        }
+
+
+    }
+    
     func addMessageReport() {
         guard let currPost = post else {return}
         guard let postID = currPost.id else {return}
@@ -122,6 +158,12 @@ class MessageDetailViewController: UIViewController {
         removeUser()
     }
     
+    @IBAction func heartTapped(_ sender: Any) {
+        let uid = self.message!.sender.id
+        let authorRef = db.collection("students").document(uid)
+       // authorRef.updateData(<#T##fields: [AnyHashable : Any]##[AnyHashable : Any]#>)
+    }
+
     private func removeUser() {
         chatViewRef?.addBannedMember(uid: self.message!.sender.id)
         chatViewRef?.removeMember(uid: self.message!.sender.id)
