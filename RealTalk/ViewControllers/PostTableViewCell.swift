@@ -232,19 +232,6 @@ class PostTableViewCell: UITableViewCell {
         heartBtn.tintColor = UIColor.customPurple.withAlphaComponent(0.5)
         heartBtn.isEnabled = false
         addHeartToPost()
-        /*
-         if heartBtn.image(for: .normal) == unfilledHeart {
-         UIView.animate(withDuration: 0.01, animations: {
-         self.heartBtn.alpha = 0.0
-         }, completion:{(finished) in
-         self.heartBtn.setImage(self.filledHeart, for: .normal)
-         UIView.animate(withDuration: 0.1,animations:{
-         self.heartBtn.alpha = 1.0
-         },completion:nil)
-         })
-         */
-        //heartBtn.setImage(filledHeart, for: .normal)
-        //heartBtn.isEnabled = false
     }
 
     func pushNotifyHeart(toID: String) {
