@@ -617,7 +617,7 @@
                         <viewLayoutGuide key="safeArea" id="y6I-Ln-FdH"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="homeIcon" selectedImage="homeIcon" id="9P8-OG-Pjl" userLabel="Home"/>
-                    <navigationItem key="navigationItem" title="Title" id="80x-qg-JaR">
+                    <navigationItem key="navigationItem" id="80x-qg-JaR">
                         <barButtonItem key="leftBarButtonItem" title="feewekwj" image="barButtonItem:cmC-uI-cYd:image" width="50" style="done" id="cmC-uI-cYd">
                             <inset key="imageInsets" minX="-16" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <inset key="largeContentSizeImageInsets" minX="-15" minY="0.0" maxX="40" maxY="0.0"/>
@@ -759,10 +759,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="79m-Uu-ZYF">
-                                <rect key="frame" x="0.0" y="44" width="414" height="194"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="233"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Handle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qXh-zu-j57">
-                                        <rect key="frame" x="155" y="0.0" width="104" height="41"/>
+                                        <rect key="frame" x="155" y="0.0" width="104" height="51"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="4Jm-k0-iBp"/>
                                         </constraints>
@@ -771,7 +771,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BKw-PQ-m8j">
-                                        <rect key="frame" x="167" y="51" width="80" height="41"/>
+                                        <rect key="frame" x="167" y="61" width="80" height="50.5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="80" id="LM0-2U-1gv"/>
                                         </constraints>
@@ -782,13 +782,13 @@
                                         </state>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Selected Message" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dgZ-Rc-1BA">
-                                        <rect key="frame" x="153.5" y="102" width="107.5" height="41"/>
+                                        <rect key="frame" x="153.5" y="121.5" width="107.5" height="51"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <color key="highlightedColor" cocoaTouchSystemColor="darkTextColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="6mg-33-K7Z">
-                                        <rect key="frame" x="81" y="153" width="252" height="41"/>
+                                        <rect key="frame" x="81" y="182.5" width="252" height="50.5"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kb2-cS-hBr">
                                                 <rect key="frame" x="0.0" y="0.0" width="121" height="36"/>
