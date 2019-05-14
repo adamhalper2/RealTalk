@@ -227,7 +227,7 @@ final class ChatViewController: MessagesViewController {
   
   private func sendPhoto(_ image: UIImage) {
     isSendingPhoto = true
-    
+    print("Send photo called")
     uploadImage(image, to: post) { [weak self] url in
       guard let `self` = self else {
         return

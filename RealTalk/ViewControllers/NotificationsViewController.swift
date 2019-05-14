@@ -56,17 +56,27 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
             guard let notifID = notifications[indexPath.row].notifID else {return}
-            guard let userID = AppController.user?.uid else {return}
-            let notifRef = db.collection(["students", userID, "notifications"].joined(separator: "/")).document(notifID)
-            notifRef.delete()
-            // handle delete (by removing the data from your array and updating the tableview)
+            deleteNotif(notifID: notifID)
         }
     }
 
     @IBOutlet weak var tableView: UITableView!
 
 
+    func deleteNotif(notifID: String) {
+        guard let userID = AppController.user?.uid else {return}
+        let notifRef = db.collection(["students", userID, "notifications"].joined(separator: "/")).document(notifID)
+        notifRef.delete()
+    }
     override func viewDidLoad() {
+
+        let clearAllButton = UIButton(type: .system)
+        clearAllButton.setTitleColor(.darkGray, for: .normal)
+        clearAllButton.setTitle("Clear All", for: .normal)
+
+        clearAllButton.addTarget(self, action: #selector(clearAllTapped), for: .touchUpInside)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: clearAllButton)
+
 
         //let usersRef = Firestore.firestore().collection("students").document(uid)
         //usersRef.setData(["fcmToken": token], merge: true)
@@ -110,6 +120,14 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         loadNotifications()
         // Do any additional setup after loading the view.
+    }
+
+    @objc func clearAllTapped() {
+        for notif in notifications {
+            if let notifID = notif.notifID {
+                deleteNotif(notifID: notifID)
+            }
+        }
     }
 
     func loadNotifications() {

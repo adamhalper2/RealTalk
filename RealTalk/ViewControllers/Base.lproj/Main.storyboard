@@ -906,9 +906,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="73M-xI-7DD"/>
                     </view>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" title="Notifications" id="60p-FQ-GyX">
                         <barButtonItem key="backBarButtonItem" title="Home" id="59d-Bk-oSO"/>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="ljI-79-gcZ" id="VBj-S2-KJQ"/>
                     </connections>
