@@ -21,7 +21,8 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet weak var reportBtn: UIButton!
     @IBOutlet weak var onlineIndicator: UIImageView!
     @IBOutlet weak var lockIndicator: UIImageView!
-
+    @IBOutlet weak var moderatorIcon: UIImageView!
+    
     //let filledHeart = UIImage(named: "filledHeart")
     // let unfilledHeart = UIImage(named: "unfilledHeart")
     var post: Post?
@@ -48,6 +49,7 @@ class PostTableViewCell: UITableViewCell {
         checkIfUserHearted()
         checkIfUserReported()
         checkIfMembersOnline()
+        checkIfUserIsModerator()
 
         lockIndicator.tintColor = UIColor.darkGray
         print("post.isLocked is \(post.isLocked)")
@@ -57,6 +59,20 @@ class PostTableViewCell: UITableViewCell {
         } else {
             print("locked indicator hidden = false")
             lockIndicator.isHidden = true
+        }
+    }
+    
+    
+    func checkIfUserIsModerator() {
+        guard let post = post else {return}
+        guard let authorID = post.authorID else {return}
+        guard let currUser = AppController.user else {return}
+        if currUser.uid == authorID {
+            onlineIndicator.isHidden = true
+            moderatorIcon.isHidden = false
+        } else {
+            onlineIndicator.isHidden = false
+            moderatorIcon.isHidden = true
         }
     }
 

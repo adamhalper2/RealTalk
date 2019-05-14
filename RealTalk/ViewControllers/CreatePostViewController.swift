@@ -11,15 +11,17 @@ import Firebase
 import ProgressHUD
 import FirebaseAuth
 
+
 class CreatePostViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var shareBtn: UIButton!
     @IBOutlet weak var closeBtn: UIButton!
     @IBOutlet weak var charCountLabel: UILabel!
-
+    
+    var post = Post(content: "", author: "", timestamp: NSDate(), authorID: "")
     let colors = Colors()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         textView.delegate = self
@@ -70,7 +72,7 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
 
         if textView.textColor != UIColor.lightGray && !textView.text.isEmpty {
             shareBtn.isEnabled = true
-            shareBtn.setTitleColor(colors.customGreen, for: .normal)
+            shareBtn.setTitleColor(colors.customPurple, for: .normal)
         } else {
             shareBtn.isEnabled = false
             shareBtn.setTitleColor(UIColor.lightGray, for: .normal)
@@ -95,7 +97,7 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
 
         print("\n\nERROR author is \(author)\n\n")
 
-        let post = Post(content: content, author: AppSettings.displayName, timestamp: NSDate(), authorID: uid)
+        post = Post(content: content, author: AppSettings.displayName, timestamp: NSDate(), authorID: uid)
         print(post.timestamp)
 
         var docRef: DocumentReference? = nil
@@ -152,6 +154,18 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
                 ])
         }
         tabBarController!.selectedIndex = 0
+        let alertController = UIAlertController(title: "", message: "You are now the moderator of your new chat, so you can remove members, delete the chat, or lock it as you like to prevent new users from joining.", preferredStyle: UIAlertController.Style.alert)
+        alertController.addAction(UIAlertAction(title: "Go to chat", style: UIAlertAction.Style.cancel) {
+            UIAlertAction in
+            let user = AppController.user
+            let vc = ChatViewController(user: user!, post: self.post)
+            self.navigationController?.pushViewController(vc, animated:true)
+        })
+        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default) {
+            UIAlertAction in
+            self.dismiss(animated: true, completion: nil)
+        })
+        self.present(alertController, animated: true, completion: nil)
     }
     
     
