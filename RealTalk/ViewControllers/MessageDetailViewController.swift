@@ -84,7 +84,7 @@ class MessageDetailViewController: UIViewController {
         })
         alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default) {
             UIAlertAction in
-            self.dismiss(animated: true, completion: nil)
+            alertController.dismiss(animated: true, completion: nil)
         })
         self.present(alertController, animated: true, completion: nil)
     }
@@ -262,6 +262,7 @@ class MessageDetailViewController: UIViewController {
     }
 
     @IBAction func removePressed(_ sender: Any) {
+        
         let alertController = UIAlertController(title: "", message: "Are you sure you want to remove this user?", preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "Yes", style: UIAlertAction.Style.cancel) {
             UIAlertAction in
@@ -269,9 +270,14 @@ class MessageDetailViewController: UIViewController {
         })
         alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default) {
             UIAlertAction in
-            self.dismiss(animated: true, completion: nil)
+            alertController.dismiss(animated: true, completion: nil)
         })
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    @IBAction func exitButtonPressed(_ sender: UIButton!) {
+        print("exit button pressed")
+        self.dismiss(animated:true, completion: nil)
     }
     
     @IBAction func heartTapped(_ sender: Any) {
