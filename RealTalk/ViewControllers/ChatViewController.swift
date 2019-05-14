@@ -76,7 +76,7 @@ final class ChatViewController: MessagesViewController {
   deinit {
     messageListener?.remove()
   }
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
     self.tabBarController?.tabBar.isHidden = true
@@ -352,6 +352,17 @@ final class ChatViewController: MessagesViewController {
     }
   }
     
+    private func updateMessage(_ message: Message) {
+
+        guard let index = messages.index(of: message) else {
+            return
+        }
+        
+        messages[index] = message
+        
+        messagesCollectionView.reloadData()
+    }
+    
     private func handlePostChange(data: [String: Any], docId: String) {
     
     guard let post = Post(data: data, docId: docId) else {
@@ -388,7 +399,10 @@ final class ChatViewController: MessagesViewController {
       } else {
         insertNewMessage(message)
       }
-
+    case .modified:
+        updateMessage(message)
+        
+        
     default:
       break
     }
@@ -418,6 +432,7 @@ extension ChatViewController: MessageCellDelegate {
         
         let message = messages.first(where: {$0.id == messageType.messageId})
         if message?.sender.id == user.uid { return }
+        if post.bannedList.contains((message?.sender.id)!) { return }
         let messageDetailVC = MessageDetailViewController.instantiate()
         messageDetailVC?.isOwner = (post.authorID == user.uid)
         messageDetailVC?.message = message
@@ -465,10 +480,44 @@ extension ChatViewController: MessagesLayoutDelegate {
   
   func avatarSize(for message: MessageType, at indexPath: IndexPath,
                   in messagesCollectionView: MessagesCollectionView) -> CGSize {
-    
+
     // 1
-    return .zero
+
+
+    let sender = message.sender.id
+    print("sender: \(sender) post author: \(post.authorID)")
+
+    if sender == post.authorID {
+        return CGSize(width: 13, height: 13)
+    } else {
+        return CGSize(width: 20, height: 20)
+    }
   }
+
+    func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+
+        let sender = message.sender.id
+        print("sender: \(sender) post author: \(post.authorID)")
+
+        if sender == post.authorID {
+            let image = UIImage(named: "crownIcon")
+            let av = Avatar(image: image, initials: "")
+            avatarView.set(avatar: av)
+            avatarView.clipsToBounds = false
+            avatarView.tintColor = UIColor.customPurple.withAlphaComponent(0.5)
+            avatarView.backgroundColor = UIColor.clear
+            print("set av author")
+        } else {
+            let image = UIImage(named: "memberAvatar")
+            let av = Avatar(image: image, initials: "")
+            avatarView.set(avatar: av)
+            avatarView.clipsToBounds = false
+            avatarView.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
+            avatarView.backgroundColor = UIColor.clear
+            print("set av member")
+
+        }
+    }
   
   func footerViewSize(for message: MessageType, at indexPath: IndexPath,
                       in messagesCollectionView: MessagesCollectionView) -> CGSize {
@@ -476,13 +525,15 @@ extension ChatViewController: MessagesLayoutDelegate {
     // 2
     return CGSize(width: 0, height: 8)
   }
-  
+
   func heightForLocation(message: MessageType, at indexPath: IndexPath,
                          with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
     
     // 3
     return 0
   }
+
+
 }
 
 // MARK: - MessagesDataSource
@@ -574,8 +625,8 @@ extension ChatViewController: MessageInputBarDelegate {
         let postRef = db.collection("channels").document(post.id!)
 
         postRef.updateData([
-            "lastMessage": message.content,
-            "updateTimestamp": message.sentDate.toString(dateFormat: "MM/dd/yy h:mm a Z")
+            "lastMessage": message.content!,
+            "updateTimestamp": message.sentDate.toString(dateFormat: "MM/dd/yy hh:mm:ss a ZZ")
         ]) { err in
             if let err = err {
                 print("Error updating document: \(err)")
@@ -609,7 +660,7 @@ extension ChatViewController: MessageInputBarDelegate {
     func removeMember(uid: String) {
         let postRef = db.collection("channels").document(post.id!)
         var mem = post.members
-        if !post.members.contains(user.uid) {
+        if !post.members.contains(uid) {
             print("Doesn't contain userID")
             return
         }
@@ -626,9 +677,8 @@ extension ChatViewController: MessageInputBarDelegate {
         }
     }
     
-    func removeChatToUserList() {
-        let user = AppController.user
-        let userRef = db.collection("students").document(user!.uid)
+    func removeChatFromUserList(uid: String) {
+        let userRef = db.collection("students").document(uid)
         
         userRef.getDocument { (documentSnapshot, err) in
             if let err = err {
@@ -654,7 +704,7 @@ extension ChatViewController: MessageInputBarDelegate {
     func addBannedMember(uid: String) {
         let postRef = db.collection("channels").document(post.id!)
         var banned = post.bannedList
-        if post.bannedList.contains(user.uid) {
+        if post.bannedList.contains(uid) {
             print("Already contains userID")
             return
         }
@@ -670,14 +720,16 @@ extension ChatViewController: MessageInputBarDelegate {
             }
         }
         for message in messages {
-            let messageRef = db.collection(["channels", post.id!, "thread"].joined(separator: "/")).document(message.id!)
-            messageRef.updateData([
-                "content": "User Removed"
-            ]) { err in
-                if let err = err {
-                    print("Error updating document: \(err)")
-                } else {
-                    print("Removed message")
+            if message.sender.id == uid {
+                let messageRef = db.collection(["channels", post.id!, "thread"].joined(separator: "/")).document(message.id!)
+                messageRef.updateData([
+                    "content": "User Removed"
+                ]) { err in
+                    if let err = err {
+                        print("Error updating document: \(err)")
+                    } else {
+                        print("Removed message")
+                    }
                 }
             }
         }

@@ -146,6 +146,10 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
             sendDataToDatabase(photoUrl: photoUrl, content: content)
             textView.text = "I wanna talk with someone about..."
             textView.textColor = UIColor.lightGray
+            Analytics.logEvent("share_post", parameters: [
+                "name": AppController.user!.uid as NSObject,
+                "full_text": textView.text as NSObject
+                ])
         }
         tabBarController!.selectedIndex = 0
     }
