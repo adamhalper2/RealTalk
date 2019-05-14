@@ -16,6 +16,7 @@ enum UserNotifs: String {
     case heart
     case messageOP
     case messageMembers
+    case remove
 
     func type()->String {
         return self.rawValue

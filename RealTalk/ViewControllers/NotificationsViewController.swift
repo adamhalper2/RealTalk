@@ -153,7 +153,10 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
         updateReadStatus(notification: notif)
 
         guard let postID = notif.postID else {return}
-
+        if notif.type == UserNotifs.remove.type() {
+            print("remove notif tapped...returning")
+            return
+        }
         let postReference =  db.collection("channels").document(postID)
         postReference.getDocument { (documentSnapshot, err) in
             if let err = err {
