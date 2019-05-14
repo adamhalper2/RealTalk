@@ -95,6 +95,11 @@ final class AppController {
                         print(error!)
                     }
 
+                    Analytics.logEvent("user_completed_onboarding", parameters: [
+                        "email": AppController.user!.uid as NSObject
+                        ])
+
+
 //                    let newStudent = Student(uid: user!.uid, username: name, bio: "", createdDate: Date())
 //                        studentsReference.document(newStudent.uid).setData(newStudent.representation) { error in
 //                            if error != nil {

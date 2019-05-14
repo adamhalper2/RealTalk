@@ -283,7 +283,7 @@ class MessageDetailViewController: UIViewController {
     private func removeUser() {
         chatViewRef?.addBannedMember(uid: self.message!.sender.id)
         chatViewRef?.removeMember(uid: self.message!.sender.id)
-        chatViewRef?.removeChatToUserList()
+        chatViewRef?.removeChatFromUserList(uid: self.message!.sender.id)
         removeButton.isEnabled = false
         removeButton.alpha = 0.5
         removeButton.setTitle("User Banned", for: .normal)

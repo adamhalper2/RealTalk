@@ -58,10 +58,15 @@ class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCe
             // For iOS 10 display notification (sent via APNS)
             UNUserNotificationCenter.current().delegate = self
             let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-            UNUserNotificationCenter.current().requestAuthorization(
-                options: authOptions,
-                completionHandler: {_, _ in })
-            // For iOS 10 data message (sent via FCM)
+            UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { (status, err) in
+                if (err != nil) {
+                    print(err!)
+                }
+                Analytics.logEvent("requested_push_permission", parameters: [
+                    "didAcceptPush": status as NSObject
+                    ])
+            }
+
             Messaging.messaging().delegate = self
         } else {
             let settings: UIUserNotificationSettings =
