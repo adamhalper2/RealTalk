@@ -574,7 +574,7 @@ extension ChatViewController: MessageInputBarDelegate {
         let postRef = db.collection("channels").document(post.id!)
 
         postRef.updateData([
-            "lastMessage": message.content,
+            "lastMessage": message.content!,
             "updateTimestamp": message.sentDate.toString(dateFormat: "MM/dd/yy h:mm a Z")
         ]) { err in
             if let err = err {

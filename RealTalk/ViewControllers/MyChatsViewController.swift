@@ -15,6 +15,10 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     private var posts = [Post]()
     private var postsListener: ListenerRegistration?
+    private var heartsListener: ListenerRegistration?
+    private var notificationsListener: ListenerRegistration?
+
+
     private let db = Firestore.firestore()
     private var joinedChatIDs: [String]?
     private var uid = ""
@@ -24,7 +28,33 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBOutlet weak var tableView: UITableView!
 
-
+    var heartButton = UIButton()
+    var notificationButton: BadgeButton?
+    
+    var heartCount : Int = 0 {
+        didSet {
+            DispatchQueue.main.async {
+                self.heartButton.setTitle(String(self.heartCount), for: .normal)
+            }
+        }
+    }
+    var unreadNotifCount : Int = 0 {
+        didSet {
+            if notificationButton != nil {
+                
+                DispatchQueue.main.async {
+                    if self.unreadNotifCount == 0 {
+                        self.notificationButton?.badgeBackgroundColor = UIColor.clear
+                        self.notificationButton?.badgeTextColor = UIColor.clear
+                    } else if self.notificationButton?.badgeBackgroundColor == UIColor.clear {
+                        self.notificationButton?.badgeBackgroundColor = UIColor.customPurple
+                        self.notificationButton?.badgeTextColor = UIColor.white
+                    }
+                    self.notificationButton?.badge = "\(self.unreadNotifCount)"
+                }
+            }
+        }
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
@@ -158,6 +188,9 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setNavBar()
+        loadUnreadNotifs()
+        loadUserHearts()
 //        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
 //        view.addGestureRecognizer(tap)
     }
@@ -171,6 +204,95 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewWillDisappear(animated)
     }
     
+    func setNavBar() {
+        //1. customize title font
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "DIN Alternate", size: 25)!]
+        
+        
+        //2. add heart
+        let heartButton = UIButton(type: .system)
+        heartButton.setImage(UIImage(named: "heartIconSmall"), for: .normal)
+        heartButton.setImage(UIImage(named: "heartIconSmall")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        heartButton.frame = CGRect(x: 0, y: 0, width: 60, height: 44)
+        heartButton.tintColor = UIColor.black
+        heartButton.contentHorizontalAlignment = .left
+        heartButton.titleEdgeInsets.left = 5
+        //heartButton.sizeToFit()
+        self.heartButton = heartButton
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: heartButton)
+        
+        //3. add notifs
+        let notificationButton = BadgeButton()
+        notificationButton.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+        notificationButton.tintColor = UIColor.black
+        notificationButton.setImage(UIImage(named: "notificationIcon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        notificationButton.badgeEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 15)
+        notificationButton.badge = "0"
+        
+        notificationButton.addTarget(self, action: #selector(notifTapped), for: .touchUpInside)
+        self.notificationButton = notificationButton
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: notificationButton)
+        
+    }
+    
+    
+    @objc func notifTapped() {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let notifVC = storyBoard.instantiateViewController(withIdentifier: "notifVC") as! NotificationsViewController
+        //self.present(notifVC, animated: true, completion: nil)
+        self.navigationController?.pushViewController(notifVC, animated:true)
+    }
+    
+    func loadUserHearts() {
+        let user = AppController.user
+        let userRef = db.collection("students").document(user!.uid)
+        heartsListener = userRef.addSnapshotListener { documentSnapshot, error in
+            guard let document = documentSnapshot else {
+                print("Error fetching document: \(error!)")
+                return
+            }
+            guard let data = document.data() else {
+                print("Document data was empty.")
+                return
+            }
+            
+            if let heartCount = data["heartCount"] as? String {
+                if let heartCountInt = Int(heartCount) {
+                    self.heartCount = heartCountInt
+                }
+            }
+        }
+    }
+    
+    func loadUnreadNotifs() {
+        let user = AppController.user
+        let notifRef = db.collection(["students", user!.uid, "notifications"].joined(separator: "/")).whereField("read", isEqualTo: "false")
+        notificationsListener = notifRef.addSnapshotListener { querySnapshot, error in
+            guard let snapshot = querySnapshot else {
+                print("Error listening for channel updates: \(error?.localizedDescription ?? "No error")")
+                return
+            }
+            snapshot.documentChanges.forEach { change in
+                self.handleNotifDocumentChange(change)
+            }
+        }
+    }
+    
+    
+    
+    private func handleNotifDocumentChange(_ change: DocumentChange) {
+        
+        switch change.type {
+        case .added:
+            self.unreadNotifCount += 1
+            break
+        case .modified:
+            break
+        case .removed:
+            self.unreadNotifCount -= 1
+            break
+        }
+    }
 
     
     @objc func reloadData() {
