@@ -580,7 +580,6 @@
                         <viewLayoutGuide key="safeArea" id="y6I-Ln-FdH"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="homeIcon" selectedImage="homeIcon" id="9P8-OG-Pjl" userLabel="Home"/>
-<<<<<<< HEAD
                     <navigationItem key="navigationItem" id="80x-qg-JaR">
                         <barButtonItem key="leftBarButtonItem" title="feewekwj" image="barButtonItem:cmC-uI-cYd:image" width="50" style="done" id="cmC-uI-cYd">
                             <inset key="imageInsets" minX="-16" minY="0.0" maxX="0.0" maxY="0.0"/>
