@@ -19,8 +19,8 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var closeBtn: UIButton!
     @IBOutlet weak var charCountLabel: UILabel!
     
-    var post = Post(content: "", author: "", timestamp: NSDate(), authorID: "")
     let colors = Colors()
+    var post = Post(content: "", author: AppSettings.displayName, timestamp: NSDate(), authorID: "")
     
     override func viewDidLoad() {
         super.viewDidLoad()
