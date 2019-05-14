@@ -368,6 +368,20 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
         guard let post = Post(document: change.document) else {
             return
         }
+        
+        if post.bannedList.contains(AppController.user!.uid) {
+            switch change.type {
+            case .added:
+                return
+            case .modified:
+                removePostFromTable(post)
+                
+            case .removed:
+                removePostFromTable(post)
+            }
+            return
+        }
+        
         switch change.type {
         case .added:
             addPostToTable(post)
