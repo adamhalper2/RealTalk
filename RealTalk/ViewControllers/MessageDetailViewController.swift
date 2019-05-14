@@ -256,9 +256,30 @@ class MessageDetailViewController: UIViewController {
     @IBAction func heartTapped(_ sender: Any) {
         addHeartToPost()
         setHeartedButton()
-        // authorRef.updateData(<#T##fields: [AnyHashable : Any]##[AnyHashable : Any]#>)
     }
 
+    func pushNotifyBannedUser(bannedID: String) {
+        db.collection("students").document(bannedID)
+            .getDocument { documentSnapshot, error in
+                guard let document = documentSnapshot else {
+                    print("Error fetching document: \(error!)")
+                    return
+                }
+                guard let data = document.data() else {
+                    print("Document data was empty.")
+                    return
+                }
+
+                guard let content = self.post?.content else {return}
+                guard let postID = self.post?.id else {return}
+                guard let token = data["fcmToken"] as? String else {return}
+
+                let sender = PushNotificationSender()
+                sender.sendPushNotification(to: token, title: "You were removed from this chat", body: "\"\(content)\"", postID: postID, type: UserNotifs.remove.type(), userID: bannedID)
+                print("banned notif sent")
+        }
+
+    }
     private func removeUser() {
         chatViewRef?.addBannedMember(uid: self.message!.sender.id)
         chatViewRef?.removeMember(uid: self.message!.sender.id)
@@ -266,6 +287,7 @@ class MessageDetailViewController: UIViewController {
         removeButton.isEnabled = false
         removeButton.alpha = 0.5
         removeButton.setTitle("User Banned", for: .normal)
+        pushNotifyBannedUser(bannedID: self.message!.sender.id)
     }
 
 }

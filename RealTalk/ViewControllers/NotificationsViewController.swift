@@ -26,7 +26,7 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
         let cell = tableView.dequeueReusableCell(withIdentifier: "notifCell") as! NotificationTableViewCell
 
         let currNotif = notifications[indexPath.row]
-        let notifStr = "\(currNotif.title) \"\(currNotif.body)\""
+        let notifStr = "\(currNotif.title) \(currNotif.body)"
 
         cell.bodyLabel.text = notifStr
 
@@ -153,7 +153,10 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
         updateReadStatus(notification: notif)
 
         guard let postID = notif.postID else {return}
-
+        if notif.type == UserNotifs.remove.type() {
+            print("remove notif tapped...returning")
+            return
+        }
         let postReference =  db.collection("channels").document(postID)
         postReference.getDocument { (documentSnapshot, err) in
             if let err = err {
