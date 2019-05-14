@@ -11,10 +11,11 @@ import UIKit
 class ChatPreviewTableViewCell: UITableViewCell {
 
     @IBOutlet weak var onlineIcon: UILabel!
-    @IBOutlet weak var coverPhoto: UIImageView!
-    @IBOutlet weak var contentCell: UILabel!
+
     @IBOutlet weak var unreadMessageLabel: UILabel!
 
+    @IBOutlet weak var lastMessageLabel: UILabel!
+    @IBOutlet weak var chatTitleLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

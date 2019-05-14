@@ -23,8 +23,8 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
     var refreshControl = UIRefreshControl()
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
-    
+
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
@@ -38,7 +38,8 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell") as! ChatPreviewTableViewCell
         let post = posts[indexPath.row]
-        cell.contentCell.text = post.content
+        cell.chatTitleLabel.text = post.content
+        cell.lastMessageLabel.text = post.lastMessage
         cell.onlineIcon.text = "2 online"
         cell.unreadMessageLabel.text = "1 unread"
         return cell
@@ -164,17 +165,12 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = false
-        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
-    @objc func dismissKeyboard() {
-        self.searchBar.endEditing(true)
-    }
 
     
     @objc func reloadData() {
@@ -217,7 +213,7 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         
         posts.append(post)
-        posts.sort()
+        posts.sort(by: >)
         
         guard let index = posts.index(of: post) else {
             return
@@ -231,7 +227,9 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         
         posts[index] = post
-        tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+        posts.sort(by: >)
+        let newIndex = posts.index(of: post)
+        tableView.reloadRows(at: [IndexPath(row: newIndex!, section: 0), IndexPath(row: index, section: 0)], with: .automatic)
     }
     
     private func removePostFromTable(_ post: Post) {
@@ -243,18 +241,11 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
         tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
     }
     
-    private func handleDocumentChange2(data: [String: Any], id: String) {
-        guard let post = Post(data: data, docId: id) else {
-            return
-        }
-        print(id)
-    }
     
     private func handleDocumentChange(_ change: DocumentChange) {
         guard let post = Post(document: change.document) else {
             return
         }
-        
         switch change.type {
         case .added:
             addPostToTable(post)

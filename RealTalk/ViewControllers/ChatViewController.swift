@@ -358,8 +358,6 @@ final class ChatViewController: MessagesViewController {
         return
     }
     
-    // bad solution, fix at some point
-    if post.id != self.post.id! {return}
     
     self.post = post
     
@@ -539,6 +537,7 @@ extension ChatViewController: MessageInputBarDelegate {
 
     print("members are: \(post.members)")
     // 2.5 add new member
+    addPostUpdate(uid: user.uid, message: message)
     addMember(uid: user.uid)
     addChatToUserList()
 
@@ -567,6 +566,21 @@ extension ChatViewController: MessageInputBarDelegate {
                     )
                     print("*~*~updated joined chats to \(joinedChatIDsStr)")
                 }
+            }
+        }
+    }
+    
+    func addPostUpdate(uid: String, message: Message) {
+        let postRef = db.collection("channels").document(post.id!)
+
+        postRef.updateData([
+            "lastMessage": message.content,
+            "updateTimestamp": message.sentDate.toString(dateFormat: "MM/dd/yy h:mm a Z")
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("added member")
             }
         }
     }
@@ -655,6 +669,19 @@ extension ChatViewController: MessageInputBarDelegate {
                 print("added to banned list")
             }
         }
+        for message in messages {
+            let messageRef = db.collection(["channels", post.id!, "thread"].joined(separator: "/")).document(message.id!)
+            messageRef.updateData([
+                "content": "User Removed"
+            ]) { err in
+                if let err = err {
+                    print("Error updating document: \(err)")
+                } else {
+                    print("Removed message")
+                }
+            }
+        }
+        
     }
 }
 
