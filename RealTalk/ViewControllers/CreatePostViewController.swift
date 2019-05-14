@@ -161,7 +161,7 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
             let vc = ChatViewController(user: user!, post: self.post)
             self.navigationController?.pushViewController(vc, animated:true)
         })
-        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default) {
+        alertController.addAction(UIAlertAction(title: "Stay in feed", style: UIAlertAction.Style.default) {
             UIAlertAction in
             self.dismiss(animated: true, completion: nil)
         })

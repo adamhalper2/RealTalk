@@ -41,13 +41,16 @@ class MessageDetailViewController: UIViewController {
         messageLabel.text = message?.content
         getUserHearts()
         if !isOwner! {
-            removeButton.isEnabled = false
-            removeButton.alpha = 0.5;
-
+            //removeButton.isEnabled = false
+            //removeButton.alpha = 0.5;
+            removeButton.isHidden = true
+        } else {
+            removeButton.isHidden = false
         }
         let banned = post?.bannedList.contains(message!.sender.id)
         if banned! {
-            removeButton.isEnabled = false
+            //removeButton.isEnabled = false
+            removeButton.isHidden = true
             removeButton.alpha = 0.5;
             removeButton.setTitle("User Banned", for: .normal)
         }
@@ -73,8 +76,17 @@ class MessageDetailViewController: UIViewController {
     }
     
     @IBAction func flagPressed(_ sender: Any) {
-        self.addMessageReport()
-        setReportedButton()
+        let alertController = UIAlertController(title: "", message: "Are you sure you want to flag this message?", preferredStyle: UIAlertController.Style.alert)
+        alertController.addAction(UIAlertAction(title: "Yes", style: UIAlertAction.Style.cancel) {
+            UIAlertAction in
+            self.addMessageReport()
+            self.setReportedButton()
+        })
+        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default) {
+            UIAlertAction in
+            self.dismiss(animated: true, completion: nil)
+        })
+        self.present(alertController, animated: true, completion: nil)
     }
 
     func setReportedButton() {
@@ -250,7 +262,16 @@ class MessageDetailViewController: UIViewController {
     }
 
     @IBAction func removePressed(_ sender: Any) {
-        removeUser()
+        let alertController = UIAlertController(title: "", message: "Are you sure you want to remove this user?", preferredStyle: UIAlertController.Style.alert)
+        alertController.addAction(UIAlertAction(title: "Yes", style: UIAlertAction.Style.cancel) {
+            UIAlertAction in
+            self.removeUser()
+        })
+        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default) {
+            UIAlertAction in
+            self.dismiss(animated: true, completion: nil)
+        })
+        self.present(alertController, animated: true, completion: nil)
     }
     
     @IBAction func heartTapped(_ sender: Any) {

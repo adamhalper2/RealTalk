@@ -96,7 +96,7 @@ class PostTableViewCell: UITableViewCell {
                 }
                 DispatchQueue.main.async {
                     if (isOnline) {
-                        self.onlineIndicator.tintColor = UIColor.green
+                        self.onlineIndicator.tintColor = UIColor.customGreen
                     } else {
                         self.onlineIndicator.tintColor = UIColor.darkGray
                     }

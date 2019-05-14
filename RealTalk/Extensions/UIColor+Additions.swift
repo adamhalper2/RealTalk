@@ -47,4 +47,10 @@ extension UIColor {
     static var greenHighlight: UIColor {
         return UIColor(red: 101/255, green: 200/255, blue: 122/255, alpha: 1)
     }
+    
+    static var customGreen: UIColor {
+        return UIColor(red:0.49, green:0.83, blue:0.13, alpha:1.0)
+    }
+    
+    
 }
