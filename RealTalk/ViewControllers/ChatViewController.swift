@@ -497,7 +497,7 @@ extension ChatViewController: MessagesLayoutDelegate {
             let image = UIImage(named: "memberAvatar")
             let av = Avatar(image: image, initials: "")
             avatarView.set(avatar: av)
-            avatarView.clipsToBounds = true
+            avatarView.clipsToBounds = false
             avatarView.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
             avatarView.backgroundColor = UIColor.clear
             print("set av member")
