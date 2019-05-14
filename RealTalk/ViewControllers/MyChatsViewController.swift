@@ -350,8 +350,8 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         posts[index] = post
         posts.sort(by: >)
-        let newIndex = posts.index(of: post)
-        tableView.reloadRows(at: [IndexPath(row: newIndex!, section: 0), IndexPath(row: index, section: 0)], with: .automatic)
+        let newIndex = posts.index(of: post)!
+        tableView.reloadRows(at: [IndexPath(row: newIndex, section: 0), IndexPath(row: index, section: 0)], with: .automatic)
     }
     
     private func removePostFromTable(_ post: Post) {

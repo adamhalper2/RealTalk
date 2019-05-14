@@ -352,6 +352,17 @@ final class ChatViewController: MessagesViewController {
     }
   }
     
+    private func updateMessage(_ message: Message) {
+
+        guard let index = messages.index(of: message) else {
+            return
+        }
+        
+        messages[index] = message
+        
+        messagesCollectionView.reloadData()
+    }
+    
     private func handlePostChange(data: [String: Any], docId: String) {
     
     guard let post = Post(data: data, docId: docId) else {
@@ -388,7 +399,10 @@ final class ChatViewController: MessagesViewController {
       } else {
         insertNewMessage(message)
       }
-
+    case .modified:
+        updateMessage(message)
+        
+        
     default:
       break
     }
@@ -576,7 +590,7 @@ extension ChatViewController: MessageInputBarDelegate {
 
         postRef.updateData([
             "lastMessage": message.content!,
-            "updateTimestamp": message.sentDate.toString(dateFormat: "MM/dd/yy h:mm a Z")
+            "updateTimestamp": message.sentDate.toString(dateFormat: "MM/dd/yy hh:mm:ss a ZZ")
         ]) { err in
             if let err = err {
                 print("Error updating document: \(err)")
@@ -670,14 +684,16 @@ extension ChatViewController: MessageInputBarDelegate {
             }
         }
         for message in messages {
-            let messageRef = db.collection(["channels", post.id!, "thread"].joined(separator: "/")).document(message.id!)
-            messageRef.updateData([
-                "content": "User Removed"
-            ]) { err in
-                if let err = err {
-                    print("Error updating document: \(err)")
-                } else {
-                    print("Removed message")
+            if message.sender.id == uid {
+                let messageRef = db.collection(["channels", post.id!, "thread"].joined(separator: "/")).document(message.id!)
+                messageRef.updateData([
+                    "content": "User Removed"
+                ]) { err in
+                    if let err = err {
+                        print("Error updating document: \(err)")
+                    } else {
+                        print("Removed message")
+                    }
                 }
             }
         }
