@@ -700,13 +700,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="79m-Uu-ZYF">
-                                <rect key="frame" x="0.0" y="44" width="414" height="788"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="313.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jdr-yb-zOy">
-                                        <rect key="frame" x="145" y="0.0" width="124.5" height="414"/>
+                                        <rect key="frame" x="145" y="0.0" width="124.5" height="29.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Handle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qXh-zu-j57">
-                                                <rect key="frame" x="0.0" y="0.0" width="74.5" height="414"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="74.5" height="29.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="100" id="wDQ-br-gof"/>
                                                 </constraints>
@@ -715,7 +715,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BKw-PQ-m8j">
-                                                <rect key="frame" x="74.5" y="0.0" width="50" height="414"/>
+                                                <rect key="frame" x="74.5" y="0.0" width="50" height="29.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="50" id="LM0-2U-1gv"/>
                                                 </constraints>
@@ -728,7 +728,7 @@
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Selected Message" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="dgZ-Rc-1BA">
-                                        <rect key="frame" x="132.5" y="426" width="149" height="150"/>
+                                        <rect key="frame" x="132.5" y="41.5" width="149" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="I5l-Cm-zPA"/>
                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="150" id="KCt-O1-que"/>
@@ -738,7 +738,7 @@
                                         <color key="highlightedColor" cocoaTouchSystemColor="darkTextColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="6mg-33-K7Z">
-                                        <rect key="frame" x="0.0" y="588" width="414" height="200"/>
+                                        <rect key="frame" x="0.0" y="113.5" width="414" height="200"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T28-nz-n0I">
                                                 <rect key="frame" x="0.0" y="0.0" width="384" height="54.5"/>
@@ -940,6 +940,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="barButtonItem:cmC-uI-cYd:image" width="16" height="16"/>
         <image name="chatIcon" width="30" height="25"/>
         <image name="commentIcon" width="14" height="13"/>
         <image name="createPostIcon" width="77" height="71"/>
