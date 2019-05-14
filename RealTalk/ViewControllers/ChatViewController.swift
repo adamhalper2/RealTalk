@@ -119,23 +119,22 @@ final class ChatViewController: MessagesViewController {
     
     
 //    // 1
-//    let cameraItem = InputBarButtonItem(type: .system)
-//    cameraItem.tintColor = .primary
-//    cameraItem.image = #imageLiteral(resourceName: "camera")
-//
-//    // 2
-//    cameraItem.addTarget(
-//      self,
-//      action: #selector(cameraButtonPressed),
-//      for: .primaryActionTriggered
-//    )
-//    cameraItem.setSize(CGSize(width: 60, height: 30), animated: false)
-//
-//    messageInputBar.leftStackView.alignment = .center
-//    messageInputBar.setLeftStackViewWidthConstant(to: 50, animated: false)
+    let cameraItem = InputBarButtonItem(type: .system)
+    cameraItem.tintColor = .primary
+    cameraItem.image = #imageLiteral(resourceName: "camera")
+
+    // 2
+    cameraItem.addTarget(
+      self,
+      action: #selector(cameraButtonPressed),
+    for: .primaryActionTriggered
+    )
+    cameraItem.setSize(CGSize(width: 60, height: 30), animated: false)
+    messageInputBar.leftStackView.alignment = .center
+   messageInputBar.setLeftStackViewWidthConstant(to: 50, animated: false)
 //
 //    // 3
-//    messageInputBar.setStackViewItems([cameraItem], forStack: .left, animated: false)
+    messageInputBar.setStackViewItems([cameraItem], forStack: .left, animated: false)
     
     navigationItem.largeTitleDisplayMode = .never
     
@@ -194,10 +193,10 @@ final class ChatViewController: MessagesViewController {
     let picker = UIImagePickerController()
     picker.delegate = self
     
-    if UIImagePickerController.isSourceTypeAvailable(.camera) {
-      picker.sourceType = .camera
-    } else {
+    if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
       picker.sourceType = .photoLibrary
+    } else {
+      picker.sourceType = .camera
     }
     
     present(picker, animated: true, completion: nil)
@@ -265,8 +264,41 @@ final class ChatViewController: MessagesViewController {
     }
 
     func pushNotifyComment(toID: String) {
-        guard let postID = post.id else {return}
+        pushAuthor(toID: toID)
+        pushMembers(authorID: toID)
+    }
 
+    func pushMembers(authorID: String) {
+        guard let postID = post.id else {return}
+        for member in post.members {
+            if member == authorID {
+                print("\n continuing")
+                continue
+            }
+            db.collection("students").document(member)
+                .getDocument { documentSnapshot, error in
+                    guard let document = documentSnapshot else {
+                        print("Error fetching document: \(error!)")
+                        return
+                    }
+                    guard let data = document.data() else {
+                        print("Document data was empty.")
+                        return
+                    }
+                    guard let token = data["fcmToken"] as? String else {return}
+                    guard let username = data["username"] as? String else {return}
+
+                    let sender = PushNotificationSender()
+                    guard let displayName = AppSettings.displayName else {return}
+                    sender.sendPushNotification(to: token, title: "\(displayName) sent a message", body: "in \"\(self.post.content)\"", postID: postID, type: UserNotifs.messageMembers.type(), userID: member)
+                    print("notif sent to \(username)")
+            }
+        }
+
+
+    }
+    func pushAuthor(toID: String) {
+        guard let postID = post.id else {return}
         db.collection("students").document(toID)
             .getDocument { documentSnapshot, error in
                 guard let document = documentSnapshot else {
@@ -280,7 +312,7 @@ final class ChatViewController: MessagesViewController {
                 guard let token = data["fcmToken"] as? String else {return}
                 let sender = PushNotificationSender()
                 guard let displayName = AppSettings.displayName else {return}
-                sender.sendPushNotification(to: token, title: "\(displayName) sent you a message", body: "\(self.post.content)", postID: postID, type: UserNotifs.messageOP.type(), userID: toID)
+                sender.sendPushNotification(to: token, title: "\(displayName) sent you a message", body: "in \"\(self.post.content)\"", postID: postID, type: UserNotifs.messageOP.type(), userID: toID)
                 print("notif sent")
         }
     }

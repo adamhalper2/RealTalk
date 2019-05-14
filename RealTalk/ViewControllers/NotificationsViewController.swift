@@ -26,7 +26,7 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
         let cell = tableView.dequeueReusableCell(withIdentifier: "notifCell") as! NotificationTableViewCell
 
         let currNotif = notifications[indexPath.row]
-        let notifStr = "\(currNotif.title) \"\(currNotif.body)\""
+        let notifStr = "\(currNotif.title) \(currNotif.body)"
 
         cell.bodyLabel.text = notifStr
 

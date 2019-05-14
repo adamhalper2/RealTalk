@@ -253,7 +253,7 @@ class PostTableViewCell: UITableViewCell {
 
                 let sender = PushNotificationSender()
                 guard let displayName = AppSettings.displayName else {return}
-                sender.sendPushNotification(to: token, title: "\(displayName) liked your post", body: "\(content)", postID: postID, type: UserNotifs.heart.type(), userID: toID)
+                sender.sendPushNotification(to: token, title: "\(displayName) liked your post", body: "\"\(content)\"", postID: postID, type: UserNotifs.heart.type(), userID: toID)
                 print("notif sent")
         }
     }

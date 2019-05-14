@@ -275,7 +275,7 @@ class MessageDetailViewController: UIViewController {
                 guard let token = data["fcmToken"] as? String else {return}
 
                 let sender = PushNotificationSender()
-                sender.sendPushNotification(to: token, title: "You were removed from this chat", body: "\(content)", postID: postID, type: UserNotifs.remove.type(), userID: bannedID)
+                sender.sendPushNotification(to: token, title: "You were removed from this chat", body: "\"\(content)\"", postID: postID, type: UserNotifs.remove.type(), userID: bannedID)
                 print("banned notif sent")
         }
 

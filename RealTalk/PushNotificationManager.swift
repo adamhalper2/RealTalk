@@ -29,6 +29,14 @@ class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCe
     private let db = Firestore.firestore()
     private var reference: CollectionReference?
 
+    private var window: UIWindow!
+    private var rootViewController: UIViewController? {
+        didSet {
+            if let vc = rootViewController {
+                window.rootViewController = vc
+            }
+        }
+    }
 
 
     static let shared = PushNotificationManager()
@@ -105,17 +113,9 @@ class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCe
         updateFirestorePushTokenIfNeeded()
     }
 
-
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-
-        let notification = response.notification
-        let userInfo = notification.request.content.userInfo
-        guard let notifID = userInfo["gcm.notification.notifID"] as? String else {return}
-        updateReadStatus(notifID: notifID)
-        print(response)
-    }
-
     func updateReadStatus(notifID: String) {
+        let db = Firestore.firestore()
+        var reference: CollectionReference?
         guard let userID = AppController.user?.uid else {return}
         if reference == nil {
             reference = db.collection(["students", userID, "notifications"].joined(separator: "/"))
@@ -127,9 +127,67 @@ class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCe
             ])
     }
 
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        let notification = response.notification
+        let userInfo = notification.request.content.userInfo
+        guard let notifID = userInfo["gcm.notification.notifID"] as? String else {return}
+        updateReadStatus(notifID: notifID)
+        print(response)
+        completionHandler()
+
+
+        /*
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        if let appWindow = appDelegate.window {
+            let notification = response.notification
+            let userInfo = notification.request.content.userInfo
+            guard let notifID = userInfo["gcm.notification.notifID"] as? String else {return}
+            updateReadStatus(notifID: notifID)
+            print(response)
+
+            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let notifVC = storyBoard.instantiateViewController(withIdentifier: "notifVC") as! NotificationsViewController
+            //self.present(notifVC, animated: true, completion: nil)
+            appWindow.rootViewController = notifVC
+        } else {
+            print("app window = nil")
+        }
+        completionHandler()
+
+
+
+         let storyboard = UIStoryboard(name: "Main", bundle: nil)
+
+         // instantiate the view controller we want to show from storyboard
+         // root view controller is tab bar controller
+         // the selected tab is a navigation controller
+         // then we push the new view controller to it
+         let tabContoller = storyboard.instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
+         rootViewController = tabContoller
+         tabContoller.present
+
+         let tabBarController = window?.rootViewController as? UITabBarController
+         let navController = tabBarController.selectedViewController as? UINavigationController {
+
+         // we can modify variable of the new view controller using notification data
+         // (eg: title of notification)
+         conversationVC.senderDisplayName = response.notification.request.content.title
+         // you can access custom data of the push notification by using userInfo property
+         // response.notification.request.content.userInfo
+         navController.pushViewController(conversationVC, animated: true)
+         }
+
+         // tell the app that we have finished processing the user’s action / response
+         completionHandler()
+         */
+
+    }
+
+
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void)
     {
-
+        print("will present called")
 
         /*
          let body = notification.request.content.body
