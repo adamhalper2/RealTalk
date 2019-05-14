@@ -56,53 +56,26 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
             guard let notifID = notifications[indexPath.row].notifID else {return}
-            guard let userID = AppController.user?.uid else {return}
-            let notifRef = db.collection(["students", userID, "notifications"].joined(separator: "/")).document(notifID)
-            notifRef.delete()
-            // handle delete (by removing the data from your array and updating the tableview)
+            deleteNotif(notifID: notifID)
         }
     }
 
     @IBOutlet weak var tableView: UITableView!
 
 
+    func deleteNotif(notifID: String) {
+        guard let userID = AppController.user?.uid else {return}
+        let notifRef = db.collection(["students", userID, "notifications"].joined(separator: "/")).document(notifID)
+        notifRef.delete()
+    }
     override func viewDidLoad() {
 
-        //let usersRef = Firestore.firestore().collection("students").document(uid)
-        //usersRef.setData(["fcmToken": token], merge: true)
+        let clearAllButton = UIButton(type: .system)
+        clearAllButton.setTitleColor(.darkGray, for: .normal)
+        clearAllButton.setTitle("Clear All", for: .normal)
 
-        //let manager = PushNotificationManager()
-        //manager.getPendingNotifs()
-        /*
-         UNUserNotificationCenter.current().getPendingNotificationRequests { (notifications) in
-         print("\n\npending notif requests: \(notifications)")
-         }
-         UNUserNotificationCenter.current().getDeliveredNotifications { (notifications) in
-         for notif in notifications {
-         print(notif)
-         let body = notif.request.content.body
-         guard let categoryID = notif.request.content.categoryIdentifier as? String else {
-         print("cateogry ID returned nil")
-         return
-         }
-         let userInfo = notif.request.content.userInfo
-         guard let postID = userInfo["gcm.notification.postID"] as? String else {return}
-         print("postID: \(postID)")
-         print("categoryID: \(categoryID)")
-         let timestamp = notif.date
-         print("user info:\(notif.request.content.userInfo)")
-         let title = notif.request.content.title
-         let dateHelper = DateHelper()
-         let date = dateHelper.timeAgoSinceDate(date: timestamp as NSDate, numericDates: false)
-         print("body: \(body), date: \(date)")
-         let notif = CustomNotif(body: body, timestamp: date, type: categoryID, title: title, postID: postID)
-         self.notifs.append(notif)
-         DispatchQueue.main.async {
-         self.tableView.reloadData()
-         }
-         }
-         }
-         */
+        clearAllButton.addTarget(self, action: #selector(clearAllTapped), for: .touchUpInside)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: clearAllButton)
 
         super.viewDidLoad()
         tableView.delegate = self
@@ -110,6 +83,14 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         loadNotifications()
         // Do any additional setup after loading the view.
+    }
+
+    @objc func clearAllTapped() {
+        for notif in notifications {
+            if let notifID = notif.notifID {
+                deleteNotif(notifID: notifID)
+            }
+        }
     }
 
     func loadNotifications() {
