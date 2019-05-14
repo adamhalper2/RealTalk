@@ -76,7 +76,7 @@ final class ChatViewController: MessagesViewController {
   deinit {
     messageListener?.remove()
   }
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
     self.tabBarController?.tabBar.isHidden = true
@@ -465,10 +465,44 @@ extension ChatViewController: MessagesLayoutDelegate {
   
   func avatarSize(for message: MessageType, at indexPath: IndexPath,
                   in messagesCollectionView: MessagesCollectionView) -> CGSize {
-    
+
     // 1
-    return .zero
+
+
+    let sender = message.sender.id
+    print("sender: \(sender) post author: \(post.authorID)")
+
+    if sender == post.authorID {
+        return CGSize(width: 13, height: 13)
+    } else {
+        return CGSize(width: 20, height: 20)
+    }
   }
+
+    func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+
+        let sender = message.sender.id
+        print("sender: \(sender) post author: \(post.authorID)")
+
+        if sender == post.authorID {
+            let image = UIImage(named: "crownIcon")
+            let av = Avatar(image: image, initials: "")
+            avatarView.set(avatar: av)
+            avatarView.clipsToBounds = false
+            avatarView.tintColor = UIColor.customPurple.withAlphaComponent(0.5)
+            avatarView.backgroundColor = UIColor.clear
+            print("set av author")
+        } else {
+            let image = UIImage(named: "memberAvatar")
+            let av = Avatar(image: image, initials: "")
+            avatarView.set(avatar: av)
+            avatarView.clipsToBounds = true
+            avatarView.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
+            avatarView.backgroundColor = UIColor.clear
+            print("set av member")
+
+        }
+    }
   
   func footerViewSize(for message: MessageType, at indexPath: IndexPath,
                       in messagesCollectionView: MessagesCollectionView) -> CGSize {
@@ -476,13 +510,15 @@ extension ChatViewController: MessagesLayoutDelegate {
     // 2
     return CGSize(width: 0, height: 8)
   }
-  
+
   func heightForLocation(message: MessageType, at indexPath: IndexPath,
                          with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
     
     // 3
     return 0
   }
+
+
 }
 
 // MARK: - MessagesDataSource
