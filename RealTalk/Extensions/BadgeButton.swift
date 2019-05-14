@@ -50,8 +50,16 @@ class BadgeButton: UIButton {
 
     func addbadgetobutton(badge: String?) {
         badgeLabel.text = badge
-        badgeLabel.textColor = badgeTextColor
-        badgeLabel.backgroundColor = badgeBackgroundColor
+        if let badge = badge {
+            let badgeInt = Int(badge)
+            if badgeInt == 0 {
+                badgeLabel.textColor = UIColor.clear
+                badgeLabel.backgroundColor = UIColor.clear
+            } else {
+                badgeLabel.textColor = badgeTextColor
+                badgeLabel.backgroundColor = badgeBackgroundColor
+            }
+        }
         badgeLabel.font = badgeFont
         badgeLabel.sizeToFit()
         badgeLabel.textAlignment = .center

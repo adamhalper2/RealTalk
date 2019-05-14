@@ -199,7 +199,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="New Chat" id="sVO-ML-Jz0">
                         <barButtonItem key="leftBarButtonItem" style="plain" id="f5T-gN-6VI">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="v2S-Q3-uKS" userLabel="xButton">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="v2S-Q3-uKS" userLabel="xButton">
                                 <rect key="frame" x="20" y="9.5" width="26" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
@@ -213,7 +213,7 @@
                             </button>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="Bbx-zP-0s5">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="io8-Gk-klw">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="io8-Gk-klw">
                                 <rect key="frame" x="339" y="5.5" width="55" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
@@ -720,43 +720,80 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="79m-Uu-ZYF">
-                                <rect key="frame" x="0.0" y="44" width="414" height="233"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="79m-Uu-ZYF">
+                                <rect key="frame" x="0.0" y="44" width="414" height="313.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Handle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qXh-zu-j57">
-                                        <rect key="frame" x="155" y="0.0" width="104" height="51"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jdr-yb-zOy">
+                                        <rect key="frame" x="145" y="0.0" width="124.5" height="29.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Handle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qXh-zu-j57">
+                                                <rect key="frame" x="0.0" y="0.0" width="74.5" height="29.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="100" id="wDQ-br-gof"/>
+                                                </constraints>
+                                                <viewLayoutGuide key="safeArea" id="hWC-Fi-T1H"/>
+                                                <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="25"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BKw-PQ-m8j">
+                                                <rect key="frame" x="74.5" y="0.0" width="50" height="29.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="50" id="LM0-2U-1gv"/>
+                                                </constraints>
+                                                <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" image="heartSmall">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                            </button>
+                                        </subviews>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </stackView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Selected Message" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="dgZ-Rc-1BA">
+                                        <rect key="frame" x="132.5" y="41.5" width="149" height="60"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="4Jm-k0-iBp"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="I5l-Cm-zPA"/>
+                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="150" id="KCt-O1-que"/>
                                         </constraints>
-                                        <viewLayoutGuide key="safeArea" id="hWC-Fi-T1H"/>
-                                        <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="35"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BKw-PQ-m8j">
-                                        <rect key="frame" x="167" y="61" width="80" height="50.5"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="80" id="LM0-2U-1gv"/>
-                                        </constraints>
-                                        <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <inset key="imageEdgeInsets" minX="20" minY="0.0" maxX="35" maxY="0.0"/>
-                                        <state key="normal" title="213" image="heartSmall">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Selected Message" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dgZ-Rc-1BA">
-                                        <rect key="frame" x="153.5" y="121.5" width="107.5" height="51"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="highlightedColor" cocoaTouchSystemColor="darkTextColor"/>
                                     </label>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="6mg-33-K7Z">
-                                        <rect key="frame" x="81" y="182.5" width="252" height="50.5"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="6mg-33-K7Z">
+                                        <rect key="frame" x="0.0" y="113.5" width="414" height="200"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kb2-cS-hBr">
-                                                <rect key="frame" x="0.0" y="0.0" width="121" height="36"/>
-                                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="20"/>
-                                                <state key="normal" title="Flag Message ">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T28-nz-n0I">
+                                                <rect key="frame" x="0.0" y="0.0" width="384" height="54.5"/>
+                                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="Xsy-Kb-8zB"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="15"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="contentEdgeInsets" minX="-30" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <inset key="titleEdgeInsets" minX="-4" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="4" maxX="25" maxY="4"/>
+                                                <state key="normal" title="Send Love" image="heartSmall">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="heartTapped:" destination="gb9-ug-gfC" eventType="touchUpInside" id="KnH-QC-goN"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kb2-cS-hBr">
+                                                <rect key="frame" x="0.0" y="72.5" width="384" height="55"/>
+                                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="GIw-kL-chM"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="15"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="25" maxY="0.0"/>
+                                                <state key="normal" title="Flag Message " image="reportIcon">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <userDefinedRuntimeAttributes>
@@ -768,11 +805,17 @@
                                                     <action selector="flagPressed:" destination="gb9-ug-gfC" eventType="touchUpInside" id="nwQ-cH-ZZw"/>
                                                 </connections>
                                             </button>
-                                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hzh-uS-o4Q">
-                                                <rect key="frame" x="131" y="0.0" width="121" height="36"/>
-                                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="20"/>
-                                                <state key="normal" title="Remove User">
+                                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hzh-uS-o4Q">
+                                                <rect key="frame" x="0.0" y="145.5" width="384" height="54.5"/>
+                                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="Xac-5Q-ylP"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="15"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="titleEdgeInsets" minX="-14" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <inset key="imageEdgeInsets" minX="-8" minY="6" maxX="25" maxY="5"/>
+                                                <state key="normal" title="Remove User" image="removeIcon">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <userDefinedRuntimeAttributes>
@@ -785,20 +828,31 @@
                                                 </connections>
                                             </button>
                                         </subviews>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="118" id="g9B-F1-nYu"/>
+                                            <constraint firstAttribute="trailing" secondItem="hzh-uS-o4Q" secondAttribute="trailing" constant="30" id="0Zj-xn-L7F"/>
+                                            <constraint firstItem="Kb2-cS-hBr" firstAttribute="leading" secondItem="6mg-33-K7Z" secondAttribute="leading" constant="30" id="KI0-tV-PpV"/>
+                                            <constraint firstAttribute="trailing" secondItem="T28-nz-n0I" secondAttribute="trailing" constant="30" id="MAh-Ym-ATF"/>
+                                            <constraint firstItem="T28-nz-n0I" firstAttribute="leading" secondItem="6mg-33-K7Z" secondAttribute="leading" constant="30" id="Qi0-Bm-i8L"/>
+                                            <constraint firstAttribute="height" constant="200" id="fa3-Kq-Wwj"/>
+                                            <constraint firstAttribute="trailing" secondItem="Kb2-cS-hBr" secondAttribute="trailing" constant="30" id="meO-Ya-Rec"/>
+                                            <constraint firstItem="T28-nz-n0I" firstAttribute="centerX" secondItem="6mg-33-K7Z" secondAttribute="centerX" id="raw-4C-suf"/>
+                                            <constraint firstItem="hzh-uS-o4Q" firstAttribute="leading" secondItem="6mg-33-K7Z" secondAttribute="leading" constant="30" id="t3R-Ma-S7m"/>
                                         </constraints>
                                     </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="qXh-zu-j57" firstAttribute="centerX" secondItem="79m-Uu-ZYF" secondAttribute="centerX" id="c2E-XJ-m0m"/>
+                                    <constraint firstItem="dgZ-Rc-1BA" firstAttribute="centerX" secondItem="79m-Uu-ZYF" secondAttribute="centerX" id="FJF-Zw-HSi"/>
+                                    <constraint firstItem="6mg-33-K7Z" firstAttribute="leading" secondItem="79m-Uu-ZYF" secondAttribute="leading" id="aQq-z3-AWT"/>
+                                    <constraint firstAttribute="bottom" secondItem="6mg-33-K7Z" secondAttribute="bottom" constant="30" id="fc1-wh-bdO"/>
+                                    <constraint firstAttribute="trailing" secondItem="6mg-33-K7Z" secondAttribute="trailing" id="qp3-8Y-Mv1"/>
                                 </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="w7N-Yr-BpV" firstAttribute="leading" secondItem="79m-Uu-ZYF" secondAttribute="leading" id="0J7-wM-nUu"/>
-                            <constraint firstItem="w7N-Yr-BpV" firstAttribute="bottom" secondItem="79m-Uu-ZYF" secondAttribute="bottom" constant="585" id="7Zl-9Z-mtz"/>
+                            <constraint firstItem="w7N-Yr-BpV" firstAttribute="bottom" secondItem="79m-Uu-ZYF" secondAttribute="bottom" constant="30" id="7Zl-9Z-mtz"/>
                             <constraint firstItem="w7N-Yr-BpV" firstAttribute="trailing" secondItem="79m-Uu-ZYF" secondAttribute="trailing" id="SWW-nU-pVh"/>
                             <constraint firstItem="79m-Uu-ZYF" firstAttribute="top" secondItem="w7N-Yr-BpV" secondAttribute="top" id="rbj-7D-20a"/>
                         </constraints>
@@ -807,6 +861,7 @@
                     <connections>
                         <outlet property="flagButton" destination="Kb2-cS-hBr" id="pJE-aY-NfC"/>
                         <outlet property="handleLabel" destination="qXh-zu-j57" id="RYr-5H-oRM"/>
+                        <outlet property="heartButton" destination="T28-nz-n0I" id="xJo-Q5-NmF"/>
                         <outlet property="heartLabel" destination="BKw-PQ-m8j" id="1Wi-VW-y4s"/>
                         <outlet property="messageLabel" destination="dgZ-Rc-1BA" id="eza-13-Wwi"/>
                         <outlet property="removeButton" destination="hzh-uS-o4Q" id="7le-Bh-gS7"/>
@@ -814,7 +869,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9fu-Kl-jyE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2712" y="-368"/>
+            <point key="canvasLocation" x="2711.594202898551" y="-368.30357142857139"/>
         </scene>
         <!--Notifications-->
         <scene sceneID="rNu-ZN-16y">
@@ -916,6 +971,7 @@
         <image name="onlineIcon" width="8" height="8"/>
         <image name="padlock" width="24" height="24"/>
         <image name="photoIcon" width="30" height="25"/>
+        <image name="removeIcon" width="20" height="20"/>
         <image name="reportIcon" width="11" height="15"/>
         <image name="xIcon" width="26" height="25"/>
     </resources>

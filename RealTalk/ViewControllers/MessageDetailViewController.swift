@@ -21,6 +21,8 @@ class MessageDetailViewController: UIViewController {
     
     @IBOutlet weak var handleLabel: UILabel!
     
+    @IBOutlet weak var heartButton: UIButton!
+    
     var isOwner: Bool?
     var message: Message?
     var chatViewRef: ChatViewController?
@@ -34,7 +36,7 @@ class MessageDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        checkIfUserReported()
         handleLabel.text = message?.sender.displayName
         messageLabel.text = message?.content
         getUserHearts()
@@ -72,10 +74,40 @@ class MessageDetailViewController: UIViewController {
     
     @IBAction func flagPressed(_ sender: Any) {
         self.addMessageReport()
-        self.flagButton.isEnabled = false
-        self.flagButton.alpha = 0.5
+        setReportedButton()
     }
 
+    func setReportedButton() {
+        self.flagButton.isEnabled = false
+        self.flagButton.alpha = 1.0
+        self.flagButton.backgroundColor = UIColor.lightGray
+        self.flagButton.setTitle("Messaged reported.", for: .normal)
+        self.flagButton.tintColor = UIColor.red
+    }
+
+    func checkIfUserReported() {
+        guard let message = message else {return}
+        guard let user = AppController.user else {return}
+
+        let reportsRef = db.collection("reports").whereField("postID", isEqualTo: message.id).whereField("fromID", isEqualTo: user.uid)
+        reportsRef.getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    if document.exists {
+                        DispatchQueue.main.async {
+                            self.setReportedButton()
+                            return
+                        }
+                    } else {
+                        return
+                    }
+                }
+            }
+        }
+    }
+    
     func addMessageReport() {
         guard let currPost = post else {return}
         guard let postID = currPost.id else {return}
@@ -118,10 +150,115 @@ class MessageDetailViewController: UIViewController {
         //messageRef.getDocument(messageID)
     }
 
+    func setHeartedButton() {
+        self.heartButton.isEnabled = false
+        self.heartButton.backgroundColor = UIColor.lightGray
+        self.heartButton.setTitle("Love sent!", for: .normal)
+        self.heartButton.tintColor = UIColor.red
+    }
+
+
+    func checkIfUserHearted() {
+        guard let message = message else {return}
+        guard let user = AppController.user else {return}
+
+        let reportsRef = db.collection("hearts").whereField("postID", isEqualTo: message.id).whereField("fromID", isEqualTo: user.uid)
+        reportsRef.getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    if document.exists {
+                        DispatchQueue.main.async {
+                            self.setHeartedButton()
+                            return
+                        }
+                    } else {
+                        return
+                    }
+                }
+            }
+        }
+    }
+
+    func addHeartToPost() {
+        guard let currUser = AppController.user else {return}
+        let fromID = currUser.uid
+
+        guard let currPost = post else {return}
+        guard let postID = currPost.id else {return}
+        guard let toID = currPost.authorID else {return}
+
+        pushNotifyHeart(toID: toID)
+
+        let newHeart = Heart(postID: postID, fromID: fromID, toID: toID, onPost: true)
+        let  heartsRef =  db.collection("hearts")
+        heartsRef.addDocument(data: newHeart.representation) //add heart to firestore
+        let newHeartCount = currPost.heartCount + 1
+
+        let postRef = db.collection("channels").document(postID) //update post's heart count in firestore
+        postRef.updateData([
+            "heartCount": String(newHeartCount)
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("updated heart count to \(newHeartCount)")
+            }
+        }
+
+        let userRef = db.collection("students").document(toID)
+        userRef.getDocument { (documentSnapshot, err) in
+            if let err = err {
+                print("Error getting document: \(err)")
+            } else {
+                guard let data = documentSnapshot?.data() else {return}
+                if let oldCount = data["heartCount"] as? String {
+                    print("old author heart count: \(oldCount)")
+                    let oldCountInt = Int(oldCount)!
+                    userRef.updateData(
+                        ["heartCount": String(oldCountInt + 1)]
+                    )
+                    print("updated authors heart count to \(oldCountInt + 1)")
+                }
+            }
+        }
+    }
+
+    func pushNotifyHeart(toID: String) {
+        //print("load user token called. display name: \(AppSettings.displayName)")
+        db.collection("students").document(toID)
+            .getDocument { documentSnapshot, error in
+                guard let document = documentSnapshot else {
+                    print("Error fetching document: \(error!)")
+                    return
+                }
+                guard let data = document.data() else {
+                    print("Document data was empty.")
+                    return
+                }
+
+                guard let content = self.post?.content else {return}
+                guard let postID = self.post?.id else {return}
+                guard let token = data["fcmToken"] as? String else {return}
+
+                let sender = PushNotificationSender()
+                guard let displayName = AppSettings.displayName else {return}
+                sender.sendPushNotification(to: token, title: "\(displayName) liked your post", body: "\(content)", postID: postID, type: UserNotifs.heart.type(), userID: toID)
+                print("notif sent")
+        }
+    }
+
     @IBAction func removePressed(_ sender: Any) {
         removeUser()
     }
     
+    @IBAction func heartTapped(_ sender: Any) {
+        addHeartToPost()
+        setHeartedButton()
+        // authorRef.updateData(<#T##fields: [AnyHashable : Any]##[AnyHashable : Any]#>)
+    }
+
     private func removeUser() {
         chatViewRef?.addBannedMember(uid: self.message!.sender.id)
         chatViewRef?.removeMember(uid: self.message!.sender.id)
