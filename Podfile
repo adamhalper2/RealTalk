@@ -25,6 +25,8 @@ target 'RealTalk' do
   pod 'Firebase/Messaging'
   pod 'Firebase/AdMob'
   pod 'Google-Mobile-Ads-SDK'
+  pod 'Firebase/Analytics'
+
 
 
 end
