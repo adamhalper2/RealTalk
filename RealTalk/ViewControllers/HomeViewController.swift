@@ -294,7 +294,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
 
         posts.append(post)
-        posts.sort() { $0.timestamp < $1.timestamp }
+        posts.sort() { $0.timestamp > $1.timestamp }
 
 
         guard let index = posts.index(of: post) else {
@@ -309,9 +309,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
 
         posts[index] = post
-        posts.sort() { $0.timestamp < $1.timestamp }
-        let newIndex = posts.index(of: post)
-        tableView.reloadRows(at: [IndexPath(row: newIndex!, section: 0), IndexPath(row: index, section: 0)], with: .automatic)
+        tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
     }
 
     private func removePostFromTable(_ post: Post) {
@@ -325,6 +323,19 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     private func handlePostDocumentChange(_ change: DocumentChange) {
         guard let post = Post(document: change.document) else {
+            return
+        }
+        
+        if post.bannedList.contains(user.uid) {
+            switch change.type {
+                case .added:
+                    return
+                case .modified:
+                    removePostFromTable(post)
+                
+                case .removed:
+                    removePostFromTable(post)
+            }
             return
         }
 

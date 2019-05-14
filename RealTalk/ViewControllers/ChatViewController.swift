@@ -418,6 +418,7 @@ extension ChatViewController: MessageCellDelegate {
         
         let message = messages.first(where: {$0.id == messageType.messageId})
         if message?.sender.id == user.uid { return }
+        if post.bannedList.contains((message?.sender.id)!) { return }
         let messageDetailVC = MessageDetailViewController.instantiate()
         messageDetailVC?.isOwner = (post.authorID == user.uid)
         messageDetailVC?.message = message
@@ -609,7 +610,7 @@ extension ChatViewController: MessageInputBarDelegate {
     func removeMember(uid: String) {
         let postRef = db.collection("channels").document(post.id!)
         var mem = post.members
-        if !post.members.contains(user.uid) {
+        if !post.members.contains(uid) {
             print("Doesn't contain userID")
             return
         }
@@ -626,9 +627,8 @@ extension ChatViewController: MessageInputBarDelegate {
         }
     }
     
-    func removeChatToUserList() {
-        let user = AppController.user
-        let userRef = db.collection("students").document(user!.uid)
+    func removeChatFromUserList(uid: String) {
+        let userRef = db.collection("students").document(uid)
         
         userRef.getDocument { (documentSnapshot, err) in
             if let err = err {
@@ -654,7 +654,7 @@ extension ChatViewController: MessageInputBarDelegate {
     func addBannedMember(uid: String) {
         let postRef = db.collection("channels").document(post.id!)
         var banned = post.bannedList
-        if post.bannedList.contains(user.uid) {
+        if post.bannedList.contains(uid) {
             print("Already contains userID")
             return
         }
