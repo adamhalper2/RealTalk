@@ -33,7 +33,7 @@ import FirebaseFirestore
 struct Message: MessageType {
 
     let id: String?
-    let content: String
+    var content: String
     let sentDate: Date
     let sender: Sender
     var reportCount: Int
@@ -102,9 +102,13 @@ struct Message: MessageType {
         }
 
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yy h:mm a Z"
-        let sentDate = dateFormatter.date(from: date)!
-
+        dateFormatter.dateFormat = "MM/dd/yy hh:mm:ss a ZZ"
+        
+        var sentDate = Date()
+        if let realDate = dateFormatter.date(from: date) {
+            sentDate = realDate
+        }
+        
         id = document.documentID
         self.isActive = isActiveBool
 
@@ -129,7 +133,7 @@ struct Message: MessageType {
 extension Message: DatabaseRepresentation {
     var representation: [String : Any] {
         var rep: [String : Any] = [
-            "created": sentDate.toString(dateFormat: "MM/dd/yy h:mm a Z"),
+            "created": sentDate.toString(dateFormat: "MM/dd/yy hh:mm:ss a ZZ"),
             "senderID": sender.id,
             "senderName": sender.displayName,
             "reportCount": String(reportCount),

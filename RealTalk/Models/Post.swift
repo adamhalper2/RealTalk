@@ -37,6 +37,7 @@ struct Post {
   let author: String
   let content: String
   let timestamp: NSDate
+  let updateTimestamp: NSDate
   var commentCount: Int
   var heartCount: Int
   var reportCount: Int
@@ -44,6 +45,7 @@ struct Post {
   var isActive: Bool
   var isLocked: Bool
   var bannedList: [String]
+  var lastMessage: String
 
   
     init(content: String, author: String, timestamp: NSDate, authorID: String) {
@@ -59,6 +61,8 @@ struct Post {
         self.isActive = true
         self.isLocked = false
         self.bannedList = []
+        self.lastMessage = ""
+        self.updateTimestamp = timestamp
     }
     
     init?(data: [String: Any], docId: String) {
@@ -75,16 +79,27 @@ struct Post {
             return nil
         }
         
+        guard let updateTimestamp = data["updateTimestamp"] as? String else {
+            return nil
+        }
+        
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yy h:mm a Z"
+        dateFormatter.dateFormat = "MM/dd/yy hh:mm:ss a ZZ"
         
         var date = NSDate()
         if let realDate = dateFormatter.date(from: timestamp) as? NSDate {
-            print("date = realDate")
             date = realDate
         }
         
+        var updateDate = NSDate()
+        if let realUpdateDate = dateFormatter.date(from: updateTimestamp) as? NSDate {
+            updateDate = realUpdateDate
+        }
+        
         guard let authorID = data["authorID"] as? String else {
+            return nil
+        }
+        guard let lastMessage = data["lastMessage"] as? String else {
             return nil
         }
         
@@ -141,6 +156,8 @@ struct Post {
         self.isActive = isActiveBool
         self.isLocked = isLockedBool
         self.bannedList = bannedList
+        self.updateTimestamp = updateDate
+        self.lastMessage = lastMessage
     }
     
   init?(document: QueryDocumentSnapshot) {
@@ -158,13 +175,29 @@ struct Post {
     guard let timestamp = data["timestamp"] as? String else {
         return nil
     }
+    
+    guard let updateTimestamp = data["updateTimestamp"] as? String else {
+        return nil
+    }
 
     let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "MM/dd/yy h:mm a Z"
+    dateFormatter.dateFormat = "MM/dd/yy hh:mm:ss a ZZ"
     
-    let date = dateFormatter.date(from: timestamp)! as NSDate
+    var date = NSDate()
+    if let actualDate = dateFormatter.date(from: timestamp) as? NSDate {
+        date = actualDate
+    }
+    
+    var updateDate = NSDate()
+    if let realUpdateDate = dateFormatter.date(from: updateTimestamp) as? NSDate {
+        updateDate = realUpdateDate
+    }
 
     guard let authorID = data["authorID"] as? String else {
+        return nil
+    }
+    
+    guard let lastMessage = data["lastMessage"] as? String else {
         return nil
     }
 
@@ -221,6 +254,8 @@ struct Post {
     self.isActive = isActiveBool
     self.isLocked = isLockedBool
     self.bannedList = bannedList
+    self.updateTimestamp = updateDate
+    self.lastMessage = lastMessage
   }
 }
 
@@ -230,7 +265,8 @@ extension Post : DatabaseRepresentation {
   var representation: [String : Any] {
     var rep = ["content": content]
     rep["author"] = author
-    rep["timestamp"] = timestamp.toString(dateFormat: "MM/dd/yy h:mm a Z")
+    rep["timestamp"] = timestamp.toString(dateFormat: "MM/dd/yy hh:mm:ss a ZZ")
+    rep["updateTimestamp"] = updateTimestamp.toString(dateFormat: "MM/dd/yy hh:mm:ss a ZZ")
     rep["commentCount"] = String(commentCount)
     rep["heartCount"] = String(heartCount)
     rep["reportCount"] = String(heartCount)
@@ -239,6 +275,7 @@ extension Post : DatabaseRepresentation {
     rep["isActive"] = String(isActive)
     rep["isLocked"] = String(isLocked)
     rep["bannedList"] = bannedList.joined(separator: "-")
+    rep["lastMessage"] = lastMessage
 
     if let id = id {
       rep["id"] = id
@@ -256,7 +293,8 @@ extension Post: Comparable {
   }
   
   static func < (lhs: Post, rhs: Post) -> Bool {
-    return rhs.timestamp < lhs.timestamp
+    return lhs.updateTimestamp < rhs.updateTimestamp
   }
 
 }
+

@@ -26,4 +26,8 @@ extension NSDate
         return lhs.compare(rhs as Date) == .orderedAscending
     }
     
+    static public func >(lhs: NSDate, rhs: NSDate) -> Bool {
+        return lhs.compare(rhs as Date) == .orderedDescending
+    }
+    
 }

@@ -294,7 +294,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
 
         posts.append(post)
-        posts.sort()
+        posts.sort() { $0.timestamp < $1.timestamp }
+
 
         guard let index = posts.index(of: post) else {
             return
@@ -308,7 +309,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
 
         posts[index] = post
-        tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+        posts.sort() { $0.timestamp < $1.timestamp }
+        let newIndex = posts.index(of: post)
+        tableView.reloadRows(at: [IndexPath(row: newIndex!, section: 0), IndexPath(row: index, section: 0)], with: .automatic)
     }
 
     private func removePostFromTable(_ post: Post) {
@@ -336,4 +339,50 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             removePostFromTable(post)
         }
     }
+    
+    func deactivateChat(post: Post) {
+        let postRef = db.collection("channels").document(post.id!)
+        postRef.updateData([
+            "isActive": String(false)
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let post = posts[indexPath.row]
+        if post.authorID == AppController.user?.uid {
+            let deleteButton = UITableViewRowAction(style: .default, title: "Delete Chat") { (action, indexPath) in
+                self.tableView.dataSource?.tableView!(self.tableView, commit: .delete, forRowAt: indexPath)
+                return
+            }
+            deleteButton.backgroundColor = UIColor.red
+            return [deleteButton]
+            
+        } else {
+            let nothingButton = UITableViewRowAction(style: .default, title: "") { (action, indexPath) in
+                self.tableView.dataSource?.tableView!(self.tableView, commit: .none, forRowAt: indexPath)
+                return
+            }
+            nothingButton.backgroundColor = UIColor.white
+            return [nothingButton]
+        }
+    }
+
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let post = posts[indexPath.row]
+        if editingStyle == .delete {
+            if post.authorID == AppController.user?.uid {
+                deactivateChat(post: post)
+                posts.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+        }
+    }
+    
 }
