@@ -62,6 +62,16 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
 
+    @objc func heartButtonClicked(_ sender: UIButton!) {
+        let alertController = UIAlertController(title: "Love Count", message: "This number represents all the love you have received from other users on your posts and messages. Click on any user's chat messages to see their love count and give love, and participate in conversations to increase yours!", preferredStyle: UIAlertController.Style.alert)
+        alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.cancel) {
+            UIAlertAction in
+            self.dismiss(animated: true, completion: nil)
+        })
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
     }
@@ -170,6 +180,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         //heartButton.sizeToFit()
         self.heartButton = heartButton
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: heartButton)
+
+        heartButton.addTarget(self, action: #selector(heartButtonClicked), for: .touchUpInside)
+
 
         //3. add notifs
         let notificationButton = BadgeButton()
