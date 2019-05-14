@@ -33,7 +33,7 @@ import FirebaseFirestore
 struct Message: MessageType {
 
     let id: String?
-    var content: String
+    let content: String?
     let sentDate: Date
     let sender: Sender
     var reportCount: Int
@@ -43,7 +43,7 @@ struct Message: MessageType {
         if let image = image {
             return .photo(image)
         } else {
-            return .text(content)
+            return .text(content!)
         }
     }
 
