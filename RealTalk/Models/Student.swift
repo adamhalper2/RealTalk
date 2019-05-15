@@ -19,6 +19,7 @@ struct Student {
     var isOnline: Bool
     var joinedChatIDs: [String]
     var fcmToken: String
+    var postCount: Int
 
     init(uid: String, username: String, bio: String?, createdDate: NSDate) {
         self.uid = uid
@@ -32,6 +33,7 @@ struct Student {
             self.bio = userBio
         }
         self.fcmToken = ""
+        self.postCount = 0
     }
 
     init?(document: QueryDocumentSnapshot) {
@@ -63,6 +65,11 @@ struct Student {
             return nil
         }
         let heartCountInt = Int(heartCount)!
+        
+        guard let postCount = data["postCount"] as? String else {
+            return nil
+        }
+        let postCountInt = Int(postCount)!
 
         guard let createdDate = data["createdDate"] as? String else {
             return nil
@@ -85,6 +92,7 @@ struct Student {
         self.heartCount = heartCountInt
         self.createdDate = date
         self.joinedChatIDs = joinedChatIDs
+        self.postCount = postCountInt
 
     }
     
@@ -101,7 +109,8 @@ extension Student: DatabaseRepresentation {
             "isOnline": String(isOnline),
             "heartCount": String(heartCount),
             "createdDate": createdDate.toString(dateFormat: "MM/dd/yy h:mm a Z"),
-            "joinedChatIDs": joinedChatIDs.joined(separator: "-")
+            "joinedChatIDs": joinedChatIDs.joined(separator: "-"),
+            "postCount": String(postCount)
         ]
 
         return rep
