@@ -44,6 +44,11 @@ extension UIColor {
         return UIColor(red: 144/255, green: 19/255, blue: 254/255, alpha: 1)
     }
 
+    static var customPurple2: UIColor {
+        return UIColor(red: 132/255, green: 52/255, blue: 251/255, alpha: 1)
+    }
+
+
     static var greenHighlight: UIColor {
         return UIColor(red: 101/255, green: 200/255, blue: 122/255, alpha: 1)
     }
