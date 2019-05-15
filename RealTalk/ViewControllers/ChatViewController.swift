@@ -269,6 +269,7 @@ final class ChatViewController: MessagesViewController {
         let delta = 1
         updateCommentCount(delta: delta)
         if let toID = post.authorID {
+            if toID == user.uid {return}
             pushNotifyComment(toID: toID)
         }
     }

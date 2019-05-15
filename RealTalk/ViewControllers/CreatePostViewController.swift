@@ -158,13 +158,13 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
         }
         tabBarController!.selectedIndex = 0
         let alertController = UIAlertController(title: "", message: "You are now the moderator of your new chat, so you can remove members, delete the chat, or lock it as you like to prevent new users from joining.", preferredStyle: UIAlertController.Style.alert)
-        alertController.addAction(UIAlertAction(title: "Go to chat", style: UIAlertAction.Style.cancel) {
+        /*alertController.addAction(UIAlertAction(title: "Go to chat", style: UIAlertAction.Style.cancel) {
             UIAlertAction in
             let user = AppController.user
             let vc = ChatViewController(user: user!, post: self.post)
             self.navigationController?.pushViewController(vc, animated:true)
-        })
-        alertController.addAction(UIAlertAction(title: "Stay in feed", style: UIAlertAction.Style.default) {
+        })*/
+        alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default) {
             UIAlertAction in
             self.dismiss(animated: true, completion: nil)
         })
