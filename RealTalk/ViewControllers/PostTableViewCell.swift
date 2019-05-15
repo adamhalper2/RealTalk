@@ -69,6 +69,7 @@ class PostTableViewCell: UITableViewCell {
         guard let currUser = AppController.user else {return}
         if currUser.uid == authorID {
             onlineIndicator.isHidden = true
+            moderatorIcon.tintColor = UIColor.customPurple2
             moderatorIcon.isHidden = false
         } else {
             onlineIndicator.isHidden = false
