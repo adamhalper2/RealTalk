@@ -185,7 +185,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="New Chat" id="sVO-ML-Jz0">
                         <barButtonItem key="leftBarButtonItem" style="plain" id="f5T-gN-6VI">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="v2S-Q3-uKS" userLabel="xButton">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="v2S-Q3-uKS" userLabel="xButton">
                                 <rect key="frame" x="20" y="9.5" width="26" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
