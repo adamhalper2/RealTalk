@@ -70,15 +70,29 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
         let post = posts[indexPath.row]
         cell.chatTitleLabel.text = post.content
         cell.lastMessageLabel.text = post.lastMessage
-        cell.onlineIcon.text = "2 online"
-        cell.unreadMessageLabel.text = "1 unread"
+        let memberCount = post.members.count
+        if memberCount == 1 {
+            cell.onlineIcon.text = String(memberCount) + " member"
+        } else {
+            cell.onlineIcon.text = String(memberCount) + " members"
+        }
         let currUser = AppController.user!
         uid = currUser.uid
         if post.authorID == currUser.uid {
             cell.crownIcon.isHidden = false
+            cell.authorLabel.isHidden = true
         } else {
             cell.crownIcon.isHidden = true
+            cell.authorLabel.text = "by " + post.author
+            cell.authorLabel.isHidden = false
         }
+        cell.lockIcon.tintColor = UIColor.darkGray
+        if post.isLocked {
+            cell.lockIcon.isHidden = false
+        } else {
+            cell.lockIcon.isHidden = true
+        }
+        
         return cell
     }
     
