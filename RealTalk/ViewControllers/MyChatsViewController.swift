@@ -80,10 +80,13 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
         uid = currUser.uid
         if post.authorID == currUser.uid {
             cell.crownIcon.isHidden = false
-            cell.authorLabel.isHidden = true
+            cell.authorLabel.text = "You"
+            cell.crownIcon.tintColor = UIColor.customPurple2
+
         } else {
-            cell.crownIcon.isHidden = true
-            cell.authorLabel.text = "by " + post.author
+            cell.crownIcon.isHidden = false
+            cell.crownIcon.tintColor = UIColor.lightGray
+            cell.authorLabel.text = post.author
             cell.authorLabel.isHidden = false
         }
         cell.lockIcon.tintColor = UIColor.darkGray

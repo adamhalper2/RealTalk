@@ -119,17 +119,20 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
             } else {
                 guard let data = documentSnapshot?.data() else {return}
                 if var joinedChatIDsStr = data["joinedChatIDs"] as? String {
-                    print("*~*~old joined chats: \(joinedChatIDsStr)")
-                    
+                    var postCountInt = 0
+                    if let postCount = data["postCount"] as? String {
+                        postCountInt = Int(postCount)!
+                    }
+                    postCountInt += 1
+
                     var joinedChatIDs = joinedChatIDsStr.components(separatedBy: "-")
                     if (!joinedChatIDs.contains(postID)) {
                         joinedChatIDs.append(postID)
                     }
                     joinedChatIDsStr = joinedChatIDs.joined(separator: "-")
                     userRef.updateData(
-                        ["joinedChatIDs": joinedChatIDsStr]
-                    )
-                    print("*~*~updated joined chats to \(joinedChatIDsStr)")
+                        ["joinedChatIDs": joinedChatIDsStr,
+                        "postCount": String(postCountInt)])
                 }
             }
         }

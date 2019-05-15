@@ -98,7 +98,7 @@ class PostTableViewCell: UITableViewCell {
                     if (isOnline) {
                         self.onlineIndicator.tintColor = UIColor.customGreen
                     } else {
-                        self.onlineIndicator.tintColor = UIColor.darkGray
+                        self.onlineIndicator.tintColor = UIColor.lightGray
                     }
                     return
                 }
@@ -127,6 +127,7 @@ class PostTableViewCell: UITableViewCell {
         heartBtn.isEnabled = true
         reportBtn.tintColor = UIColor.darkGray
         reportBtn.isEnabled = true
+        onlineIndicator.tintColor = UIColor.lightGray
 
     }
 
@@ -281,9 +282,9 @@ class PostTableViewCell: UITableViewCell {
         guard let currPost = post else {return}
         guard let postID = currPost.id else {return}
         guard let toID = currPost.authorID else {return}
-
-        pushNotifyHeart(toID: toID)
-
+        if fromID != toID {
+            pushNotifyHeart(toID: toID)
+        }
 
         let newHeart = Heart(postID: postID, fromID: fromID, toID: toID, onPost: true)
         let  heartsRef =  db.collection("hearts")
