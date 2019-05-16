@@ -381,7 +381,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let post = posts[indexPath.row]
         if post.authorID == AppController.user?.uid {
             let deleteButton = UITableViewRowAction(style: .default, title: "Delete Chat") { (action, indexPath) in
-                self.tableView.dataSource?.tableView!(self.tableView, commit: .delete, forRowAt: indexPath)
+                self.removePostFromTable(post)
                 return
             }
             deleteButton.backgroundColor = UIColor.red
