@@ -103,8 +103,9 @@ class LoginViewController: UIViewController {
     }
     
     displayNameField.resignFirstResponder()
-    email = email + "@stanford.edu"
-    print(email)
+    if email != "realtalk377@gmail.com" {
+        email = email + "@stanford.edu"
+    }
     if email.isValidEmail() && email.isCollegeEmail() {
     
         Auth.auth().sendSignInLink(toEmail:email,

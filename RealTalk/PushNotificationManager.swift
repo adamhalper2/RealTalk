@@ -132,61 +132,31 @@ class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCe
             ])
     }
 
-
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("did receive notif")
         let notification = response.notification
         let userInfo = notification.request.content.userInfo
         guard let notifID = userInfo["gcm.notification.notifID"] as? String else {return}
         updateReadStatus(notifID: notifID)
         print(response)
-        completionHandler()
 
+        let rootViewController =  UIApplication.shared.keyWindow?.rootViewController as! UITabBarController
 
-        /*
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        if let appWindow = appDelegate.window {
-            let notification = response.notification
-            let userInfo = notification.request.content.userInfo
-            guard let notifID = userInfo["gcm.notification.notifID"] as? String else {return}
-            updateReadStatus(notifID: notifID)
-            print(response)
+        guard let user = Auth.auth().currentUser else {return}
+        guard let postID = userInfo["gcm.notification.postID"] as? String else {return}
 
-            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let notifVC = storyBoard.instantiateViewController(withIdentifier: "notifVC") as! NotificationsViewController
-            //self.present(notifVC, animated: true, completion: nil)
-            appWindow.rootViewController = notifVC
-        } else {
-            print("app window = nil")
+        let postRef = db.collection("channels").document(postID)
+        postRef.getDocument { (documentSnapshot, err) in
+            if let err = err {
+                print("Error getting document: \(err)")
+            } else {
+                guard let data = documentSnapshot?.data() else {return}
+                guard let post = Post(data: data, docId: postID) else {return}
+                let navController = rootViewController.selectedViewController as? UINavigationController
+                let vc = ChatViewController(user: user, post: post)
+                navController!.pushViewController(vc, animated:true)
+            }
         }
-        completionHandler()
-
-
-
-         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-
-         // instantiate the view controller we want to show from storyboard
-         // root view controller is tab bar controller
-         // the selected tab is a navigation controller
-         // then we push the new view controller to it
-         let tabContoller = storyboard.instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
-         rootViewController = tabContoller
-         tabContoller.present
-
-         let tabBarController = window?.rootViewController as? UITabBarController
-         let navController = tabBarController.selectedViewController as? UINavigationController {
-
-         // we can modify variable of the new view controller using notification data
-         // (eg: title of notification)
-         conversationVC.senderDisplayName = response.notification.request.content.title
-         // you can access custom data of the push notification by using userInfo property
-         // response.notification.request.content.userInfo
-         navController.pushViewController(conversationVC, animated: true)
-         }
-
-         // tell the app that we have finished processing the user’s action / response
-         completionHandler()
-         */
-
     }
 
 

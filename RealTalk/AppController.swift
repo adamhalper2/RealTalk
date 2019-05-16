@@ -94,9 +94,8 @@ final class AppController {
                     if (error != nil) {
                         print(error!)
                     }
-
                     Analytics.logEvent("user_completed_onboarding", parameters: [
-                        "email": AppController.user!.uid as NSObject
+                        "email": user?.user.uid as! NSObject
                         ])
 
 
