@@ -39,7 +39,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NR8-oS-7HA">
-                                                    <rect key="frame" x="43" y="21" width="256" height="18"/>
+                                                    <rect key="frame" x="28" y="21" width="271" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -70,7 +70,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Last Message" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cxd-dC-jKf">
-                                                    <rect key="frame" x="43" y="44" width="256" height="16"/>
+                                                    <rect key="frame" x="28" y="44" width="271" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -86,7 +86,7 @@
                                                 <constraint firstItem="Z3U-tP-hEg" firstAttribute="centerY" secondItem="h3B-3O-aoT" secondAttribute="centerY" id="OHI-zq-iro"/>
                                                 <constraint firstItem="cxd-dC-jKf" firstAttribute="top" secondItem="NR8-oS-7HA" secondAttribute="bottom" constant="5" id="TgH-94-QoI"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="wjX-h3-Rdl" secondAttribute="bottom" constant="47.5" id="Tm9-Gl-b7e"/>
-                                                <constraint firstItem="NR8-oS-7HA" firstAttribute="leading" secondItem="wjX-h3-Rdl" secondAttribute="trailing" constant="20" id="b2c-ar-DJO"/>
+                                                <constraint firstItem="NR8-oS-7HA" firstAttribute="leading" secondItem="wjX-h3-Rdl" secondAttribute="trailing" constant="5" id="b2c-ar-DJO"/>
                                                 <constraint firstItem="Lmi-Bz-bey" firstAttribute="trailing" secondItem="8DM-xb-qAT" secondAttribute="trailingMargin" id="bRV-X5-wbY"/>
                                                 <constraint firstItem="NR8-oS-7HA" firstAttribute="top" secondItem="8DM-xb-qAT" secondAttribute="topMargin" constant="10" id="dTj-3q-Ulm"/>
                                                 <constraint firstItem="Lmi-Bz-bey" firstAttribute="top" secondItem="Z3U-tP-hEg" secondAttribute="bottom" constant="2.5" id="gCA-qN-y4t"/>
