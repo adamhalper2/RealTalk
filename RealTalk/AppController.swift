@@ -94,9 +94,11 @@ final class AppController {
                     if (error != nil) {
                         print(error!)
                     }
-                    Analytics.logEvent("user_completed_onboarding", parameters: [
-                        "email": user?.user.uid as! NSObject
-                        ])
+                    if let userQuery = user {
+                        Analytics.logEvent("user_completed_onboarding", parameters: [
+                            "email": userQuery.user.uid as! NSObject
+                            ])
+                    }
 
 
 //                    let newStudent = Student(uid: user!.uid, username: name, bio: "", createdDate: Date())
