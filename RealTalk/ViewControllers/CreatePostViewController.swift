@@ -157,7 +157,7 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
                 ])
         }
         tabBarController!.selectedIndex = 0
-        let alertController = UIAlertController(title: "", message: "You are now the moderator of your new chat, so you can remove members, delete the chat, or lock it as you like to prevent new users from joining.", preferredStyle: UIAlertController.Style.alert)
+        let alertController = UIAlertController(title: "", message: "You are now the moderator of your new chat, so you can remove members, delete the chat, or lock the chat to prevent new users from seeing or joining it.", preferredStyle: UIAlertController.Style.alert)
         /*alertController.addAction(UIAlertAction(title: "Go to chat", style: UIAlertAction.Style.cancel) {
             UIAlertAction in
             let user = AppController.user
@@ -168,7 +168,30 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
             UIAlertAction in
             self.dismiss(animated: true, completion: nil)
         })
-        self.present(alertController, animated: true, completion: nil)
+        
+        if let user = AppController.user {
+            let db = Firestore.firestore()
+            let userRef = db.collection("students").document(user.uid)
+            userRef.getDocument { (documentSnapshot, err) in
+                if let err = err {
+                    print("Error getting document: \(err)")
+                } else {
+                    guard let data = documentSnapshot?.data() else {return}
+                    if let numPosts = data["postCount"] as? Int {
+                        print("*~*~user post count: \(numPosts)")
+                        
+                        if numPosts < 1 {
+                            print("num posts = \(numPosts)")
+                            self.present(alertController, animated: true, completion: nil)
+                        }
+                    }
+                }
+            }
+        } else {
+            print("user is nil")
+        }
+        
+        
     }
     
     
