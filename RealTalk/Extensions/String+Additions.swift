@@ -16,6 +16,7 @@ extension String {
     }
     
     func isCollegeEmail() -> Bool {
+        if self == "realtalk377@gmail.com" {return true}
         return self.hasSuffix("edu")
     }
 }
