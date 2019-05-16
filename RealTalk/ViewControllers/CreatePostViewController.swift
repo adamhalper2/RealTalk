@@ -83,7 +83,7 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
         let db = Firestore.firestore()
         let  postsReference =  db.collection("channels")
 
-        var author = "mrBean"
+        var author = ""
         var uid = ""
         if let user = AppController.user {
             uid = user.uid
