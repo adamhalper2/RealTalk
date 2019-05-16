@@ -179,7 +179,7 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
                     if let numPosts = data["postCount"] as? Int {
                         print("*~*~user post count: \(numPosts)")
                         
-                        if numPosts < 1 {
+                        if numPosts == 1 {
                             print("num posts = \(numPosts)")
                             self.present(alertController, animated: true, completion: nil)
                         }
