@@ -176,10 +176,11 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
                     print("Error getting document: \(err)")
                 } else {
                     guard let data = documentSnapshot?.data() else {return}
-                    if let numPosts = data["postCount"] as? Int {
+                    if let numPosts = data["postCount"] as? String {
+                        let numPostsInt = Int(numPosts)
                         print("*~*~user post count: \(numPosts)")
                         
-                        if numPosts == 1 {
+                        if numPostsInt == 0 {
                             print("num posts = \(numPosts)")
                             self.present(alertController, animated: true, completion: nil)
                         }
