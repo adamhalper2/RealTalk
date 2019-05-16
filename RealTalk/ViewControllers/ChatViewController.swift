@@ -323,7 +323,7 @@ final class ChatViewController: MessagesViewController {
                 guard let token = data["fcmToken"] as? String else {return}
                 let sender = PushNotificationSender()
                 guard let displayName = AppSettings.displayName else {return}
-                sender.sendPushNotification(to: token, title: "\(displayName) sent you a message", body: "in \"\(self.post.content)\"", postID: postID, type: UserNotifs.messageOP.type(), userID: toID)
+                sender.sendPushNotification(to: token, title: "\(displayName) sent a message in your chat", body: "\"\(self.post.content)\"", postID: postID, type: UserNotifs.messageOP.type(), userID: toID)
                 print("notif sent")
         }
     }
