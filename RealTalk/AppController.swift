@@ -67,16 +67,16 @@ final class AppController {
     //FirebaseApp.configure()
     
     // TODO: remove this once logout is handled
-//    do {
-//        try Auth.auth().signOut()
-//    } catch {
-//        print("Error signing out: \(error.localizedDescription)")
-//    }
+    do {
+        try Auth.auth().signOut()
+    } catch {
+        print("Error signing out: \(error.localizedDescription)")
+    }
     
     // TODO: remove when done testing
-//    let domain = Bundle.main.bundleIdentifier!
-//    UserDefaults.standard.removePersistentDomain(forName: domain)
-//    UserDefaults.standard.synchronize()
+    let domain = Bundle.main.bundleIdentifier!
+    UserDefaults.standard.removePersistentDomain(forName: domain)
+    UserDefaults.standard.synchronize()
     
     self.window = window
     window.tintColor = .primary

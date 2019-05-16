@@ -586,7 +586,7 @@
                   moduleName = "RealTalk"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/colin/Desktop/cs377U/app2/RealTalk/RealTalk/ViewControllers/CreatePostViewController.swift"
-                  timestampString = "579677653.328099"
+                  timestampString = "579689555.316416"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "174"
@@ -601,7 +601,7 @@
                   moduleName = "RealTalk"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/colin/Desktop/cs377U/app2/RealTalk/RealTalk/ViewControllers/CreatePostViewController.swift"
-                  timestampString = "579677653.3302751"
+                  timestampString = "579689555.3186181"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "175"
@@ -624,6 +624,22 @@
             startingLineNumber = "175"
             endingLineNumber = "175"
             landmarkName = "shareTapped(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RealTalk/AppDelegate.swift"
+            timestampString = "579689554.554098"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
+            landmarkName = "application(_:open:options:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
