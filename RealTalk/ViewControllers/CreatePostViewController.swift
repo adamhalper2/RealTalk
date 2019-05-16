@@ -106,7 +106,6 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
                 ProgressHUD.showError(error!.localizedDescription)
                     return
             }
-            ProgressHUD.showSuccess("Success")
         }
         
         let postID = docRef!.documentID
