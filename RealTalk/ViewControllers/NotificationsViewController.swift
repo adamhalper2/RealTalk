@@ -46,6 +46,7 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
 
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        print("returning 80")
         return 80
     }
 
