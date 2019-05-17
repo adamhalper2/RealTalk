@@ -600,10 +600,10 @@
             </objects>
             <point key="canvasLocation" x="1534.7826086956522" y="-350.22321428571428"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Animated Tab Controller-->
         <scene sceneID="N7F-Pg-Uo3">
             <objects>
-                <tabBarController storyboardIdentifier="TabBarController" id="qWI-oG-Zhp" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarController" id="qWI-oG-Zhp" customClass="AnimatedTabController" customModule="RealTalk" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="VVv-B8-ADa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
