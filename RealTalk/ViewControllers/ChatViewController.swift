@@ -87,7 +87,7 @@ final class ChatViewController: MessagesViewController {
         titleLabel.textAlignment = .center
         titleLabel.backgroundColor = UIColor.clear
         titleLabel.textColor = UIColor.black
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 17)
+        titleLabel.font = UIFont(name: "DIN Alternate", size: 17)!
         titleLabel.text = title
         titleLabel.lineBreakMode = .byTruncatingTail
         //titleLabel.sizeToFit()
