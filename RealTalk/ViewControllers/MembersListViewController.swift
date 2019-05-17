@@ -113,6 +113,9 @@ class MembersListViewController: UIViewController, UITableViewDelegate, UITableV
                     print("added student \(student)")
 
                     self.members.append(student)
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
                 }
 
             }
