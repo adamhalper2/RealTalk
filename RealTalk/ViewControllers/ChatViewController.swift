@@ -92,10 +92,6 @@ final class ChatViewController: MessagesViewController {
         titleLabel.lineBreakMode = .byTruncatingTail
         //titleLabel.sizeToFit()
 
-        let recognizer = UITapGestureRecognizer(target: self, action: #selector(titleTapped))
-        titleLabel.isUserInteractionEnabled = true
-        titleLabel.addGestureRecognizer(recognizer)
-
 
         let subtitleLabel = UILabel(frame: CGRect(x: 0, y: 18, width: 0, height: 0))
         subtitleLabel.backgroundColor = UIColor.clear
@@ -107,6 +103,10 @@ final class ChatViewController: MessagesViewController {
         let titleView = UIView(frame: CGRect(x: 0, y: 0, width: max(titleLabel.frame.size.width, subtitleLabel.frame.size.width), height: 40))
         titleView.addSubview(titleLabel)
         titleView.addSubview(subtitleLabel)
+
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(titleTapped))
+        titleView.isUserInteractionEnabled = true
+        titleView.addGestureRecognizer(recognizer)
 
         let widthDiff = subtitleLabel.frame.size.width - titleLabel.frame.size.width
 
