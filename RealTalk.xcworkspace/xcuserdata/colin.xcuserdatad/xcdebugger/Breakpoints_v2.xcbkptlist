@@ -586,7 +586,7 @@
                   moduleName = "RealTalk"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/colin/Desktop/cs377U/app2/RealTalk/RealTalk/ViewControllers/CreatePostViewController.swift"
-                  timestampString = "579690437.046519"
+                  timestampString = "579757853.283563"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "174"
@@ -601,7 +601,7 @@
                   moduleName = "RealTalk"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/colin/Desktop/cs377U/app2/RealTalk/RealTalk/ViewControllers/CreatePostViewController.swift"
-                  timestampString = "579690437.048751"
+                  timestampString = "579757853.2868429"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "175"
@@ -650,13 +650,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RealTalk/AppController.swift"
-            timestampString = "579690436.254011"
+            timestampString = "579757843.916896"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "90"
             endingLineNumber = "90"
-            landmarkName = "signIn(link:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -666,13 +666,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RealTalk/AppController.swift"
-            timestampString = "579690436.254411"
+            timestampString = "579757843.917014"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "128"
             endingLineNumber = "128"
-            landmarkName = "handleAppState()"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
