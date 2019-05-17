@@ -43,18 +43,20 @@ class MemberTableViewCell: UITableViewCell {
         }
 
         guard let currUser = AppController.user else {return}
-        
-        if user.uid == post.authorID {
+
+        if user.uid == post.authorID && currUser.uid == user.uid {
+            memberIcon.image = UIImage(named: "crownIcon")
+            memberIcon.tintColor = .customPurple2
+            xIcon.isHidden = true
+        } else if user.uid == post.authorID {
             memberIcon.image = UIImage(named: "crownIcon")
             memberIcon.tintColor = .customPurple2
             xIcon.isHidden = false
         } else {
             memberIcon.image = UIImage(named: "memberAvatar")
             memberIcon.tintColor = .lightGray
-
             xIcon.isHidden = true
         }
-
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
