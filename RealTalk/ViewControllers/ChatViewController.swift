@@ -77,8 +77,69 @@ final class ChatViewController: MessagesViewController {
     messageListener?.remove()
   }
 
+    func setTitle(title:String, subtitle:String) -> UIView {
+
+        let screenSize: CGRect = UIScreen.main.bounds
+        let screenWidth = screenSize.width
+        let screenHeight = screenSize.height
+
+        let titleLabel = UILabel(frame: CGRect(x: 0, y: -2, width: screenWidth/2, height: 20))
+        titleLabel.textAlignment = .center
+        titleLabel.backgroundColor = UIColor.clear
+        titleLabel.textColor = UIColor.black
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 17)
+        titleLabel.text = title
+        titleLabel.lineBreakMode = .byTruncatingTail
+        //titleLabel.sizeToFit()
+
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(titleTapped))
+        titleLabel.isUserInteractionEnabled = true
+        titleLabel.addGestureRecognizer(recognizer)
+
+
+        let subtitleLabel = UILabel(frame: CGRect(x: 0, y: 18, width: 0, height: 0))
+        subtitleLabel.backgroundColor = UIColor.clear
+        subtitleLabel.textColor = UIColor.lightGray
+        subtitleLabel.font = UIFont.systemFont(ofSize: 12)
+        subtitleLabel.text = subtitle
+        subtitleLabel.sizeToFit()
+
+        let titleView = UIView(frame: CGRect(x: 0, y: 0, width: max(titleLabel.frame.size.width, subtitleLabel.frame.size.width), height: 40))
+        titleView.addSubview(titleLabel)
+        titleView.addSubview(subtitleLabel)
+
+        let widthDiff = subtitleLabel.frame.size.width - titleLabel.frame.size.width
+
+        if widthDiff < 0 {
+            let newX = widthDiff / 2
+            subtitleLabel.frame.origin.x = abs(newX)
+        } else {
+            let newX = widthDiff / 2
+            titleLabel.frame.origin.x = newX
+        }
+
+        return titleView
+    }
+
+    @objc func titleTapped() {
+
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let membersVC = storyboard.instantiateViewController(withIdentifier: "membersVC") as! MembersListViewController
+        membersVC.post = post
+        membersVC.chatViewRef = self
+
+        let popupVC = PopupViewController(contentController: membersVC, popupWidth: 300, popupHeight: 400)
+        popupVC.cornerRadius = 5
+        present(popupVC, animated: true, completion: nil)
+
+        //self.navigationController?.present(membersVC, animated: true)
+
+    }
+
   override func viewDidLoad() {
     super.viewDidLoad()
+    self.navigationItem.titleView = setTitle(title: "\(post.content)", subtitle: "\(post.members.count) members")
+
     self.tabBarController?.tabBar.isHidden = true
 
     guard let id = post.id else {

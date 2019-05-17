@@ -36,6 +36,63 @@ struct Student {
         self.postCount = 0
     }
 
+    init?(data: [String: Any]) {
+        guard let uid = data["uid"] as? String else {
+            return nil
+        }
+
+        guard let username = data["username"] as? String else {
+            return nil
+        }
+
+        guard let fcmToken = data["fcmToken"] as? String else {
+            return nil
+        }
+
+        guard let bio = data["bio"] as? String else {
+            return nil
+        }
+
+        guard let isOnline = data["isOnline"] as? String else {
+            return nil
+        }
+
+        guard let isOnlineBool = Bool(isOnline) else {return nil}
+
+        guard let heartCount = data["heartCount"] as? String else {
+            return nil
+        }
+        let heartCountInt = Int(heartCount)!
+
+        guard let postCount = data["postCount"] as? String else {
+            return nil
+        }
+        let postCountInt = Int(postCount)!
+
+        guard let createdDate = data["createdDate"] as? String else {
+            return nil
+        }
+
+        guard let joinedChatIDsString = data["joinedChatIDs"] as? String else {
+            return nil
+        }
+        let joinedChatIDs = joinedChatIDsString.components(separatedBy: "-")
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yy h:mm a Z"
+        let date = dateFormatter.date(from: createdDate)! as NSDate
+
+        self.uid = uid
+        self.username = username
+        self.fcmToken = fcmToken
+        self.bio = bio
+        self.isOnline = isOnlineBool
+        self.heartCount = heartCountInt
+        self.createdDate = date
+        self.joinedChatIDs = joinedChatIDs
+        self.postCount = postCountInt
+    }
+
     init?(document: QueryDocumentSnapshot) {
         let data = document.data()
 

@@ -363,7 +363,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             removePostFromTable(post)
         }
     }
-    
+
+     /*
     func deactivateChat(post: Post) {
         let postRef = db.collection("channels").document(post.id!)
         postRef.updateData([
@@ -376,7 +377,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }
     }
-    
+
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let post = posts[indexPath.row]
         if post.authorID == AppController.user?.uid {
@@ -397,7 +398,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
 
-    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         let post = posts[indexPath.row]
         if editingStyle == .delete {
@@ -408,5 +408,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }
     }
+  */
     
 }

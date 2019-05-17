@@ -9,6 +9,8 @@ PODS:
   - Firebase/AdMob (5.20.2):
     - Firebase/Core
     - Google-Mobile-Ads-SDK (~> 7.42)
+  - Firebase/Analytics (5.20.2):
+    - Firebase/Core
   - Firebase/Auth (5.20.2):
     - Firebase/CoreOnly
     - FirebaseAuth (= 5.4.2)
@@ -142,10 +144,12 @@ PODS:
   - nanopb/encode (0.3.901)
   - ProgressHUD (2.60)
   - Protobuf (3.7.0)
+  - RevealingSplashView (0.6.0)
 
 DEPENDENCIES:
   - EzPopup
   - Firebase/AdMob
+  - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
@@ -156,6 +160,7 @@ DEPENDENCIES:
   - Google-Mobile-Ads-SDK
   - MessageKit
   - ProgressHUD
+  - RevealingSplashView
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -184,6 +189,7 @@ SPEC REPOS:
     - nanopb
     - ProgressHUD
     - Protobuf
+    - RevealingSplashView
 
 SPEC CHECKSUMS:
   BoringSSL-GRPC: 2a230d9cd93e7ce39916044f645cebb31f37dde6
@@ -211,7 +217,8 @@ SPEC CHECKSUMS:
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   ProgressHUD: 4e4efbaf4f5de8bd32e0c4c3b6644a90ea1a8c3e
   Protobuf: 7a877b7f3e5964e3fce995e2eb323dbc6831bb5a
+  RevealingSplashView: 40c5a770894459736acdc95655eeba0dd30ce91c
 
-PODFILE CHECKSUM: 8d33f99375e365814c18495fd22f9a2025745a3c
+PODFILE CHECKSUM: 554a39b6adf7f3ade123f79f210258b4672ba860
 
 COCOAPODS: 1.7.0.rc.1

@@ -34,6 +34,5 @@ struct OnlineOfflineManager {
         let isOnline = true
         db.collection("students").document(user.uid).setData([ "isOnline": String(isOnline)], merge: true)
         print("updated online status to true")
-
     }
 }
