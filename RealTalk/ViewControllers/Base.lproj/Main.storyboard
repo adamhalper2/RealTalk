@@ -1020,7 +1020,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="79.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stanford12 liked your post &quot;I have a crazy roommate" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S6T-Le-wTX">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stanford12 liked your post &quot;I have a crazy roommate" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S6T-Le-wTX">
                                                     <rect key="frame" x="20" y="16" width="374" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="374" id="MHn-Mr-tSC"/>
@@ -1082,7 +1082,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T0d-tE-SG1">
-                                <rect key="frame" x="0.0" y="44" width="414" height="200"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="235"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change your handle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mgo-SC-TxM">
                                         <rect key="frame" x="136" y="50" width="142" height="20"/>
@@ -1113,8 +1113,8 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Handle changed!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BrO-Lg-iI7">
-                                        <rect key="frame" x="237" y="160.5" width="105.5" height="17.5"/>
-                                        <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="15"/>
+                                        <rect key="frame" x="147.5" y="188" width="119.5" height="20"/>
+                                        <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="17"/>
                                         <color key="textColor" red="0.39607843139999999" green="0.7843137255" blue="0.47843137250000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -1122,13 +1122,13 @@
                                 <color key="backgroundColor" red="0.44721001386642456" green="0.0" blue="0.99572736024856567" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="mBu-Qd-wkX" firstAttribute="leading" secondItem="T0d-tE-SG1" secondAttribute="leading" constant="50" id="1Qa-G2-LNg"/>
-                                    <constraint firstItem="BrO-Lg-iI7" firstAttribute="centerY" secondItem="HFo-QD-ioU" secondAttribute="centerY" id="Ahf-tz-XqF"/>
                                     <constraint firstItem="Mgo-SC-TxM" firstAttribute="top" secondItem="T0d-tE-SG1" secondAttribute="top" constant="50" id="Hbi-7I-JgY"/>
-                                    <constraint firstAttribute="bottom" secondItem="HFo-QD-ioU" secondAttribute="bottom" constant="15" id="Y7m-IM-ohR"/>
+                                    <constraint firstItem="BrO-Lg-iI7" firstAttribute="top" secondItem="HFo-QD-ioU" secondAttribute="bottom" constant="3" id="JSF-Qd-pn7"/>
+                                    <constraint firstAttribute="bottom" secondItem="HFo-QD-ioU" secondAttribute="bottom" constant="50" id="Y7m-IM-ohR"/>
                                     <constraint firstItem="Mgo-SC-TxM" firstAttribute="centerX" secondItem="T0d-tE-SG1" secondAttribute="centerX" id="bpA-Pw-p6K"/>
                                     <constraint firstAttribute="trailing" secondItem="mBu-Qd-wkX" secondAttribute="trailing" constant="50" id="eRM-HP-5K0"/>
-                                    <constraint firstItem="BrO-Lg-iI7" firstAttribute="leading" secondItem="HFo-QD-ioU" secondAttribute="trailing" id="scC-QA-cGg"/>
-                                    <constraint firstAttribute="height" constant="200" id="tCB-hO-yjr"/>
+                                    <constraint firstItem="BrO-Lg-iI7" firstAttribute="centerX" secondItem="T0d-tE-SG1" secondAttribute="centerX" id="p4H-OJ-ryC"/>
+                                    <constraint firstAttribute="height" constant="235" id="tCB-hO-yjr"/>
                                     <constraint firstItem="HFo-QD-ioU" firstAttribute="centerX" secondItem="T0d-tE-SG1" secondAttribute="centerX" id="vex-wU-n1W"/>
                                     <constraint firstItem="mBu-Qd-wkX" firstAttribute="top" secondItem="Mgo-SC-TxM" secondAttribute="bottom" constant="20" id="yq5-qb-Vab"/>
                                 </constraints>

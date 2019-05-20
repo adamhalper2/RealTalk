@@ -209,7 +209,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let handleVC = storyboard.instantiateViewController(withIdentifier: "handleVC") as! ChangeHandleViewController
 
-        let popupVC = PopupViewController(contentController: handleVC, popupWidth: 300, popupHeight: 200)
+        let popupVC = PopupViewController(contentController: handleVC, popupWidth: 300, popupHeight: 235)
         popupVC.cornerRadius = 5
         present(popupVC, animated: true, completion: nil)
     }
