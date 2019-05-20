@@ -17,7 +17,6 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
     private var notificationListener: ListenerRegistration?
     private var notifications: [CustomNotif] = []
 
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return notifications.count
     }
@@ -63,14 +62,12 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
 
     @IBOutlet weak var tableView: UITableView!
 
-
     func deleteNotif(notifID: String) {
         guard let userID = AppController.user?.uid else {return}
         let notifRef = db.collection(["students", userID, "notifications"].joined(separator: "/")).document(notifID)
         notifRef.delete()
     }
     override func viewDidLoad() {
-
         let clearAllButton = UIButton(type: .system)
         clearAllButton.setTitleColor(.darkGray, for: .normal)
         clearAllButton.setTitle("Clear All", for: .normal)
@@ -83,6 +80,8 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.dataSource = self
         tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         loadNotifications()
+
+
         // Do any additional setup after loading the view.
     }
 

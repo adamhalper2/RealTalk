@@ -210,6 +210,13 @@ class PushNotificationSender {
         let notif = CustomNotif(body: body, timestamp: timestamp, type: type, title: title, postID: postID, read: false, notifID: notifID)
         self.save(notif, userID: userID)
 
+        UNUserNotificationCenter.current().requestAuthorization(options: .badge)
+        { (granted, error) in
+            if error != nil {
+                UIApplication.shared.applicationIconBadgeNumber = 1
+            }
+        }
+
 
         let urlString = "https://fcm.googleapis.com/fcm/send"
         let url = NSURL(string: urlString)!

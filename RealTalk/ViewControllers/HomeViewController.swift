@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import FirebaseFirestore
 import GoogleMobileAds
+import EzPopup
 
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate {
@@ -191,11 +192,26 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         notificationButton.setImage(UIImage(named: "notificationIcon")?.withRenderingMode(.alwaysTemplate), for: .normal)
         notificationButton.badgeEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 15)
         notificationButton.badge = "0"
-
         notificationButton.addTarget(self, action: #selector(notifTapped), for: .touchUpInside)
         self.notificationButton = notificationButton
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: notificationButton)
 
+        let handleBtn = UIButton()
+        handleBtn.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+        handleBtn.tintColor = UIColor.black
+        handleBtn.setImage(UIImage(named: "profileIcon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        handleBtn.addTarget(self, action: #selector(changeHandleTapped), for: .touchUpInside)
+
+        self.navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: notificationButton), UIBarButtonItem(customView: handleBtn)]
+    }
+
+    @objc func changeHandleTapped() {
+
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let handleVC = storyboard.instantiateViewController(withIdentifier: "handleVC") as! ChangeHandleViewController
+
+        let popupVC = PopupViewController(contentController: handleVC, popupWidth: 300, popupHeight: 200)
+        popupVC.cornerRadius = 5
+        present(popupVC, animated: true, completion: nil)
     }
 
     /*
