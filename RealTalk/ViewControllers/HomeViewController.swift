@@ -21,6 +21,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     private var heartsListener: ListenerRegistration?
     private let db = Firestore.firestore()
     private let user = Auth.auth().currentUser!
+    private let application = UIApplication.shared
 
     lazy var adBannerView: GADBannerView = {
         let adBannerView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
@@ -59,6 +60,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     }
                     self.notificationButton?.badge = "\(self.unreadNotifCount)"
                 }
+                application.applicationIconBadgeNumber = unreadNotifCount
             }
         }
     }

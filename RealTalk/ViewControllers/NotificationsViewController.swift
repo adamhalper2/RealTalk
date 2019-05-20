@@ -80,8 +80,6 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.dataSource = self
         tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         loadNotifications()
-
-
         // Do any additional setup after loading the view.
     }
 
@@ -213,6 +211,4 @@ class NotificationTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         self.backgroundColor = UIColor.white
     }
-
-
 }

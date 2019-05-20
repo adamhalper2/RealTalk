@@ -18,7 +18,7 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
     private var heartsListener: ListenerRegistration?
     private var notificationsListener: ListenerRegistration?
 
-
+    private let application = UIApplication.shared
     private let db = Firestore.firestore()
     private var joinedChatIDs: [String]?
     private var uid = ""
@@ -52,6 +52,7 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
                     }
                     self.notificationButton?.badge = "\(self.unreadNotifCount)"
                 }
+                application.applicationIconBadgeNumber = unreadNotifCount
             }
         }
     }
