@@ -43,6 +43,7 @@ class MessageDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         checkIfUserReported()
+        checkIfUserHearted()
         handleLabel.text = message?.sender.displayName
         messageLabel.text = message?.content
         getUserHearts()
@@ -71,10 +72,8 @@ class MessageDetailViewController: UIViewController {
                 print("Error getting document: \(err)")
             } else {
                 guard let data = documentSnapshot?.data() else {return}
-                if let heartCount = data["heartCount"] as? String {
-                    DispatchQueue.main.async {
-                        self.heartLabel.setTitle("\(heartCount)", for: .normal)
-                    }
+                if let heartCount = data["heartCount"] as? Int {
+                    self.heartCount = heartCount
                 }
             }
         }
@@ -178,16 +177,19 @@ class MessageDetailViewController: UIViewController {
 
     func checkIfUserHearted() {
         guard let message = message else {return}
+        guard let messageID = message.id else {return}
+        print("messageID is \(messageID)")
         guard let user = AppController.user else {return}
 
-        let reportsRef = db.collection("hearts").whereField("postID", isEqualTo: message.id).whereField("fromID", isEqualTo: user.uid)
-        reportsRef.getDocuments() { (querySnapshot, err) in
+        let heartsRef = db.collection("hearts").whereField("postID", isEqualTo: messageID).whereField("fromID", isEqualTo: user.uid)
+        heartsRef.getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
                 for document in querySnapshot!.documents {
                     if document.exists {
                         DispatchQueue.main.async {
+                            print("user has hearted \(document)")
                             self.setHeartedButton()
                             return
                         }
@@ -203,16 +205,20 @@ class MessageDetailViewController: UIViewController {
         guard let currUser = AppController.user else {return}
         let fromID = currUser.uid
 
-        guard let currPost = post else {return}
-        guard let postID = currPost.id else {return}
-        guard let toID = currPost.authorID else {return}
+        guard let msg = message else {return}
+        guard let messageID = msg.id else {return}
+        let sender = msg.sender
+        let senderID = sender.id
 
-        pushNotifyHeart(toID: toID)
+        heartCount += 1
+        pushNotifyHeart(toID: senderID)
 
-        let newHeart = Heart(postID: postID, fromID: fromID, toID: toID, onPost: true)
+        let newHeart = Heart(postID: messageID, fromID: fromID, toID: senderID, onPost: false)
         let  heartsRef =  db.collection("hearts")
         heartsRef.addDocument(data: newHeart.representation) //add heart to firestore
-        let newHeartCount = currPost.heartCount + 1
+
+        /*
+        let newHeartCount = message.heartCount + 1
 
         let postRef = db.collection("channels").document(postID) //update post's heart count in firestore
         postRef.updateData([
@@ -224,8 +230,9 @@ class MessageDetailViewController: UIViewController {
                 print("updated heart count to \(newHeartCount)")
             }
         }
+        */
 
-        let userRef = db.collection("students").document(toID)
+        let userRef = db.collection("students").document(senderID)
         userRef.getDocument { (documentSnapshot, err) in
             if let err = err {
                 print("Error getting document: \(err)")
@@ -262,7 +269,7 @@ class MessageDetailViewController: UIViewController {
 
                 let sender = PushNotificationSender()
                 guard let displayName = AppSettings.displayName else {return}
-                sender.sendPushNotification(to: token, title: "\(displayName) liked your post", body: "\(content)", postID: postID, type: UserNotifs.heart.type(), userID: toID)
+                sender.sendPushNotification(to: token, title: "\(displayName) sent you love on your message", body: "\"\(content)\"", postID: postID, type: UserNotifs.heart.type(), userID: toID)
                 print("notif sent")
         }
     }
