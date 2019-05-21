@@ -55,7 +55,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                         self.notificationButton?.badgeBackgroundColor = UIColor.clear
                         self.notificationButton?.badgeTextColor = UIColor.clear
                     } else if self.notificationButton?.badgeBackgroundColor == UIColor.clear {
-                        self.notificationButton?.badgeBackgroundColor = UIColor.customPurple
+                        self.notificationButton?.badgeBackgroundColor = UIColor.customPurple2
                         self.notificationButton?.badgeTextColor = UIColor.white
                     }
                     self.notificationButton?.badge = "\(self.unreadNotifCount)"

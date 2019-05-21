@@ -28,7 +28,13 @@ class MessageDetailViewController: UIViewController {
     var chatViewRef: ChatViewController?
     var post: Post?
     private let db = Firestore.firestore()
-
+    var heartCount = 0 {
+        didSet {
+            DispatchQueue.main.async {
+                self.heartLabel.setTitle("\(self.heartCount)", for: .normal)
+            }
+        }
+    }
     
     static func instantiate() -> MessageDetailViewController? {
         return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MessageDetailViewController") as? MessageDetailViewController

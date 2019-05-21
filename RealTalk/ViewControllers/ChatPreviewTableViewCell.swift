@@ -77,7 +77,7 @@ class ChatPreviewTableViewCell: UITableViewCell {
     }
 
     func setOnlineLabel() {
-        if membersOnline.count > 0 {
+        if membersOnline.count > 1 {
             onlineIcon.isHidden = false
             onlineLabel.isHidden = false
             onlineLabel.text = "\(membersOnline.count) online"
