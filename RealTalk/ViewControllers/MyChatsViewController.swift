@@ -69,34 +69,7 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell") as! ChatPreviewTableViewCell
         let post = posts[indexPath.row]
-        cell.chatTitleLabel.text = post.content
-        cell.lastMessageLabel.text = post.lastMessage
-        let memberCount = post.members.count
-        if memberCount == 1 {
-            cell.onlineIcon.text = String(memberCount) + " member"
-        } else {
-            cell.onlineIcon.text = String(memberCount) + " members"
-        }
-        let currUser = AppController.user!
-        uid = currUser.uid
-        if post.authorID == currUser.uid {
-            cell.crownIcon.isHidden = false
-            cell.authorLabel.text = "You"
-            cell.crownIcon.tintColor = UIColor.customPurple2
-
-        } else {
-            cell.crownIcon.isHidden = false
-            cell.crownIcon.tintColor = UIColor.lightGray
-            cell.authorLabel.text = post.author
-            cell.authorLabel.isHidden = false
-        }
-        cell.lockIcon.tintColor = UIColor.darkGray
-        if post.isLocked {
-            cell.lockIcon.isHidden = false
-        } else {
-            cell.lockIcon.isHidden = true
-        }
-        
+        cell.setCell(post: post)
         return cell
     }
     
@@ -336,33 +309,6 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.tableView.reloadData()
             self.tableView.refreshControl?.endRefreshing()
         }
-        //I think unnecessary?
-        /*
-         let db = Firestore.firestore()
-         let  postsReference =  db.collection("channels")
-         
-         for post in posts {
-         if let id = post.id {
-         let postRef = postsReference.document(id)
-         postRef.getDocument { (documentSnapshot, err) in
-         if let err = err {
-         print("Error getting document: \(err)")
-         } else {
-         
-         let docId = documentSnapshot?.documentID
-         let commentCount = documentSnapshot?.get("commentCount") as! String
-         let commentCountInt = Int(commentCount)!
-         print("after reload, comment count: \(commentCountInt)")
-         }
-         
-         }
-         }
-         }
-         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-         self.tableView.reloadData()
-         self.tableView.refreshControl?.endRefreshing()
-         }
-         */
     }
     
     private func addPostToTable(_ post: Post) {

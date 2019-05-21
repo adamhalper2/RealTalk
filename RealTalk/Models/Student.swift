@@ -172,5 +172,18 @@ extension Student: DatabaseRepresentation {
 
         return rep
     }
+    
 
 }
+
+extension Student: Comparable {
+
+    static func < (lhs: Student, rhs: Student) -> Bool {
+        return lhs.heartCount < rhs.heartCount
+    }
+
+    static func == (lhs: Student, rhs: Student) -> Bool {
+        return lhs.uid == rhs.uid
+    }
+}
+
