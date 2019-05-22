@@ -27,21 +27,63 @@ class PollTableViewCell: UITableViewCell {
 
     @IBOutlet weak var optionAView: UIView!
     @IBOutlet weak var optionALabel: UILabel!
-
+    @IBOutlet weak var optionAPercentLabel: UILabel!
+    
     @IBOutlet weak var optionBLabel: UILabel!
     @IBOutlet weak var optionBView: UIView!
-
+    @IBOutlet weak var optionBPercentLabel: UILabel!
+    
+    @IBOutlet weak var voteCountLabel: UILabel!
+    
+    private var votesListener: ListenerRegistration?
 
     var post: Post?
     var poll: Poll?
-    private let db = Firestore.firestore()
     let user = AppController.user!
+    var hasVoted = false {
+        didSet {
+            if (hasVoted) {
+                print("set hasVoted == true)")
+                DispatchQueue.main.async {
+                    self.staticFill()
+                }
+            }
+        }
+    }
+
+    var votes: [Vote] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                print("votes array did change: \(self.votes.count)")
+                if self.votes.count == 1 {
+                    self.voteCountLabel.text = "1 vote"
+                } else {
+                    self.voteCountLabel.text = "\(self.votes.count) votes"
+                }
+            }
+        }
+    }
+
+    private let db = Firestore.firestore()
     let dateHelper = DateHelper()
+
+    deinit {
+        votesListener?.remove()
+    }
 
     func setCell(post: Post) {
 
         optionAView.frame.size.width = 0
         optionBView.frame.size.width = 0
+
+        optionAPercentLabel.isHidden = true
+        optionBPercentLabel.isHidden = true
+
+        if votes.count == 1 {
+            voteCountLabel.text = "1 vote"
+        } else {
+            voteCountLabel.text = "\(votes.count) votes"
+        }
 
         optionALabel.addTapGesture(tapNumber: 1, target: self, action: #selector(voteForA))
         //optionAView.addTapGesture(tapNumber: 1, target: self, action: #selector(voteForA))
@@ -52,6 +94,8 @@ class PollTableViewCell: UITableViewCell {
         self.post = post
         print("setting poll cell")
         setPoll(pollID: post.pollID)
+        loadVotes(pollID: post.pollID)
+
         let memberLabel = getMemberNames(members: post.members, author: post.author)
         authorLabel.text = memberLabel
         contentLabel.text = post.content
@@ -70,6 +114,7 @@ class PollTableViewCell: UITableViewCell {
         checkIfUserReported()
         checkIfMembersOnline()
         checkIfUserIsModerator()
+        checkIfUserVoted()
 
         lockIndicator.tintColor = UIColor.darkGray
         print("post.isLocked is \(post.isLocked)")
@@ -81,6 +126,17 @@ class PollTableViewCell: UITableViewCell {
             lockIndicator.isHidden = true
         }
     }
+
+    func checkIfUserVoted() {
+        print("check if user voted called...\(votes)")
+        for vote in votes {
+            if vote.senderID == user.uid {
+                hasVoted = true
+                print("user has voted")
+            }
+        }
+    }
+
 
     func setPoll(pollID: String) {
 
@@ -94,6 +150,7 @@ class PollTableViewCell: UITableViewCell {
                 print("data for poll: \(data)")
 
                 if let poll = Poll(data: data, docId: pollID) {
+                    self.poll = poll
                     DispatchQueue.main.async {
                         print("option A label: \(poll.optionA)")
                         self.optionALabel.text = poll.optionA
@@ -104,13 +161,148 @@ class PollTableViewCell: UITableViewCell {
         }
     }
 
+    
+    func loadVotes(pollID: String) {
+        print("load votes called")
+        let voteRef = db.collection("votes").whereField("pollID", isEqualTo: pollID)
+        votesListener = voteRef.addSnapshotListener({ (querySnapshot, err) in
+            guard let snapshot = querySnapshot else {
+                print("Error listening for channel updates: \(err?.localizedDescription ?? "No error")")
+                return
+            }
+            snapshot.documentChanges.forEach { change in
+                self.handleVoteDocumentChange(change)
+            }
+        })
+    }
+
+    private func addVote(_ vote: Vote) {
+        guard !votes.contains(vote) else {
+            return
+        }
+        print("addVote called")
+        votes.append(vote)
+
+
+    }
+
+    func animateFill() {
+        let width = pollView.frame.size.width
+
+        var votesForA : CGFloat = 0
+        var votesForB : CGFloat = 0
+
+        for vote in votes {
+            if (vote.option) {
+                votesForA += 1
+            } else {
+                votesForB += 1
+            }
+        }
+        print("vote count is \(votes.count)")
+
+        print("votesForA: \(votesForA), votesForB: \(votesForB)")
+
+        let APercent : CGFloat = votesForA / (votesForA + votesForB)
+        let BPercent : CGFloat = votesForB / (votesForA + votesForB)
+        self.optionAPercentLabel.isHidden = false
+        self.optionBPercentLabel.isHidden = false
+
+        let AWidth = APercent * width
+        let BWidth = BPercent * width
+
+        print("APercent: \(APercent)")
+        print("BPercent: \(BPercent)")
+
+        let aPercentStr = "\(Int(APercent * 100))%"
+        let bPercentStr = "\(Int(BPercent * 100))%"
+
+        self.optionAPercentLabel.text = aPercentStr
+        self.optionBPercentLabel.text = bPercentStr
+
+        print("APercentStr: \(aPercentStr)")
+        print("BPercentStr: \(bPercentStr)")
+
+        fillLayer(option: "A", fillWidth: AWidth)
+        fillLayer(option: "B", fillWidth: BWidth)
+    }
+
+    func staticFill() {
+        print("static fill called")
+        let width = pollView.frame.size.width
+
+        var votesForA : CGFloat = 0
+        var votesForB : CGFloat = 0
+
+        for vote in votes {
+            if (vote.option) {
+                votesForA += 1
+            } else {
+                votesForB += 1
+            }
+        }
+        print("vote count is \(votes.count)")
+
+        print("votesForA: \(votesForA), votesForB: \(votesForB)")
+
+        let APercent : CGFloat = votesForA / (votesForA + votesForB)
+        let BPercent : CGFloat = votesForB / (votesForA + votesForB)
+        self.optionAPercentLabel.isHidden = false
+        self.optionBPercentLabel.isHidden = false
+
+        let AWidth = APercent * width
+        let BWidth = BPercent * width
+
+        print("APercent: \(APercent)")
+        print("BPercent: \(BPercent)")
+
+        let aPercentStr = "\(Int(APercent * 100))%"
+        let bPercentStr = "\(Int(BPercent * 100))%"
+
+        self.optionAPercentLabel.text = aPercentStr
+        self.optionBPercentLabel.text = bPercentStr
+
+        print("APercentStr: \(aPercentStr)")
+        print("BPercentStr: \(bPercentStr)")
+
+        self.optionAView.frame.size.width = AWidth
+        self.optionBView.frame.size.width = BWidth
+        self.layoutIfNeeded()
+
+    }
+
+
+    private func handleVoteDocumentChange(_ change: DocumentChange) {
+
+        guard let vote = Vote(document: change.document) else {
+            print("couldnt create vote from doc")
+            return
+        }
+
+        if vote.senderID == user.uid {
+            if hasVoted == false {
+                self.hasVoted = true
+            }
+        }
+
+        switch change.type {
+        case .added:
+            addVote(vote)
+            break
+        case .modified:
+            break
+        case .removed:
+            break
+        }
+    }
+
     @objc func fillLayer(option: String, fillWidth: CGFloat) {
-        UIView.animate(withDuration: 2) {
+        UIView.animate(withDuration: 1) {
             if option == "A" {
-                print("setting a width")
+                print("setting a width \(fillWidth)")
                 self.optionAView.frame.size.width = fillWidth
             } else  if option == "B" {
-                print("setting B width")
+                print("setting B width \(fillWidth)")
                 self.optionBView.frame.size.width = fillWidth
             }
         }
@@ -121,12 +313,45 @@ class PollTableViewCell: UITableViewCell {
 
     @objc func voteForA() {
         print("vote for A tapped")
-        fillLayer(option: "A", fillWidth: 75.0)
+        print("votes: \(votes)")
+        guard let currPoll = poll else {return}
+        guard let pollID = currPoll.id else {return}
+
+        //fillLayer(option: "A", fillWidth: 75.0)
+        let vote = Vote(senderID: user.uid, option: true, pollID: pollID)
+        let voteRef = db.collection("votes")
+        voteRef.addDocument(data: vote.representation) { (err) in
+            if (err != nil){
+                print("Error getting document: \(err)")
+            } else {
+                print("added new vote for A")
+                DispatchQueue.main.async {
+                    //self.addVote(vote)
+                    self.animateFill()
+                }
+            }
+        }
     }
 
     @objc func voteForB() {
         print("vote for B tapped")
-        fillLayer(option: "B", fillWidth: pollView.frame.size.width)
+        guard let currPoll = poll else {return}
+        guard let pollID = currPoll.id else {return}
+
+        //fillLayer(option: "A", fillWidth: 75.0)
+        let vote = Vote(senderID: user.uid, option: false, pollID: pollID)
+        let voteRef = db.collection("votes")
+        voteRef.addDocument(data: vote.representation) { (err) in
+            if (err != nil){
+                print("Error getting document: \(err)")
+            } else {
+                print("added new vote for B")
+                DispatchQueue.main.async {
+                    //self.addVote(vote)
+                    self.animateFill()
+                }
+            }
+        }
     }
 
     func checkIfUserIsModerator() {

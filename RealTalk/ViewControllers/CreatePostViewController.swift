@@ -21,7 +21,17 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
 
 
     @IBOutlet weak var createPollBtn: UIButton!
-    @IBOutlet weak var pollView: UIView!
+    @IBOutlet weak var pollView: UIView! {
+        didSet {
+            if pollView.isHidden == false {
+                if optionAField.text == "" || optionBField.text == "" {
+                    shareBtn.isEnabled = false
+                } else {
+                    shareBtn.isEnabled = true
+                }
+            }
+        }
+    }
     @IBOutlet weak var optionAField: TextField!
     @IBOutlet weak var optionBField: TextField!
 
@@ -35,9 +45,7 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        optionAField.isHidden = true
-        optionBField.isHidden = true
-
+        pollView.isHidden = true
         textView.delegate = self
         textView.textColor = UIColor.lightGray
 
@@ -55,9 +63,21 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
     }
 
     @IBAction func createPollTapped(_ sender: Any) {
-        optionAField.isHidden = false
-        optionBField.isHidden = false
-        charLimit = 140
+        if pollView.isHidden {
+            pollView.isHidden = false
+            charLimit = 140
+
+            /*
+            if optionAField.text == "" || optionBField.text == "" {
+                shareBtn.isEnabled = false
+            } else {
+                shareBtn.isEnabled = true
+            }
+            */
+        } else {
+            pollView.isHidden = true
+            charLimit = 280
+        }
     }
 
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -237,12 +257,22 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
 
     @IBAction func shareTapped(_ sender: Any) {
         guard let content = textView.text else {return}
+        guard let optionA = optionAField.text else {return}
+        guard let optionB = optionBField.text else {return}
 
         if pollView.isHidden {
             sendDataToDatabase(content: content)
+        } else if optionA == "" && optionB == "" {
+            sendDataToDatabase(content: content)
+        } else if optionA == "" || optionB == "" {
+                let alertController = UIAlertController(title: "", message: "You need to add two options for your poll!", preferredStyle: UIAlertController.Style.alert)
+                alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    self.dismiss(animated: true, completion: nil)
+                })
+                self.present(alertController, animated: true, completion: nil)
+                return
         } else {
-            guard let optionA = optionAField.text else {return}
-            guard let optionB = optionBField.text else {return}
             let poll = Poll(optionA: optionA, optionB: optionB)
             sendDataToDatabasePoll(poll: poll, content: content)
         }

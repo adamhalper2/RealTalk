@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 struct Poll {
 
@@ -53,7 +54,33 @@ struct Poll {
         self.optionB = optionB
         self.votes = votes
     }
+
+    init?(document: QueryDocumentSnapshot) {
+        let data = document.data()
+
+        guard let optionA = data["optionA"] as? String else {
+            return nil
+        }
+
+        guard let optionB = data["optionB"] as? String else {
+            return nil
+        }
+
+        guard let votesStr = data["votes"] as? String else {
+            return nil
+        }
+        let votes = votesStr.components(separatedBy: "-")
+
+        id = document.documentID
+        self.postID = ""
+        self.optionA = optionA
+        self.optionB = optionB
+        self.votes = votes
+    }
 }
+
+
+
 
 extension Poll : DatabaseRepresentation {
 
