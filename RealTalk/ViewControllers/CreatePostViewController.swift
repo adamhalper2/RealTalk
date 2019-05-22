@@ -18,14 +18,29 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var shareBtn: UIButton!
     @IBOutlet weak var closeBtn: UIButton!
     @IBOutlet weak var charCountLabel: UILabel!
-    
+
+
+    @IBOutlet weak var createPollBtn: UIButton!
+    @IBOutlet weak var pollView: UIView!
+    @IBOutlet weak var optionAField: TextField!
+    @IBOutlet weak var optionBField: TextField!
+
+
     let colors = Colors()
+    var charLimit = 280
     var post = Post(content: "", author: AppSettings.displayName, timestamp: NSDate(), authorID: "")
-    
+
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        optionAField.isHidden = true
+        optionBField.isHidden = true
+
         textView.delegate = self
         textView.textColor = UIColor.lightGray
+
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "DIN Alternate", size: 25)!]
     }
 
@@ -39,12 +54,18 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
        // textView.becomeFirstResponder()
     }
 
+    @IBAction func createPollTapped(_ sender: Any) {
+        optionAField.isHidden = false
+        optionBField.isHidden = false
+        charLimit = 140
+    }
+
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if (text == "\n") {
             textView.resignFirstResponder()
             return false
         }
-        return textView.text.characters.count + (text.characters.count - range.length) <= 280
+        return textView.text.characters.count + (text.characters.count - range.length) <= charLimit
     }
 
     @objc func dismissKeyboard() {
@@ -67,8 +88,9 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
         }
     }
 
+
     func textViewDidChange(_ textView: UITextView) {
-        charCountLabel.text = "\(280 - textView.text.characters.count)"
+        charCountLabel.text = "\(charLimit - textView.text.characters.count)"
 
         if textView.textColor != UIColor.lightGray && !textView.text.isEmpty {
             shareBtn.isEnabled = true
@@ -79,7 +101,7 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
         }
     }
     
-    func sendDataToDatabase(photoUrl: String, content: String){
+    func sendDataToDatabase(content: String){
         let db = Firestore.firestore()
         let  postsReference =  db.collection("channels")
 
@@ -109,6 +131,7 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
         }
         
         let postID = docRef!.documentID
+
         
         let userRef = db.collection("students").document(uid)
         
@@ -137,6 +160,74 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
         }
     }
 
+    func sendDataToDatabasePoll(poll: Poll, content: String){
+
+
+        let db = Firestore.firestore()
+        let pollRef =  db.collection("polls")
+        var pollDocRef: DocumentReference? = nil
+
+        pollDocRef = pollRef.addDocument(data: poll.representation) { error in
+            if error != nil {
+                ProgressHUD.showError(error!.localizedDescription)
+                return
+            }
+        }
+
+        let pollID = pollDocRef!.documentID
+
+        let  postsReference =  db.collection("channels")
+
+        var author = ""
+        var uid = ""
+        if let user = AppController.user {
+            uid = user.uid
+            if let username = user.displayName {
+                author = username
+            }
+
+        }
+
+        post = Post(content: content, author: AppSettings.displayName, timestamp: NSDate(), authorID: uid, pollID: pollID)
+        print(post.timestamp)
+
+        var docRef: DocumentReference? = nil
+        docRef = postsReference.addDocument(data: post.representation) { error in
+            if error != nil {
+                ProgressHUD.showError(error!.localizedDescription)
+                return
+            }
+        }
+
+        let postID = docRef!.documentID
+
+        let userRef = db.collection("students").document(uid)
+
+        userRef.getDocument { (documentSnapshot, err) in
+            if let err = err {
+                print("Error getting document: \(err)")
+            } else {
+                guard let data = documentSnapshot?.data() else {return}
+                if var joinedChatIDsStr = data["joinedChatIDs"] as? String {
+                    var postCountInt = 0
+                    if let postCount = data["postCount"] as? String {
+                        postCountInt = Int(postCount)!
+                    }
+                    postCountInt += 1
+
+                    var joinedChatIDs = joinedChatIDsStr.components(separatedBy: "-")
+                    if (!joinedChatIDs.contains(postID)) {
+                        joinedChatIDs.append(postID)
+                    }
+                    joinedChatIDsStr = joinedChatIDs.joined(separator: "-")
+                    userRef.updateData(
+                        ["joinedChatIDs": joinedChatIDsStr,
+                         "postCount": String(postCountInt)])
+                }
+            }
+        }
+    }
+
     @IBAction func closeTapped(_ sender: Any) {
         print("close tapped")
         tabBarController!.selectedIndex = 0
@@ -145,16 +236,24 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
     }
 
     @IBAction func shareTapped(_ sender: Any) {
-        if let content = textView.text {
-            let photoUrl = "samplePhotoUrl"
-            sendDataToDatabase(photoUrl: photoUrl, content: content)
-            textView.text = "I wanna talk with someone about..."
-            textView.textColor = UIColor.lightGray
-            Analytics.logEvent("share_post", parameters: [
-                "name": AppController.user!.uid as NSObject,
-                "full_text": textView.text as NSObject
-                ])
+        guard let content = textView.text else {return}
+
+        if pollView.isHidden {
+            sendDataToDatabase(content: content)
+        } else {
+            guard let optionA = optionAField.text else {return}
+            guard let optionB = optionBField.text else {return}
+            let poll = Poll(optionA: optionA, optionB: optionB)
+            sendDataToDatabasePoll(poll: poll, content: content)
         }
+
+        textView.text = "I wanna talk with someone about..."
+        textView.textColor = UIColor.lightGray
+        Analytics.logEvent("share_post", parameters: [
+            "name": AppController.user!.uid as NSObject,
+            "full_text": textView.text as NSObject
+            ])
+
         tabBarController!.selectedIndex = 0
         let alertController = UIAlertController(title: "", message: "You are now the moderator of your new chat, so you can remove members, delete the chat, or lock the chat to prevent new users from seeing or joining it.", preferredStyle: UIAlertController.Style.alert)
         /*alertController.addAction(UIAlertAction(title: "Go to chat", style: UIAlertAction.Style.cancel) {

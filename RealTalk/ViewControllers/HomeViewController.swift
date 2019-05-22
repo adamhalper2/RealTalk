@@ -76,6 +76,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("post count: \(posts.count)")
         return posts.count
     }
 
@@ -85,10 +86,19 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "postCell") as! PostTableViewCell
+
         let post = posts[indexPath.row]
-        cell.setCell(post: post)
-        return cell
+        if post.pollID == "" {
+            print("post.pollid = empty : \(post.pollID)")
+            let cell = tableView.dequeueReusableCell(withIdentifier: "postCell") as! PostTableViewCell
+            cell.setCell(post: post)
+            return cell
+        } else {
+            print("post.pollid != empty : \(post.pollID)")
+            let cell = tableView.dequeueReusableCell(withIdentifier: "pollCell") as! PollTableViewCell
+            cell.setCell(post: post)
+            return cell
+        }
     }
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

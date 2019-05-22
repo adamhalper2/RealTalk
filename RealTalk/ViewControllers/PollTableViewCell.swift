@@ -1,8 +1,8 @@
 //
-//  PostTableViewCell.swift
+//  PollTableViewCell.swift
 //  RealTalk
 //
-//  Created by Adam Halper on 4/27/19.
+//  Created by Adam Halper on 5/21/19.
 //  Copyright © 2019 Adam Halper. All rights reserved.
 //
 
@@ -10,29 +10,48 @@ import UIKit
 import FirebaseFirestore
 import ProgressHUD
 
-class PostTableViewCell: UITableViewCell {
+class PollTableViewCell: UITableViewCell {
 
     @IBOutlet weak var authorLabel: UILabel!
-    @IBOutlet weak var contentLabel: UILabel!
-    @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var commentBtn: UIButton!
-    @IBOutlet weak var heartBtn: UIButton!
-    @IBOutlet weak var heartCountLabel: UILabel!
-    @IBOutlet weak var reportBtn: UIButton!
+    @IBOutlet weak var moderatorIcon: UIImageView!
     @IBOutlet weak var onlineIndicator: UIImageView!
     @IBOutlet weak var lockIndicator: UIImageView!
-    @IBOutlet weak var moderatorIcon: UIImageView!
-    
-    //let filledHeart = UIImage(named: "filledHeart")
-    // let unfilledHeart = UIImage(named: "unfilledHeart")
+    @IBOutlet weak var heartBtn: UIButton!
+    @IBOutlet weak var heartCountLabel: UILabel!
+    @IBOutlet weak var contentLabel: UILabel!
+    @IBOutlet weak var reportBtn: UIButton!
+    @IBOutlet weak var commentBtn: UIButton!
+    @IBOutlet weak var timeLabel: UILabel!
+
+    @IBOutlet weak var pollView: UIView!
+
+    @IBOutlet weak var optionAView: UIView!
+    @IBOutlet weak var optionALabel: UILabel!
+
+    @IBOutlet weak var optionBLabel: UILabel!
+    @IBOutlet weak var optionBView: UIView!
+
+
     var post: Post?
+    var poll: Poll?
     private let db = Firestore.firestore()
     let user = AppController.user!
     let dateHelper = DateHelper()
 
     func setCell(post: Post) {
 
+        optionAView.frame.size.width = 0
+        optionBView.frame.size.width = 0
+
+        optionALabel.addTapGesture(tapNumber: 1, target: self, action: #selector(voteForA))
+        //optionAView.addTapGesture(tapNumber: 1, target: self, action: #selector(voteForA))
+        optionBLabel.addTapGesture(tapNumber: 1, target: self, action: #selector(voteForB))
+        //optionBView.addTapGesture(tapNumber: 1, target: self, action: #selector(voteForB))
+
+
         self.post = post
+        print("setting poll cell")
+        setPoll(pollID: post.pollID)
         let memberLabel = getMemberNames(members: post.members, author: post.author)
         authorLabel.text = memberLabel
         contentLabel.text = post.content
@@ -62,8 +81,54 @@ class PostTableViewCell: UITableViewCell {
             lockIndicator.isHidden = true
         }
     }
-    
-    
+
+    func setPoll(pollID: String) {
+
+        if pollID == "" {return}
+        let pollRef = db.collection("polls").document(pollID)
+        pollRef.getDocument { (documentSnapshot, err) in
+            if let err = err {
+                print("Error getting document: \(err)")
+            } else {
+                guard let data = documentSnapshot?.data() else {return}
+                print("data for poll: \(data)")
+
+                if let poll = Poll(data: data, docId: pollID) {
+                    DispatchQueue.main.async {
+                        print("option A label: \(poll.optionA)")
+                        self.optionALabel.text = poll.optionA
+                        self.optionBLabel.text = poll.optionB
+                    }
+                }
+            }
+        }
+    }
+
+    @objc func fillLayer(option: String, fillWidth: CGFloat) {
+        UIView.animate(withDuration: 2) {
+            if option == "A" {
+                print("setting a width")
+                self.optionAView.frame.size.width = fillWidth
+            } else  if option == "B" {
+                print("setting B width")
+                self.optionBView.frame.size.width = fillWidth
+            }
+        }
+        self.layoutIfNeeded()
+    }
+
+
+
+    @objc func voteForA() {
+        print("vote for A tapped")
+        fillLayer(option: "A", fillWidth: 75.0)
+    }
+
+    @objc func voteForB() {
+        print("vote for B tapped")
+        fillLayer(option: "B", fillWidth: pollView.frame.size.width)
+    }
+
     func checkIfUserIsModerator() {
         guard let post = post else {return}
         guard let authorID = post.authorID else {return}
@@ -195,24 +260,6 @@ class PostTableViewCell: UITableViewCell {
         }
     }
 
-    @IBAction func reportTapped(_ sender: Any) {
-
-        reportBtn.isEnabled = false
-        let refreshAlert = UIAlertController(title: "Report Post", message: "Are you sure you want to report this post?", preferredStyle: UIAlertController.Style.alert)
-
-        refreshAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
-            self.addReport()
-
-            print("Thanks! This post is under review")
-        }))
-
-        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
-            self.reportBtn.isEnabled = true
-        }))
-        UIApplication.shared.keyWindow?.rootViewController?.present(refreshAlert, animated: true, completion: nil)
-    }
-
-
     func addReport() {
         guard let currPost = post else {return}
         guard let postID = currPost.id else {return}
@@ -244,13 +291,6 @@ class PostTableViewCell: UITableViewCell {
                 print("updated report count to \(newReportCount)")
             }
         }
-    }
-
-    @IBAction func heartTapped(_ sender: Any) {
-        print("heart tapped")
-        heartBtn.tintColor = UIColor.customPurple.withAlphaComponent(0.5)
-        heartBtn.isEnabled = false
-        addHeartToPost()
     }
 
     func pushNotifyHeart(toID: String) {
@@ -321,4 +361,30 @@ class PostTableViewCell: UITableViewCell {
             }
         }
     }
+
+
+
+    @IBAction func heartTapped(_ sender: Any) {
+        print("heart tapped")
+        heartBtn.tintColor = UIColor.customPurple.withAlphaComponent(0.5)
+        heartBtn.isEnabled = false
+        addHeartToPost()
+    }
+
+    @IBAction func reportBtnTapped(_ sender: Any) {
+        reportBtn.isEnabled = false
+        let refreshAlert = UIAlertController(title: "Report Post", message: "Are you sure you want to report this post?", preferredStyle: UIAlertController.Style.alert)
+
+        refreshAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
+            self.addReport()
+
+            print("Thanks! This post is under review")
+        }))
+
+        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+            self.reportBtn.isEnabled = true
+        }))
+        UIApplication.shared.keyWindow?.rootViewController?.present(refreshAlert, animated: true, completion: nil)
+    }
+
 }

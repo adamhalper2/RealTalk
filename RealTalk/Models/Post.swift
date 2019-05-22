@@ -46,7 +46,8 @@ struct Post {
   var isLocked: Bool
   var bannedList: [String]
   var lastMessage: String
-
+  var pollID: String
+  
   
     init(content: String, author: String, timestamp: NSDate, authorID: String) {
         self.id = nil
@@ -63,6 +64,25 @@ struct Post {
         self.bannedList = []
         self.lastMessage = ""
         self.updateTimestamp = timestamp
+        self.pollID = ""
+    }
+
+    init(content: String, author: String, timestamp: NSDate, authorID: String, pollID: String) {
+        self.id = nil
+        self.content = content
+        self.author = author
+        self.timestamp = timestamp
+        self.commentCount = 0
+        self.heartCount = 0
+        self.reportCount = 0
+        self.members = [authorID]
+        self.authorID = authorID
+        self.isActive = true
+        self.isLocked = false
+        self.bannedList = []
+        self.lastMessage = ""
+        self.updateTimestamp = timestamp
+        self.pollID = pollID
     }
     
     init?(data: [String: Any], docId: String) {
@@ -99,6 +119,11 @@ struct Post {
         guard let authorID = data["authorID"] as? String else {
             return nil
         }
+
+        guard let pollID = data["pollID"] as? String else {
+            return nil
+        }
+
         guard let lastMessage = data["lastMessage"] as? String else {
             return nil
         }
@@ -141,6 +166,8 @@ struct Post {
         guard let bannedListStr = data["bannedList"] as? String else {
             return nil
         }
+
+
         let bannedList = bannedListStr.components(separatedBy: "-")
         
         self.id = docId
@@ -153,6 +180,7 @@ struct Post {
         self.timestamp = date
         self.members = members
         self.authorID = authorID
+        self.pollID = pollID
         self.isActive = isActiveBool
         self.isLocked = isLockedBool
         self.bannedList = bannedList
@@ -194,6 +222,10 @@ struct Post {
     }
 
     guard let authorID = data["authorID"] as? String else {
+        return nil
+    }
+
+    guard let pollID = data["pollID"] as? String else {
         return nil
     }
     
@@ -251,6 +283,7 @@ struct Post {
     self.timestamp = date
     self.members = members
     self.authorID = authorID
+    self.pollID = pollID
     self.isActive = isActiveBool
     self.isLocked = isLockedBool
     self.bannedList = bannedList
@@ -271,6 +304,7 @@ extension Post : DatabaseRepresentation {
     rep["heartCount"] = String(heartCount)
     rep["reportCount"] = String(heartCount)
     rep["authorID"] = authorID
+    rep["pollID"] = pollID
     rep["members"] = members.joined(separator: "-")
     rep["isActive"] = String(isActive)
     rep["isLocked"] = String(isLocked)
