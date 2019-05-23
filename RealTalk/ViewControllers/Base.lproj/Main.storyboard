@@ -242,7 +242,7 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="23%" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8G4-py-Jw7">
+                                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="23%" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8G4-py-Jw7">
                                                             <rect key="frame" x="329" y="12.5" width="40" height="16"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="40" id="zpA-hm-3l0"/>
@@ -250,7 +250,7 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="67%" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Ii-Ts-4F7">
+                                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="67%" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Ii-Ts-4F7">
                                                             <rect key="frame" x="329" y="61.5" width="40" height="16"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="40" id="OGb-D3-a0u"/>
@@ -286,8 +286,8 @@
                                                         <constraint firstAttribute="trailing" secondItem="8G4-py-Jw7" secondAttribute="trailing" constant="5" id="xLh-Cz-6vM"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2 votes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bMF-2c-jUk">
-                                                    <rect key="frame" x="20" y="241" width="44.5" height="25.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 votes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bMF-2c-jUk">
+                                                    <rect key="frame" x="20" y="241" width="45" height="25.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -309,7 +309,7 @@
                                                 <constraint firstItem="4nC-F8-ViJ" firstAttribute="top" secondItem="qpr-E3-Nqk" secondAttribute="bottom" constant="1" id="Zkj-uK-gtX"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="AXx-kz-1FW" secondAttribute="trailing" constant="105" id="hfG-3N-W2N"/>
                                                 <constraint firstItem="6Tx-TO-y54" firstAttribute="trailing" secondItem="UmJ-UL-9Jn" secondAttribute="trailingMargin" id="jvS-Aa-ds2"/>
-                                                <constraint firstItem="whA-dL-XNW" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Eds-Bu-avt" secondAttribute="bottom" constant="20" id="m9E-rY-H6Y"/>
+                                                <constraint firstItem="whA-dL-XNW" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Eds-Bu-avt" secondAttribute="bottom" constant="30" id="m9E-rY-H6Y"/>
                                                 <constraint firstItem="AXx-kz-1FW" firstAttribute="leading" secondItem="ZAD-Q8-hsY" secondAttribute="leading" id="mfC-JC-Gqu"/>
                                                 <constraint firstItem="Eds-Bu-avt" firstAttribute="leading" secondItem="AXx-kz-1FW" secondAttribute="leading" id="mxF-4A-5pz"/>
                                                 <constraint firstItem="whA-dL-XNW" firstAttribute="leading" secondItem="UmJ-UL-9Jn" secondAttribute="leadingMargin" id="oF1-yj-qdn"/>
@@ -1124,9 +1124,11 @@
                                             <outlet property="lockIndicator" destination="Qbx-Oa-tC5" id="fim-5q-r8g"/>
                                             <outlet property="moderatorIcon" destination="BJD-N3-Lgw" id="QA3-qd-gJr"/>
                                             <outlet property="onlineIndicator" destination="YP7-rl-yl7" id="W75-K0-INM"/>
+                                            <outlet property="optionABackgroundView" destination="9iq-Ry-Y8z" id="Xn5-Tq-fDo"/>
                                             <outlet property="optionALabel" destination="xzE-Yy-0Ef" id="cJG-oN-osI"/>
                                             <outlet property="optionAPercentLabel" destination="zHb-Yr-oJy" id="DFy-nI-NS4"/>
                                             <outlet property="optionAView" destination="hBZ-g9-AoX" id="jMf-90-vUc"/>
+                                            <outlet property="optionBBackgroundView" destination="VME-XL-Cph" id="k5G-Je-SOD"/>
                                             <outlet property="optionBLabel" destination="cSc-xp-BQW" id="WWX-R1-Fbh"/>
                                             <outlet property="optionBPercentLabel" destination="LKj-N4-llT" id="VSK-VY-B82"/>
                                             <outlet property="optionBView" destination="P1o-0z-d4i" id="vKJ-Qd-jb6"/>

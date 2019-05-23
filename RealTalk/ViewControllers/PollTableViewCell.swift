@@ -30,6 +30,9 @@ class PollTableViewCell: UITableViewCell {
     @IBOutlet weak var optionALabel: UILabel!
     @IBOutlet weak var optionAPercentLabel: UILabel!
     
+    @IBOutlet weak var optionABackgroundView: UIView!
+    @IBOutlet weak var optionBBackgroundView: UIView!
+
     @IBOutlet weak var optionBLabel: UILabel!
     @IBOutlet weak var optionBView: UIView!
     @IBOutlet weak var optionBPercentLabel: UILabel!
@@ -57,6 +60,15 @@ class PollTableViewCell: UITableViewCell {
         didSet {
             DispatchQueue.main.async {
                 print("votes array did change: \(self.votes.count)")
+                //let filteredVotes = self.votes.filter { $0.pollID != self.poll?.id}
+                //print("filtered votes: \(filteredVotes.count)")
+                /*
+                for vote in self.votes {
+                    if vote.pollID != self.poll?.id {
+                        self.votes = self.votes.filter { $0.pollID != self.poll?.id}
+                    }
+                }
+                */
                 if self.votes.count == 1 {
                     self.voteCountLabel.text = "1 vote"
                 } else {
@@ -73,6 +85,8 @@ class PollTableViewCell: UITableViewCell {
         votesListener?.remove()
     }
 
+
+
     func setCell(post: Post) {
 
         //optionAView.frame.size.width = 0
@@ -86,13 +100,14 @@ class PollTableViewCell: UITableViewCell {
         }
 
         optionALabel.addTapGesture(tapNumber: 1, target: self, action: #selector(voteForA))
+
         //optionAView.addTapGesture(tapNumber: 1, target: self, action: #selector(voteForA))
         optionBLabel.addTapGesture(tapNumber: 1, target: self, action: #selector(voteForB))
+
         //optionBView.addTapGesture(tapNumber: 1, target: self, action: #selector(voteForB))
 
 
         self.post = post
-        print("setting poll cell")
         setPoll(pollID: post.pollID)
         loadVotes(pollID: post.pollID)
 
@@ -162,7 +177,6 @@ class PollTableViewCell: UITableViewCell {
             }
         }
     }
-
     
     func loadVotes(pollID: String) {
         print("load votes called")
@@ -189,7 +203,12 @@ class PollTableViewCell: UITableViewCell {
     }
 
     func animateFill() {
+        if votes.count <= 0 {return}
         let width = pollView.frame.size.width
+
+        //let votesForA = votes.filter { $0.option == true}
+        //let votesForB = votes.filter { $0.option == false}
+
 
         var votesForA : CGFloat = 0
         var votesForB : CGFloat = 0
@@ -201,6 +220,7 @@ class PollTableViewCell: UITableViewCell {
                 votesForB += 1
             }
         }
+
         print("vote count is \(votes.count)")
 
         print("votesForA: \(votesForA), votesForB: \(votesForB)")
@@ -230,7 +250,7 @@ class PollTableViewCell: UITableViewCell {
     }
 
     func staticFill() {
-        print("static fill called")
+        if votes.count <= 0 {return}
         let width = pollView.frame.size.width
 
         var votesForA : CGFloat = 0
@@ -243,9 +263,6 @@ class PollTableViewCell: UITableViewCell {
                 votesForB += 1
             }
         }
-        print("vote count is \(votes.count)")
-
-        print("votesForA: \(votesForA), votesForB: \(votesForB)")
 
         let APercent : CGFloat = votesForA / (votesForA + votesForB)
         let BPercent : CGFloat = votesForB / (votesForA + votesForB)
@@ -255,17 +272,11 @@ class PollTableViewCell: UITableViewCell {
         let AWidth = APercent * width
         let BWidth = BPercent * width
 
-        print("APercent: \(APercent)")
-        print("BPercent: \(BPercent)")
-
         let aPercentStr = "\(Int(APercent * 100))%"
         let bPercentStr = "\(Int(BPercent * 100))%"
 
         self.optionAPercentLabel.text = aPercentStr
         self.optionBPercentLabel.text = bPercentStr
-
-        print("APercentStr: \(aPercentStr)")
-        print("BPercentStr: \(bPercentStr)")
 
         self.optionAView.frame.size.width = AWidth
         self.optionBView.frame.size.width = BWidth
@@ -298,6 +309,22 @@ class PollTableViewCell: UITableViewCell {
         }
     }
 
+    func resetCell() {
+        votes = [Vote]()
+        optionAView.frame.size.width = 0
+        optionBView.frame.size.width = 0
+        optionALabel.isUserInteractionEnabled = true
+        optionBLabel.isUserInteractionEnabled = true
+        hasVoted = false
+        poll = nil
+        post = nil
+        optionAPercentLabel.isHidden = true
+        optionBPercentLabel.isHidden = true
+        optionALabel.text = ""
+        optionBLabel.text = ""
+        contentLabel.text = ""
+    }
+
     @objc func fillLayer(option: String, fillWidth: CGFloat) {
         UIView.animate(withDuration: 1) {
             if option == "A" {
@@ -328,8 +355,10 @@ class PollTableViewCell: UITableViewCell {
             } else {
                 print("added new vote for A")
                 DispatchQueue.main.async {
-                    //self.addVote(vote)
+                    self.addVote(vote)
                     self.animateFill()
+                    self.optionALabel.isUserInteractionEnabled = false
+                    self.optionBLabel.isUserInteractionEnabled = false
                 }
             }
         }
@@ -349,8 +378,10 @@ class PollTableViewCell: UITableViewCell {
             } else {
                 print("added new vote for B")
                 DispatchQueue.main.async {
-                    //self.addVote(vote)
+                    self.addVote(vote)
                     self.animateFill()
+                    self.optionALabel.isUserInteractionEnabled = false
+                    self.optionBLabel.isUserInteractionEnabled = false
                 }
             }
         }

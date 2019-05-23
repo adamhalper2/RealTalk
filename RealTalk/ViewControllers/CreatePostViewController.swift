@@ -279,6 +279,8 @@ class CreatePostViewController: UIViewController, UITextViewDelegate {
 
         textView.text = "I wanna talk with someone about..."
         textView.textColor = UIColor.lightGray
+        optionAField.text = ""
+        optionBField.text = ""
         Analytics.logEvent("share_post", parameters: [
             "name": AppController.user!.uid as NSObject,
             "full_text": textView.text as NSObject

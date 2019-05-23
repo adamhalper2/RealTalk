@@ -35,11 +35,13 @@ class PollPreviewTableViewCell: UITableViewCell {
     @IBOutlet weak var voteCountLabel: UILabel!
 
     var user = AppController.user!
+    var poll: Poll?
+
     var votes : [Vote] = [] {
         didSet {
             DispatchQueue.main.async {
-                if (self.hasVoted) {
-                    self.staticFill()
+                if (self.hasVoted && self.votes.count > 0) {
+                   // self.staticFill()
                 }
                 if self.votes.count == 1 {
                     self.voteCountLabel.text = "1 vote"
@@ -55,7 +57,7 @@ class PollPreviewTableViewCell: UITableViewCell {
             print("did set hasVoted \(hasVoted)")
             if (hasVoted) {
                 DispatchQueue.main.async {
-                    self.staticFill()
+                    self.animateFill()
                 }
 
             }
@@ -85,8 +87,11 @@ class PollPreviewTableViewCell: UITableViewCell {
             guard let snap = querySnapshot else {return}
             for document in snap.documents {
                 guard let vote = Vote(data: document.data(), docId: document.documentID) else {return}
-                self.votes.append(vote)
-                print("successfully loaded vote \(vote)")
+                if !self.votes.contains(vote) {
+                    self.votes.append(vote)
+                    print("successfully loaded vote \(vote)")
+
+                }
                 if vote.senderID == self.user.uid {
                     if self.hasVoted == false {
                         self.hasVoted = true
@@ -96,12 +101,34 @@ class PollPreviewTableViewCell: UITableViewCell {
         }
     }
 
+    func setPoll(pollID: String) {
+
+        if pollID == "" {return}
+        let pollRef = db.collection("polls").document(pollID)
+        pollRef.getDocument { (documentSnapshot, err) in
+            if let err = err {
+                print("Error getting document: \(err)")
+            } else {
+                guard let data = documentSnapshot?.data() else {return}
+                print("data for poll: \(data)")
+
+                if let poll = Poll(data: data, docId: pollID) {
+                    self.poll = poll
+                    DispatchQueue.main.async {
+                        print("option A label: \(poll.optionA)")
+                        self.optionALabel.text = poll.optionA
+                        self.optionBLabel.text = poll.optionB
+                    }
+                }
+            }
+        }
+    }
+
+
     func setCell(post: Post) {
         self.post = post
-
+        setPoll(pollID: post.pollID)
         loadVotes(pollID: post.pollID)
-        optionAPercentLabel.isHidden = true
-        optionBPercentLabel.isHidden = true
         optionALabel.addTapGesture(tapNumber: 1, target: self, action: #selector(voteForA))
         optionBLabel.addTapGesture(tapNumber: 1, target: self, action: #selector(voteForB))
 
@@ -153,7 +180,7 @@ class PollPreviewTableViewCell: UITableViewCell {
             } else {
                 print("added new vote for A")
                 DispatchQueue.main.async {
-                    //self.addVote(vote)
+                    self.addVote(vote)
                     self.animateFill()
                 }
             }
@@ -174,12 +201,38 @@ class PollPreviewTableViewCell: UITableViewCell {
             } else {
                 print("added new vote for B")
                 DispatchQueue.main.async {
-                    //self.addVote(vote)
+                    self.addVote(vote)
                     self.animateFill()
                 }
             }
         }
     }
+
+    private func addVote(_ vote: Vote) {
+        guard !votes.contains(vote) else {
+            return
+        }
+        print("addVote called")
+        votes.append(vote)
+
+
+    }
+
+    func resetCell() {
+        votes = [Vote]()
+        voteCountLabel.text = "0 votes"
+        optionAView.frame.size.width = 0
+        optionBView.frame.size.width = 0
+        hasVoted = false
+        poll = nil
+        post = nil
+        optionAPercentLabel.isHidden = true
+        optionBPercentLabel.isHidden = true
+        optionALabel.text = ""
+        optionBLabel.text = ""
+        chatTitleLabel.text = ""
+    }
+
 
     func setOnlineLabel() {
         if membersOnline.count > 1 {
@@ -223,6 +276,7 @@ class PollPreviewTableViewCell: UITableViewCell {
 
     func staticFill() {
         print("static fill called")
+        if votes.count <= 0 {return}
         let width = pollView.frame.size.width
 
         var votesForA : CGFloat = 0
@@ -265,6 +319,10 @@ class PollPreviewTableViewCell: UITableViewCell {
     }
 
     func animateFill() {
+        if votes.count == 0 {
+            print("vote count is zero")
+            return
+        }
         let width = pollView.frame.size.width
 
         var votesForA : CGFloat = 0
