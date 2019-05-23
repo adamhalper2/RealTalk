@@ -74,9 +74,7 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "pollPreviewCell") as! PollPreviewTableViewCell
-            if cell.votes.count > 0 {
-                cell.resetCell()
-            }
+            cell.resetCell()
             cell.setCell(post: post)
             return cell
 

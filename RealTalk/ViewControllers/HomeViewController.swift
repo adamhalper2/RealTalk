@@ -94,6 +94,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             print("post.pollid = empty : \(post.pollID)")
             let cell = tableView.dequeueReusableCell(withIdentifier: "postCell") as! PostTableViewCell
             cell.setCell(post: post)
+            print("returning post cell")
             return cell
         } else {
             print("post.pollid != empty : \(post.pollID)")

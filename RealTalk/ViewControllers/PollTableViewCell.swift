@@ -41,6 +41,7 @@ class PollTableViewCell: UITableViewCell {
     
     private var votesListener: ListenerRegistration?
 
+    var userVote: Vote?
     var post: Post?
     var poll: Poll?
     let user = AppController.user!
@@ -49,8 +50,12 @@ class PollTableViewCell: UITableViewCell {
             print("did set hasVoted \(hasVoted)")
             if (hasVoted) {
                 print("set hasVoted == true)")
-                DispatchQueue.main.async {
-                    self.animateFill()
+                optionALabel.isUserInteractionEnabled = false
+                optionBLabel.isUserInteractionEnabled = false
+                if let vote = userVote {
+                    DispatchQueue.main.async {
+                        self.animateFill(option: vote.option)
+                    }
                 }
             }
         }
@@ -202,7 +207,7 @@ class PollTableViewCell: UITableViewCell {
 
     }
 
-    func animateFill() {
+    func animateFill(option: Bool) {
         if votes.count <= 0 {return}
         let width = pollView.frame.size.width
 
@@ -222,7 +227,6 @@ class PollTableViewCell: UITableViewCell {
         }
 
         print("vote count is \(votes.count)")
-
         print("votesForA: \(votesForA), votesForB: \(votesForB)")
 
         let APercent : CGFloat = votesForA / (votesForA + votesForB)
@@ -239,8 +243,24 @@ class PollTableViewCell: UITableViewCell {
         let aPercentStr = "\(Int(APercent * 100))%"
         let bPercentStr = "\(Int(BPercent * 100))%"
 
+        /*
+        let strokeTextAttributes = [
+            NSAttributedString.Key.strokeColor : UIColor.darkText,
+            NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 13)
+            ] as [NSAttributedString.Key : Any]
+        */
         self.optionAPercentLabel.text = aPercentStr
         self.optionBPercentLabel.text = bPercentStr
+
+        if (option) {
+            //self.optionAPercentLabel.attributedText = NSAttributedString(string: aPercentStr, attributes: strokeTextAttributes)
+            self.optionABackgroundView.layer.borderWidth = 1
+            self.optionABackgroundView.layer.borderColor = UIColor.customPurple2.cgColor
+        } else {
+            //self.optionBPercentLabel.attributedText = NSAttributedString(string: aPercentStr, attributes: strokeTextAttributes)
+            self.optionBBackgroundView.layer.borderWidth = 1
+            self.optionBBackgroundView.layer.borderColor = UIColor.customPurple2.cgColor
+        }
 
         print("APercentStr: \(aPercentStr)")
         print("BPercentStr: \(bPercentStr)")
@@ -249,7 +269,7 @@ class PollTableViewCell: UITableViewCell {
         fillLayer(option: "B", fillWidth: BWidth)
     }
 
-    func staticFill() {
+    func staticFill(option: Bool) {
         if votes.count <= 0 {return}
         let width = pollView.frame.size.width
 
@@ -275,8 +295,17 @@ class PollTableViewCell: UITableViewCell {
         let aPercentStr = "\(Int(APercent * 100))%"
         let bPercentStr = "\(Int(BPercent * 100))%"
 
-        self.optionAPercentLabel.text = aPercentStr
-        self.optionBPercentLabel.text = bPercentStr
+        let strokeTextAttributes = [
+            NSAttributedString.Key.strokeColor : UIColor.darkText,
+            NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 13)
+            ] as [NSAttributedString.Key : Any]
+        if (option) {
+            self.optionAPercentLabel.attributedText = NSAttributedString(string: aPercentStr, attributes: strokeTextAttributes)
+            self.optionBPercentLabel.text = bPercentStr
+        } else {
+            self.optionAPercentLabel.text = aPercentStr
+            self.optionBPercentLabel.attributedText = NSAttributedString(string: aPercentStr, attributes: strokeTextAttributes)
+        }
 
         self.optionAView.frame.size.width = AWidth
         self.optionBView.frame.size.width = BWidth
@@ -293,6 +322,7 @@ class PollTableViewCell: UITableViewCell {
         }
 
         if vote.senderID == user.uid {
+            self.userVote = vote
             if hasVoted == false {
                 self.hasVoted = true
             }
@@ -315,6 +345,8 @@ class PollTableViewCell: UITableViewCell {
         optionBView.frame.size.width = 0
         optionALabel.isUserInteractionEnabled = true
         optionBLabel.isUserInteractionEnabled = true
+        optionABackgroundView.layer.borderWidth = 0
+        optionBBackgroundView.layer.borderWidth = 0
         hasVoted = false
         poll = nil
         post = nil
@@ -355,8 +387,7 @@ class PollTableViewCell: UITableViewCell {
             } else {
                 print("added new vote for A")
                 DispatchQueue.main.async {
-                    self.addVote(vote)
-                    self.animateFill()
+                    self.animateFill(option: true)
                     self.optionALabel.isUserInteractionEnabled = false
                     self.optionBLabel.isUserInteractionEnabled = false
                 }
@@ -379,7 +410,7 @@ class PollTableViewCell: UITableViewCell {
                 print("added new vote for B")
                 DispatchQueue.main.async {
                     self.addVote(vote)
-                    self.animateFill()
+                    self.animateFill(option: false)
                     self.optionALabel.isUserInteractionEnabled = false
                     self.optionBLabel.isUserInteractionEnabled = false
                 }

@@ -16,9 +16,11 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var commentBtn: UIButton!
     @IBOutlet weak var heartBtn: UIButton!
     @IBOutlet weak var heartCountLabel: UILabel!
+
+    @IBOutlet weak var commentBtn: UIButton!
+    
     @IBOutlet weak var reportBtn: UIButton!
     @IBOutlet weak var onlineIndicator: UIImageView!
     @IBOutlet weak var lockIndicator: UIImageView!
@@ -197,7 +199,6 @@ class PostTableViewCell: UITableViewCell {
     }
 
     @IBAction func reportTapped(_ sender: Any) {
-
         reportBtn.isEnabled = false
         let refreshAlert = UIAlertController(title: "Report Post", message: "Are you sure you want to report this post?", preferredStyle: UIAlertController.Style.alert)
 
@@ -212,6 +213,8 @@ class PostTableViewCell: UITableViewCell {
         }))
         UIApplication.shared.keyWindow?.rootViewController?.present(refreshAlert, animated: true, completion: nil)
     }
+
+
 
 
     func addReport() {
