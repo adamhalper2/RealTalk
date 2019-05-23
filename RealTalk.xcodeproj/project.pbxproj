@@ -28,6 +28,11 @@
 		8A1B98B1228E2D240033DF11 /* MemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B98B0228E2D240033DF11 /* MemberTableViewCell.swift */; };
 		8A1B98B3228E55F00033DF11 /* AnimatedTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B98B2228E55F00033DF11 /* AnimatedTabController.swift */; };
 		8A1B98B52292963C0033DF11 /* ChangeHandleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B98B42292963C0033DF11 /* ChangeHandleViewController.swift */; };
+		8A1B98B72294CC570033DF11 /* Poll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B98B62294CC570033DF11 /* Poll.swift */; };
+		8A1B98B92294CCD10033DF11 /* Vote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B98B82294CCD10033DF11 /* Vote.swift */; };
+		8A1B98BB2294DEC60033DF11 /* PollTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B98BA2294DEC60033DF11 /* PollTableViewCell.swift */; };
+		8A1B98BF229513660033DF11 /* FillResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B98BE229513660033DF11 /* FillResultsView.swift */; };
+		8A1B98C1229525410033DF11 /* UITextField+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B98C0229525410033DF11 /* UITextField+Additions.swift */; };
 		8A1F306A227A18050065D370 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8A1F3069227A18050065D370 /* GoogleService-Info.plist */; };
 		8A1F306C227A23AC0065D370 /* Heart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1F306B227A23AC0065D370 /* Heart.swift */; };
 		8A1F306E227A27020065D370 /* TabBar+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1F306D227A27020065D370 /* TabBar+Additions.swift */; };
@@ -43,6 +48,7 @@
 		8A5AF92222743F9E00E4AC1A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF92122743F9E00E4AC1A /* HomeViewController.swift */; };
 		8A5AF9242275088A00E4AC1A /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF9232275088A00E4AC1A /* PostTableViewCell.swift */; };
 		8A5AF9282275266C00E4AC1A /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AF9272275266C00E4AC1A /* CreatePostViewController.swift */; };
+		8A7E03BF2296047100B63D73 /* PollPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7E03BE2296047100B63D73 /* PollPreviewTableViewCell.swift */; };
 		8AB7D7AB2287C5F100DBBC04 /* CustomNotif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB7D7AA2287C5F100DBBC04 /* CustomNotif.swift */; };
 		8AB7D7AF2287C6AD00DBBC04 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB7D7AE2287C6AD00DBBC04 /* DateHelper.swift */; };
 		8AB7D7B12287C93600DBBC04 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB7D7B02287C93600DBBC04 /* NotificationsViewController.swift */; };
@@ -76,6 +82,11 @@
 		8A1B98B0228E2D240033DF11 /* MemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberTableViewCell.swift; sourceTree = "<group>"; };
 		8A1B98B2228E55F00033DF11 /* AnimatedTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedTabController.swift; sourceTree = "<group>"; };
 		8A1B98B42292963C0033DF11 /* ChangeHandleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeHandleViewController.swift; sourceTree = "<group>"; };
+		8A1B98B62294CC570033DF11 /* Poll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Poll.swift; sourceTree = "<group>"; };
+		8A1B98B82294CCD10033DF11 /* Vote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vote.swift; sourceTree = "<group>"; };
+		8A1B98BA2294DEC60033DF11 /* PollTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollTableViewCell.swift; sourceTree = "<group>"; };
+		8A1B98BE229513660033DF11 /* FillResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillResultsView.swift; sourceTree = "<group>"; };
+		8A1B98C0229525410033DF11 /* UITextField+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Additions.swift"; sourceTree = "<group>"; };
 		8A1F3069227A18050065D370 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8A1F306B227A23AC0065D370 /* Heart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heart.swift; sourceTree = "<group>"; };
 		8A1F306D227A27020065D370 /* TabBar+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabBar+Additions.swift"; sourceTree = "<group>"; };
@@ -93,6 +104,7 @@
 		8A5AF92122743F9E00E4AC1A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		8A5AF9232275088A00E4AC1A /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		8A5AF9272275266C00E4AC1A /* CreatePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
+		8A7E03BE2296047100B63D73 /* PollPreviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollPreviewTableViewCell.swift; sourceTree = "<group>"; };
 		8AB7D7AA2287C5F100DBBC04 /* CustomNotif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNotif.swift; sourceTree = "<group>"; };
 		8AB7D7AE2287C6AD00DBBC04 /* DateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		8AB7D7B02287C93600DBBC04 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
@@ -129,6 +141,7 @@
 			children = (
 				3BC2AFF322781DBE00B01F32 /* UIImage+Additions.swift */,
 				3BC2AFF522781DC600B01F32 /* UIView+Additions.swift */,
+				8A1B98C0229525410033DF11 /* UITextField+Additions.swift */,
 				3B82425B227EA0CC00C0A6CA /* String+Additions.swift */,
 				3BC2AFEF22781D7A00B01F32 /* UIColor+Additions.swift */,
 				3BC2AFF122781D8B00B01F32 /* UICollectionView+Additions.swift */,
@@ -148,9 +161,12 @@
 				8ABB64382282708100E33C0F /* OnlineOfflineManager.swift */,
 				3B5EA1A02279829C005D9E5F /* LoginViewController.swift */,
 				8A5AF9102273D31500E4AC1A /* Main.storyboard */,
+				8A1B98BA2294DEC60033DF11 /* PollTableViewCell.swift */,
+				8A1B98BE229513660033DF11 /* FillResultsView.swift */,
 				8A1B98B42292963C0033DF11 /* ChangeHandleViewController.swift */,
 				8A1B98AE228E2B5D0033DF11 /* MembersListViewController.swift */,
 				8A1F3073227A57B70065D370 /* ChatPreviewTableViewCell.swift */,
+				8A7E03BE2296047100B63D73 /* PollPreviewTableViewCell.swift */,
 				8A1F3071227A48150065D370 /* MyChatsViewController.swift */,
 				8A5AF9232275088A00E4AC1A /* PostTableViewCell.swift */,
 				8A5AF9272275266C00E4AC1A /* CreatePostViewController.swift */,
@@ -169,11 +185,13 @@
 			children = (
 				3B1F1A9E2277B3D2001655B6 /* DatabaseRepresentation.swift */,
 				3B1F1A9C2277B131001655B6 /* Post.swift */,
+				8A1B98B62294CC570033DF11 /* Poll.swift */,
 				3BC2AFED22781D5500B01F32 /* Message.swift */,
 				8ABB643622822FD400E33C0F /* Report.swift */,
 				8A1F306B227A23AC0065D370 /* Heart.swift */,
 				8A1F3075227B7F0F0065D370 /* Student.swift */,
 				8AB7D7AA2287C5F100DBBC04 /* CustomNotif.swift */,
+				8A1B98B82294CCD10033DF11 /* Vote.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -361,12 +379,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BC2AFFE227826E300B01F32 /* NSDate+Additions.swift in Sources */,
+				8A7E03BF2296047100B63D73 /* PollPreviewTableViewCell.swift in Sources */,
+				8A1B98BB2294DEC60033DF11 /* PollTableViewCell.swift in Sources */,
 				8A1F306E227A27020065D370 /* TabBar+Additions.swift in Sources */,
 				3B82425C227EA0CC00C0A6CA /* String+Additions.swift in Sources */,
+				8A1B98BF229513660033DF11 /* FillResultsView.swift in Sources */,
 				3B824262227F6DE400C0A6CA /* Date+Additions.swift in Sources */,
 				8A1B98B1228E2D240033DF11 /* MemberTableViewCell.swift in Sources */,
 				3B1F1A9D2277B132001655B6 /* Post.swift in Sources */,
 				8AB7D7AB2287C5F100DBBC04 /* CustomNotif.swift in Sources */,
+				8A1B98B72294CC570033DF11 /* Poll.swift in Sources */,
 				3B824260227EB77B00C0A6CA /* HandleSelectionViewController.swift in Sources */,
 				8AB7D7B32287CAF900DBBC04 /* BadgeButton.swift in Sources */,
 				8A1B98AF228E2B5D0033DF11 /* MembersListViewController.swift in Sources */,
@@ -386,6 +408,7 @@
 				3B5EA19D22798269005D9E5F /* AppController.swift in Sources */,
 				8A1B98B52292963C0033DF11 /* ChangeHandleViewController.swift in Sources */,
 				8A5AF9152273D31500E4AC1A /* RealTalk.xcdatamodeld in Sources */,
+				8A1B98B92294CCD10033DF11 /* Vote.swift in Sources */,
 				8A5AF9242275088A00E4AC1A /* PostTableViewCell.swift in Sources */,
 				3BC2AFEE22781D5500B01F32 /* Message.swift in Sources */,
 				8A5AF90D2273D31500E4AC1A /* AppDelegate.swift in Sources */,
@@ -395,6 +418,7 @@
 				8ABB643722822FD400E33C0F /* Report.swift in Sources */,
 				3BC2AFF422781DBE00B01F32 /* UIImage+Additions.swift in Sources */,
 				3B3700BF2282852300E65BF9 /* MessageDetailViewController.swift in Sources */,
+				8A1B98C1229525410033DF11 /* UITextField+Additions.swift in Sources */,
 				3B67DDA622854FFB0083F657 /* PushNotificationManager.swift in Sources */,
 				3B5EA19F22798281005D9E5F /* AppSettings.swift in Sources */,
 				8A1F3076227B7F0F0065D370 /* Student.swift in Sources */,

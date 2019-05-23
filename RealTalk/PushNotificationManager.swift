@@ -145,6 +145,10 @@ class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCe
         guard let user = Auth.auth().currentUser else {return}
         guard let postID = userInfo["gcm.notification.postID"] as? String else {return}
 
+        Analytics.logEvent("requested_push_permission", parameters: [
+            "didSendPush": response.notification as NSObject
+            ])
+
         let postRef = db.collection("channels").document(postID)
         postRef.getDocument { (documentSnapshot, err) in
             if let err = err {

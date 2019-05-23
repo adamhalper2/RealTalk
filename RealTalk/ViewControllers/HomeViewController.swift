@@ -15,8 +15,10 @@ import EzPopup
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate {
 
+    private var votes = [String:[Vote]]()
     private var posts = [Post]()
     private var postsListener: ListenerRegistration?
+    //private var votesListener: ListenerRegistration?
     private var notificationsListener: ListenerRegistration?
     private var heartsListener: ListenerRegistration?
     private let db = Firestore.firestore()
@@ -76,6 +78,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("post count: \(posts.count)")
         return posts.count
     }
 
@@ -85,10 +88,23 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "postCell") as! PostTableViewCell
+
         let post = posts[indexPath.row]
-        cell.setCell(post: post)
-        return cell
+        if post.pollID == "" {
+            print("post.pollid = empty : \(post.pollID)")
+            let cell = tableView.dequeueReusableCell(withIdentifier: "postCell") as! PostTableViewCell
+            cell.setCell(post: post)
+            return cell
+        } else {
+            print("post.pollid != empty : \(post.pollID)")
+            let cell = tableView.dequeueReusableCell(withIdentifier: "pollCell") as! PollTableViewCell
+            if cell.votes.count > 0 {
+                print("cell vote count > 0 before setCell")
+                cell.resetCell()
+            }
+            cell.setCell(post: post)
+            return cell
+        }
     }
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -112,10 +128,51 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     deinit {
+        //votesListener?.remove()
         postsListener?.remove()
         notificationsListener?.remove()
         heartsListener?.remove()
     }
+
+
+    /*
+    func loadVotes() {
+        print("load votes called")
+        let voteRef = db.collection("votes")
+        votesListener = voteRef.addSnapshotListener({ (querySnapshot, err) in
+            guard let snapshot = querySnapshot else {
+                print("Error listening for channel updates: \(err?.localizedDescription ?? "No error")")
+                return
+            }
+            snapshot.documentChanges.forEach { change in
+                print(snapshot)
+                guard let vote = Vote(document: change.document) else {
+                    print("couldnt create vote from doc")
+                    return
+                }
+                let pollID = vote.pollID
+                print("appended poll...post count is \(self.posts.count)")
+
+                var pollVotes = self.votes[pollID] ?? [Vote]()
+                pollVotes.append(vote)
+                self.votes[pollID] = pollVotes
+
+                for (index, post) in self.posts.enumerated() {
+                    if post.pollID == pollID {
+                        let indexPath = IndexPath(row: index, section: 1)
+                        if let cell = self.tableView.cellForRow(at: indexPath) as? PollTableViewCell {
+                            cell.votes = pollVotes
+                            print("changing cell votes from home view")
+                        }
+                    }
+                }
+            }
+        })
+    }
+    */
+
+    
+
 
     override func viewDidLoad() {
         super.viewDidLoad()

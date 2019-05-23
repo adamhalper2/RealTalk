@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseFirestore
+import Firebase
 
 class MessageDetailViewController: UIViewController {
     
@@ -65,6 +66,8 @@ class MessageDetailViewController: UIViewController {
     }
 
     func getUserHearts(){
+        print("get user hearts called")
+        print("message is \(message)")
         guard let message = message else {return}
         let userRef = db.collection("students").document(message.sender.id)
         userRef.getDocument { (documentSnapshot, err) in
@@ -72,8 +75,14 @@ class MessageDetailViewController: UIViewController {
                 print("Error getting document: \(err)")
             } else {
                 guard let data = documentSnapshot?.data() else {return}
-                if let heartCount = data["heartCount"] as? Int {
-                    self.heartCount = heartCount
+                print("data is \(data)")
+
+                if let heartCountStr = data["heartCount"] as? String {
+                    self.heartCount = Int(heartCountStr)!
+                    DispatchQueue.main.async {
+                        print("setting heart label")
+                        self.heartLabel.setTitle(heartCountStr, for: .normal)
+                    }
                 }
             }
         }
@@ -132,6 +141,12 @@ class MessageDetailViewController: UIViewController {
         guard let message = message else {return}
         let toID = message.sender.id
         let messageID = message.messageId
+
+        var content = ""
+        if message.content != nil {
+            content = message.content!
+        }
+
         guard let user = AppController.user else {return}
         let fromID = user.uid
 
@@ -140,6 +155,14 @@ class MessageDetailViewController: UIViewController {
         //Adds report object to FB
         let reportsRef = db.collection("reports")
         reportsRef.addDocument(data: newReport.representation)
+
+        //log event for analytics
+        Analytics.logEvent("add_message_report", parameters: [
+            "sender": user.uid as NSObject,
+            "reportedPost": content as NSObject,
+            "reportedAuthor": toID as NSObject
+            ])
+
 
         //Auto-hides post if 4 or more reports
         var isActive = true
