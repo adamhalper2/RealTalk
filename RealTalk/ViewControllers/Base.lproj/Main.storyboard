@@ -210,7 +210,7 @@
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dzd-n0-u2H" userLabel="optionAView">
                                                             <rect key="frame" x="0.0" y="0.0" width="0.0" height="41"/>
-                                                            <color key="backgroundColor" red="0.18039215689999999" green="0.80000000000000004" blue="0.4431372549" alpha="0.39808558560000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="backgroundColor" red="0.56078431370000004" green="0.17254901959999999" blue="0.98039215690000003" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" id="AM1-BD-IKf"/>
                                                                 <constraint firstAttribute="height" constant="41" id="Lqd-T9-eQX"/>
@@ -218,7 +218,7 @@
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cSe-cg-H6c" userLabel="optionBView">
                                                             <rect key="frame" x="0.0" y="49" width="0.0" height="41"/>
-                                                            <color key="backgroundColor" red="0.18039215689999999" green="0.80000000000000004" blue="0.4431372549" alpha="0.39808558560000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="backgroundColor" red="0.56078431370000004" green="0.17254901959999999" blue="0.98039215690000003" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" id="bec-GA-Dls"/>
                                                                 <constraint firstAttribute="height" constant="41" id="heJ-8r-tm3"/>
@@ -918,7 +918,7 @@
                                                                 </view>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hBZ-g9-AoX" userLabel="optionAView">
                                                                     <rect key="frame" x="0.0" y="0.0" width="0.0" height="41"/>
-                                                                    <color key="backgroundColor" red="0.18039215689999999" green="0.80000000000000004" blue="0.4431372549" alpha="0.3980855855855856" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <color key="backgroundColor" red="0.4568748980929625" green="0.81696492433547974" blue="0.37362310053967712" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="displayP3"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="41" id="MRK-al-pPN"/>
                                                                         <constraint firstAttribute="width" id="pVy-o6-ESa"/>
@@ -926,7 +926,7 @@
                                                                 </view>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P1o-0z-d4i" userLabel="optionBView">
                                                                     <rect key="frame" x="0.0" y="49" width="0.0" height="41"/>
-                                                                    <color key="backgroundColor" red="0.18039215689999999" green="0.80000000000000004" blue="0.4431372549" alpha="0.39808558560000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <color key="backgroundColor" red="0.4568748980929625" green="0.81696492433547974" blue="0.37362310053967712" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="displayP3"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" id="dRi-bz-bCo"/>
                                                                         <constraint firstAttribute="height" constant="41" id="oGy-CU-CDz"/>
@@ -1293,7 +1293,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="79m-Uu-ZYF">
-                                <rect key="frame" x="0.0" y="54" width="414" height="354"/>
+                                <rect key="frame" x="0.0" y="54" width="414" height="778"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="Jdr-yb-zOy">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="70"/>
@@ -1323,7 +1323,7 @@
                                         </constraints>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Selected Message" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="dgZ-Rc-1BA">
-                                        <rect key="frame" x="20" y="82" width="374" height="60"/>
+                                        <rect key="frame" x="20" y="82" width="374" height="484"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="I5l-Cm-zPA"/>
                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="150" id="KCt-O1-que"/>
@@ -1333,7 +1333,7 @@
                                         <color key="highlightedColor" cocoaTouchSystemColor="darkTextColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="6mg-33-K7Z">
-                                        <rect key="frame" x="0.0" y="154" width="414" height="200"/>
+                                        <rect key="frame" x="0.0" y="578" width="414" height="200"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T28-nz-n0I">
                                                 <rect key="frame" x="0.0" y="0.0" width="384" height="54.5"/>
