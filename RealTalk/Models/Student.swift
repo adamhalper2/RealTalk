@@ -80,7 +80,12 @@ struct Student {
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yy h:mm a Z"
-        let date = dateFormatter.date(from: createdDate)! as NSDate
+        print("createdDate: \(createdDate)")
+        if dateFormatter.date(from: createdDate) as? NSDate == nil {
+            print("date is nil for \(username)")
+            return nil
+        }
+        let date = dateFormatter.date(from: createdDate) as? NSDate
 
         self.uid = uid
         self.username = username
@@ -88,7 +93,7 @@ struct Student {
         self.bio = bio
         self.isOnline = isOnlineBool
         self.heartCount = heartCountInt
-        self.createdDate = date
+        self.createdDate = date ?? NSDate()
         self.joinedChatIDs = joinedChatIDs
         self.postCount = postCountInt
     }
@@ -172,5 +177,18 @@ extension Student: DatabaseRepresentation {
 
         return rep
     }
+    
 
 }
+
+extension Student: Comparable {
+
+    static func < (lhs: Student, rhs: Student) -> Bool {
+        return lhs.heartCount < rhs.heartCount
+    }
+
+    static func == (lhs: Student, rhs: Student) -> Bool {
+        return lhs.uid == rhs.uid
+    }
+}
+

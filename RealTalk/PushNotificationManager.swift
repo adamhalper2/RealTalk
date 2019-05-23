@@ -145,6 +145,10 @@ class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCe
         guard let user = Auth.auth().currentUser else {return}
         guard let postID = userInfo["gcm.notification.postID"] as? String else {return}
 
+        Analytics.logEvent("requested_push_permission", parameters: [
+            "didSendPush": response.notification as NSObject
+            ])
+
         let postRef = db.collection("channels").document(postID)
         postRef.getDocument { (documentSnapshot, err) in
             if let err = err {
@@ -209,6 +213,13 @@ class PushNotificationSender {
 
         let notif = CustomNotif(body: body, timestamp: timestamp, type: type, title: title, postID: postID, read: false, notifID: notifID)
         self.save(notif, userID: userID)
+
+        UNUserNotificationCenter.current().requestAuthorization(options: .badge)
+        { (granted, error) in
+            if error != nil {
+                UIApplication.shared.applicationIconBadgeNumber = 1
+            }
+        }
 
 
         let urlString = "https://fcm.googleapis.com/fcm/send"

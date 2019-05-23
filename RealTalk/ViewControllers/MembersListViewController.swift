@@ -121,7 +121,6 @@ class MembersListViewController: UIViewController, UITableViewDelegate, UITableV
             }
 
         }
-        db.collection("students")
     }
 
     /*

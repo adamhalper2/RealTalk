@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseFirestore
 import ProgressHUD
+import Firebase
 
 class PostTableViewCell: UITableViewCell {
 
@@ -28,6 +29,7 @@ class PostTableViewCell: UITableViewCell {
     var post: Post?
     private let db = Firestore.firestore()
     let user = AppController.user!
+    let dateHelper = DateHelper()
 
     func setCell(post: Post) {
 
@@ -36,7 +38,7 @@ class PostTableViewCell: UITableViewCell {
         authorLabel.text = memberLabel
         contentLabel.text = post.content
         let date = post.timestamp
-        let timestamp = timeAgoSinceDate(date: date, numericDates: true)
+        let timestamp = dateHelper.timeAgoSinceDate(date: date, numericDates: true)
         timeLabel.text = timestamp
         if post.commentCount == 0 {
             commentBtn.setTitle(" ", for: .normal)
@@ -222,6 +224,12 @@ class PostTableViewCell: UITableViewCell {
         let reportsRef = db.collection("reports")
         reportsRef.addDocument(data: newReport.representation)
 
+        Analytics.logEvent("add_report", parameters: [
+            "sender": AppController.user!.uid as NSObject,
+            "reportedPost": currPost.content as NSObject,
+            "reportedAuthor": toID as NSObject
+            ])
+
         let reportCount = currPost.reportCount
         var isActive = true
         reportBtn.tintColor = UIColor.red
@@ -318,68 +326,6 @@ class PostTableViewCell: UITableViewCell {
                     print("updated authors heart count to \(oldCountInt + 1)")
                 }
             }
-        }
-    }
-
-    func timeAgoSinceDate(date:NSDate, numericDates:Bool) -> String {
-        let calendar = NSCalendar.current
-        let unitFlags: Set<Calendar.Component> = [.minute, .hour, .day, .weekOfYear, .month, .year, .second]
-        let now = NSDate()
-        let earliest = now.earlierDate(date as Date)
-        let latest = (earliest == now as Date) ? date : now
-        let components = calendar.dateComponents(unitFlags, from: earliest as Date,  to: latest as Date)
-        if (components.year! >= 2) {
-            return "\(components.year!)y"
-        } else if (components.year! >= 1){
-            if (numericDates){
-                return "1 yr"
-            } else {
-                return "Last year"
-            }
-        } else if (components.month! >= 2) {
-            return "\(components.month!)mo"
-        } else if (components.month! >= 1){
-            if (numericDates){
-                return "1 month ago"
-            } else {
-                return "Last month"
-            }
-        } else if (components.weekOfYear! >= 2) {
-            return "\(components.weekOfYear!)w"
-        } else if (components.weekOfYear! >= 1){
-            if (numericDates){
-                return "1w"
-            } else {
-                return "Last week"
-            }
-        } else if (components.day! >= 2) {
-            return "\(components.day!)d"
-        } else if (components.day! >= 1){
-            if (numericDates){
-                return "1d"
-            } else {
-                return "Yesterday"
-            }
-        } else if (components.hour! >= 2) {
-            return "\(components.hour!)h"
-        } else if (components.hour! >= 1){
-            if (numericDates){
-                return "1h"
-            } else {
-                return "An hour ago"
-            }
-        } else if (components.minute! >= 2) {
-            return "\(components.minute!)min"
-        } else if (components.minute! >= 1){
-            if (numericDates){
-                return "1 min ago"
-            } else {
-                return "A min ago"
-            }
-        } else if (components.second! >= 3) {
-            return "\(components.second!)s"
-        } else {
-            return "Just now"
         }
     }
 }

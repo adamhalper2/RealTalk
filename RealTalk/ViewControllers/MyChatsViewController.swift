@@ -18,7 +18,7 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
     private var heartsListener: ListenerRegistration?
     private var notificationsListener: ListenerRegistration?
 
-
+    private let application = UIApplication.shared
     private let db = Firestore.firestore()
     private var joinedChatIDs: [String]?
     private var uid = ""
@@ -52,6 +52,7 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
                     }
                     self.notificationButton?.badge = "\(self.unreadNotifCount)"
                 }
+                application.applicationIconBadgeNumber = unreadNotifCount
             }
         }
     }
@@ -66,37 +67,20 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell") as! ChatPreviewTableViewCell
         let post = posts[indexPath.row]
-        cell.chatTitleLabel.text = post.content
-        cell.lastMessageLabel.text = post.lastMessage
-        let memberCount = post.members.count
-        if memberCount == 1 {
-            cell.onlineIcon.text = String(memberCount) + " member"
+        if post.pollID == "" {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell") as! ChatPreviewTableViewCell
+            cell.setCell(post: post)
+            return cell
         } else {
-            cell.onlineIcon.text = String(memberCount) + " members"
-        }
-        let currUser = AppController.user!
-        uid = currUser.uid
-        if post.authorID == currUser.uid {
-            cell.crownIcon.isHidden = false
-            cell.authorLabel.text = "You"
-            cell.crownIcon.tintColor = UIColor.customPurple2
+            let cell = tableView.dequeueReusableCell(withIdentifier: "pollPreviewCell") as! PollPreviewTableViewCell
+            if cell.votes.count > 0 {
+                cell.resetCell()
+            }
+            cell.setCell(post: post)
+            return cell
 
-        } else {
-            cell.crownIcon.isHidden = false
-            cell.crownIcon.tintColor = UIColor.lightGray
-            cell.authorLabel.text = post.author
-            cell.authorLabel.isHidden = false
         }
-        cell.lockIcon.tintColor = UIColor.darkGray
-        if post.isLocked {
-            cell.lockIcon.isHidden = false
-        } else {
-            cell.lockIcon.isHidden = true
-        }
-        
-        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -166,8 +150,15 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 print("Error updating document: \(err)")
             } else {
                 print("Document successfully updated")
+                let postID = post.id ?? ""
+                Analytics.logEvent("deactivated_chat", parameters: [
+                    "sender": AppController.user!.uid as NSObject,
+                    "postTitle": post.content as NSObject,
+                    "postID": postID as NSObject
+                    ])
             }
         }
+
     }
     
     func removeMember(post: Post) {
@@ -187,6 +178,13 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 print("Error updating document: \(err)")
             } else {
                 print("removed member")
+                let postID = post.id ?? ""
+                Analytics.logEvent("user_left_from_chat", parameters: [
+                    "userRemoved": AppController.user!.uid as NSObject,
+                    "postTitle": post.content as NSObject,
+                    "postID": postID as NSObject
+                    ])
+
             }
         }
     }
@@ -335,33 +333,6 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.tableView.reloadData()
             self.tableView.refreshControl?.endRefreshing()
         }
-        //I think unnecessary?
-        /*
-         let db = Firestore.firestore()
-         let  postsReference =  db.collection("channels")
-         
-         for post in posts {
-         if let id = post.id {
-         let postRef = postsReference.document(id)
-         postRef.getDocument { (documentSnapshot, err) in
-         if let err = err {
-         print("Error getting document: \(err)")
-         } else {
-         
-         let docId = documentSnapshot?.documentID
-         let commentCount = documentSnapshot?.get("commentCount") as! String
-         let commentCountInt = Int(commentCount)!
-         print("after reload, comment count: \(commentCountInt)")
-         }
-         
-         }
-         }
-         }
-         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-         self.tableView.reloadData()
-         self.tableView.refreshControl?.endRefreshing()
-         }
-         */
     }
     
     private func addPostToTable(_ post: Post) {
