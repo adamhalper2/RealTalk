@@ -66,6 +66,8 @@ class MessageDetailViewController: UIViewController {
     }
 
     func getUserHearts(){
+        print("get user hearts called")
+        print("message is \(message)")
         guard let message = message else {return}
         let userRef = db.collection("students").document(message.sender.id)
         userRef.getDocument { (documentSnapshot, err) in
@@ -73,8 +75,14 @@ class MessageDetailViewController: UIViewController {
                 print("Error getting document: \(err)")
             } else {
                 guard let data = documentSnapshot?.data() else {return}
-                if let heartCount = data["heartCount"] as? Int {
-                    self.heartCount = heartCount
+                print("data is \(data)")
+
+                if let heartCountStr = data["heartCount"] as? String {
+                    self.heartCount = Int(heartCountStr)!
+                    DispatchQueue.main.async {
+                        print("setting heart label")
+                        self.heartLabel.setTitle(heartCountStr, for: .normal)
+                    }
                 }
             }
         }
