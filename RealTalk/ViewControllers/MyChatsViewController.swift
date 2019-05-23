@@ -150,8 +150,15 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 print("Error updating document: \(err)")
             } else {
                 print("Document successfully updated")
+                let postID = post.id ?? ""
+                Analytics.logEvent("deactivated_chat", parameters: [
+                    "sender": AppController.user!.uid as NSObject,
+                    "postTitle": post.content as NSObject,
+                    "postID": postID as NSObject
+                    ])
             }
         }
+
     }
     
     func removeMember(post: Post) {
@@ -171,6 +178,13 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 print("Error updating document: \(err)")
             } else {
                 print("removed member")
+                let postID = post.id ?? ""
+                Analytics.logEvent("user_left_from_chat", parameters: [
+                    "userRemoved": AppController.user!.uid as NSObject,
+                    "postTitle": post.content as NSObject,
+                    "postID": postID as NSObject
+                    ])
+
             }
         }
     }
