@@ -243,18 +243,21 @@ class PollTableViewCell: UITableViewCell {
         let aPercentStr = "\(Int(APercent * 100))%"
         let bPercentStr = "\(Int(BPercent * 100))%"
 
+        /*
         let strokeTextAttributes = [
             NSAttributedString.Key.strokeColor : UIColor.darkText,
             NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 13)
             ] as [NSAttributedString.Key : Any]
+        */
+        self.optionAPercentLabel.text = aPercentStr
+        self.optionBPercentLabel.text = bPercentStr
+
         if (option) {
-            self.optionAPercentLabel.attributedText = NSAttributedString(string: aPercentStr, attributes: strokeTextAttributes)
-            self.optionBPercentLabel.text = bPercentStr
+            //self.optionAPercentLabel.attributedText = NSAttributedString(string: aPercentStr, attributes: strokeTextAttributes)
             self.optionABackgroundView.layer.borderWidth = 1
             self.optionABackgroundView.layer.borderColor = UIColor.customPurple2.cgColor
         } else {
-            self.optionAPercentLabel.text = aPercentStr
-            self.optionBPercentLabel.attributedText = NSAttributedString(string: aPercentStr, attributes: strokeTextAttributes)
+            //self.optionBPercentLabel.attributedText = NSAttributedString(string: aPercentStr, attributes: strokeTextAttributes)
             self.optionBBackgroundView.layer.borderWidth = 1
             self.optionBBackgroundView.layer.borderColor = UIColor.customPurple2.cgColor
         }

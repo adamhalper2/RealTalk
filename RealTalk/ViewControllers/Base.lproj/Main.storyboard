@@ -331,9 +331,11 @@
                                             <outlet property="membersCountLabel" destination="4nC-F8-ViJ" id="rGe-Jb-eBF"/>
                                             <outlet property="onlineIcon" destination="ax5-s3-wRa" id="fih-sx-WTj"/>
                                             <outlet property="onlineLabel" destination="6Tx-TO-y54" id="amR-1D-WAd"/>
+                                            <outlet property="optionABackgroundView" destination="fpC-Rw-cpV" id="Lmd-8d-YWt"/>
                                             <outlet property="optionALabel" destination="3tW-1U-ylg" id="jXt-cJ-aUj"/>
                                             <outlet property="optionAPercentLabel" destination="8G4-py-Jw7" id="uSb-Sn-2jZ"/>
                                             <outlet property="optionAView" destination="Dzd-n0-u2H" id="mtz-ps-lqw"/>
+                                            <outlet property="optionBBackgroundView" destination="tN2-kO-RbG" id="tI9-l4-wsw"/>
                                             <outlet property="optionBLabel" destination="x2z-C5-jWp" id="2yC-eJ-ghq"/>
                                             <outlet property="optionBPercentLabel" destination="1Ii-Ts-4F7" id="ZxQ-Rh-U96"/>
                                             <outlet property="optionBView" destination="cSe-cg-H6c" id="lWH-pU-6My"/>

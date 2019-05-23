@@ -30,19 +30,48 @@ class PollPreviewTableViewCell: UITableViewCell {
     @IBOutlet weak var optionALabel: UILabel!
     @IBOutlet weak var optionBLabel: UILabel!
 
+    @IBOutlet weak var optionABackgroundView: UIView!
+    @IBOutlet weak var optionBBackgroundView: UIView!
+    
     @IBOutlet weak var optionBPercentLabel: UILabel!
     @IBOutlet weak var optionAPercentLabel: UILabel!
     @IBOutlet weak var voteCountLabel: UILabel!
 
+    private var votesListener: ListenerRegistration?
+
     var user = AppController.user!
     var poll: Poll?
+    var userVote: Vote?
 
-    var votes : [Vote] = [] {
+    var hasVoted = false {
+        didSet {
+            print("did set hasVoted \(hasVoted)")
+            if (hasVoted) {
+                print("set hasVoted == true)")
+                optionALabel.isUserInteractionEnabled = false
+                optionBLabel.isUserInteractionEnabled = false
+                if let vote = userVote {
+                    DispatchQueue.main.async {
+                        self.animateFill(option: vote.option)
+                    }
+                }
+            }
+        }
+    }
+
+    var votes: [Vote] = [] {
         didSet {
             DispatchQueue.main.async {
-                if (self.hasVoted && self.votes.count > 0) {
-                   // self.staticFill()
-                }
+                print("votes array did change: \(self.votes.count)")
+                //let filteredVotes = self.votes.filter { $0.pollID != self.poll?.id}
+                //print("filtered votes: \(filteredVotes.count)")
+                /*
+                 for vote in self.votes {
+                 if vote.pollID != self.poll?.id {
+                 self.votes = self.votes.filter { $0.pollID != self.poll?.id}
+                 }
+                 }
+                 */
                 if self.votes.count == 1 {
                     self.voteCountLabel.text = "1 vote"
                 } else {
@@ -52,17 +81,10 @@ class PollPreviewTableViewCell: UITableViewCell {
         }
     }
 
-    var hasVoted: Bool = false {
-        didSet {
-            print("did set hasVoted \(hasVoted)")
-            if (hasVoted) {
-                DispatchQueue.main.async {
-                    self.animateFill()
-                }
-
-            }
-        }
+    deinit {
+        votesListener?.remove()
     }
+
     var post: Post?
     private let db = Firestore.firestore()
     var membersOnline: [Student] = [] {
@@ -79,26 +101,27 @@ class PollPreviewTableViewCell: UITableViewCell {
     }
 
     func loadVotes(pollID: String) {
-        let votesRef = db.collection("votes").whereField("pollID", isEqualTo: pollID)
-        votesRef.getDocuments { (querySnapshot, err) in
-            if err != nil {
-                print("Error getting votes from DB: \(err)")
+        print("load votes called")
+        let voteRef = db.collection("votes").whereField("pollID", isEqualTo: pollID)
+        votesListener = voteRef.addSnapshotListener({ (querySnapshot, err) in
+            guard let snapshot = querySnapshot else {
+                print("Error listening for channel updates: \(err?.localizedDescription ?? "No error")")
+                return
             }
-            guard let snap = querySnapshot else {return}
-            for document in snap.documents {
-                guard let vote = Vote(data: document.data(), docId: document.documentID) else {return}
-                if !self.votes.contains(vote) {
-                    self.votes.append(vote)
-                    print("successfully loaded vote \(vote)")
+            snapshot.documentChanges.forEach { change in
+                self.handleVoteDocumentChange(change)
+            }
+        })
+    }
 
-                }
-                if vote.senderID == self.user.uid {
-                    if self.hasVoted == false {
-                        self.hasVoted = true
-                    }
-                }
-            }
+    private func addVote(_ vote: Vote) {
+        guard !votes.contains(vote) else {
+            return
         }
+        print("addVote called")
+        votes.append(vote)
+
+
     }
 
     func setPoll(pollID: String) {
@@ -168,8 +191,8 @@ class PollPreviewTableViewCell: UITableViewCell {
     @objc func voteForA() {
         print("vote for A tapped")
         print("votes: \(votes)")
-        guard let currPost = post else {return}
-        let pollID = currPost.pollID
+        guard let currPoll = poll else {return}
+        guard let pollID = currPoll.id else {return}
 
         //fillLayer(option: "A", fillWidth: 75.0)
         let vote = Vote(senderID: user.uid, option: true, pollID: pollID)
@@ -180,8 +203,9 @@ class PollPreviewTableViewCell: UITableViewCell {
             } else {
                 print("added new vote for A")
                 DispatchQueue.main.async {
-                    self.addVote(vote)
-                    self.animateFill()
+                    self.animateFill(option: true)
+                    self.optionALabel.isUserInteractionEnabled = false
+                    self.optionBLabel.isUserInteractionEnabled = false
                 }
             }
         }
@@ -189,8 +213,8 @@ class PollPreviewTableViewCell: UITableViewCell {
 
     @objc func voteForB() {
         print("vote for B tapped")
-        guard let currPost = post else {return}
-        let pollID = currPost.pollID
+        guard let currPoll = poll else {return}
+        guard let pollID = currPoll.id else {return}
 
         //fillLayer(option: "A", fillWidth: 75.0)
         let vote = Vote(senderID: user.uid, option: false, pollID: pollID)
@@ -202,27 +226,49 @@ class PollPreviewTableViewCell: UITableViewCell {
                 print("added new vote for B")
                 DispatchQueue.main.async {
                     self.addVote(vote)
-                    self.animateFill()
+                    self.animateFill(option: false)
+                    self.optionALabel.isUserInteractionEnabled = false
+                    self.optionBLabel.isUserInteractionEnabled = false
                 }
             }
         }
     }
 
-    private func addVote(_ vote: Vote) {
-        guard !votes.contains(vote) else {
+
+    private func handleVoteDocumentChange(_ change: DocumentChange) {
+
+        guard let vote = Vote(document: change.document) else {
+            print("couldnt create vote from doc")
             return
         }
-        print("addVote called")
-        votes.append(vote)
 
+        if vote.senderID == user.uid {
+            self.userVote = vote
+            if hasVoted == false {
+                self.hasVoted = true
+            }
+        }
 
+        switch change.type {
+        case .added:
+            addVote(vote)
+            break
+        case .modified:
+            break
+        case .removed:
+            break
+        }
     }
+
 
     func resetCell() {
         votes = [Vote]()
-        voteCountLabel.text = "0 votes"
         optionAView.frame.size.width = 0
         optionBView.frame.size.width = 0
+        optionALabel.isUserInteractionEnabled = true
+        optionBLabel.isUserInteractionEnabled = true
+        optionABackgroundView.layer.borderWidth = 0
+        optionBBackgroundView.layer.borderWidth = 0
         hasVoted = false
         poll = nil
         post = nil
@@ -230,6 +276,7 @@ class PollPreviewTableViewCell: UITableViewCell {
         optionBPercentLabel.isHidden = true
         optionALabel.text = ""
         optionBLabel.text = ""
+        lastMessageLabel.text = ""
         chatTitleLabel.text = ""
     }
 
@@ -274,10 +321,13 @@ class PollPreviewTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    func staticFill() {
-        print("static fill called")
+    func staticFill(option: Bool) {
         if votes.count <= 0 {return}
         let width = pollView.frame.size.width
+
+        //let votesForA = votes.filter { $0.option == true}
+        //let votesForB = votes.filter { $0.option == false}
+
 
         var votesForA : CGFloat = 0
         var votesForB : CGFloat = 0
@@ -289,8 +339,8 @@ class PollPreviewTableViewCell: UITableViewCell {
                 votesForB += 1
             }
         }
-        print("vote count is \(votes.count)")
 
+        print("vote count is \(votes.count)")
         print("votesForA: \(votesForA), votesForB: \(votesForB)")
 
         let APercent : CGFloat = votesForA / (votesForA + votesForB)
@@ -307,8 +357,24 @@ class PollPreviewTableViewCell: UITableViewCell {
         let aPercentStr = "\(Int(APercent * 100))%"
         let bPercentStr = "\(Int(BPercent * 100))%"
 
+        /*
+         let strokeTextAttributes = [
+         NSAttributedString.Key.strokeColor : UIColor.darkText,
+         NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 13)
+         ] as [NSAttributedString.Key : Any]
+         */
         self.optionAPercentLabel.text = aPercentStr
         self.optionBPercentLabel.text = bPercentStr
+
+        if (option) {
+            //self.optionAPercentLabel.attributedText = NSAttributedString(string: aPercentStr, attributes: strokeTextAttributes)
+            self.optionABackgroundView.layer.borderWidth = 1
+            self.optionABackgroundView.layer.borderColor = UIColor.customPurple2.cgColor
+        } else {
+            //self.optionBPercentLabel.attributedText = NSAttributedString(string: aPercentStr, attributes: strokeTextAttributes)
+            self.optionBBackgroundView.layer.borderWidth = 1
+            self.optionBBackgroundView.layer.borderColor = UIColor.customPurple2.cgColor
+        }
 
         print("APercentStr: \(aPercentStr)")
         print("BPercentStr: \(bPercentStr)")
@@ -318,12 +384,13 @@ class PollPreviewTableViewCell: UITableViewCell {
         self.layoutIfNeeded()
     }
 
-    func animateFill() {
-        if votes.count == 0 {
-            print("vote count is zero")
-            return
-        }
+    func animateFill(option: Bool) {
+        if votes.count <= 0 {return}
         let width = pollView.frame.size.width
+
+        //let votesForA = votes.filter { $0.option == true}
+        //let votesForB = votes.filter { $0.option == false}
+
 
         var votesForA : CGFloat = 0
         var votesForB : CGFloat = 0
@@ -335,8 +402,8 @@ class PollPreviewTableViewCell: UITableViewCell {
                 votesForB += 1
             }
         }
-        print("vote count is \(votes.count)")
 
+        print("vote count is \(votes.count)")
         print("votesForA: \(votesForA), votesForB: \(votesForB)")
 
         let APercent : CGFloat = votesForA / (votesForA + votesForB)
@@ -353,8 +420,24 @@ class PollPreviewTableViewCell: UITableViewCell {
         let aPercentStr = "\(Int(APercent * 100))%"
         let bPercentStr = "\(Int(BPercent * 100))%"
 
+        /*
+         let strokeTextAttributes = [
+         NSAttributedString.Key.strokeColor : UIColor.darkText,
+         NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 13)
+         ] as [NSAttributedString.Key : Any]
+         */
         self.optionAPercentLabel.text = aPercentStr
         self.optionBPercentLabel.text = bPercentStr
+
+        if (option) {
+            //self.optionAPercentLabel.attributedText = NSAttributedString(string: aPercentStr, attributes: strokeTextAttributes)
+            self.optionABackgroundView.layer.borderWidth = 1
+            self.optionABackgroundView.layer.borderColor = UIColor.customPurple2.cgColor
+        } else {
+            //self.optionBPercentLabel.attributedText = NSAttributedString(string: aPercentStr, attributes: strokeTextAttributes)
+            self.optionBBackgroundView.layer.borderWidth = 1
+            self.optionBBackgroundView.layer.borderColor = UIColor.customPurple2.cgColor
+        }
 
         print("APercentStr: \(aPercentStr)")
         print("BPercentStr: \(bPercentStr)")
@@ -375,6 +458,4 @@ class PollPreviewTableViewCell: UITableViewCell {
         }
         self.layoutIfNeeded()
     }
-
-
 }
