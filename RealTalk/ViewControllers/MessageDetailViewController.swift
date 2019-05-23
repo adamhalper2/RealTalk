@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseFirestore
+import Firebase
 
 class MessageDetailViewController: UIViewController {
     
@@ -132,6 +133,12 @@ class MessageDetailViewController: UIViewController {
         guard let message = message else {return}
         let toID = message.sender.id
         let messageID = message.messageId
+
+        var content = ""
+        if message.content != nil {
+            content = message.content!
+        }
+
         guard let user = AppController.user else {return}
         let fromID = user.uid
 
@@ -140,6 +147,14 @@ class MessageDetailViewController: UIViewController {
         //Adds report object to FB
         let reportsRef = db.collection("reports")
         reportsRef.addDocument(data: newReport.representation)
+
+        //log event for analytics
+        Analytics.logEvent("add_message_report", parameters: [
+            "sender": user.uid as NSObject,
+            "reportedPost": content as NSObject,
+            "reportedAuthor": toID as NSObject
+            ])
+
 
         //Auto-hides post if 4 or more reports
         var isActive = true

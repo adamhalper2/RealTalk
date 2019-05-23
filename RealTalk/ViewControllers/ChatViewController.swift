@@ -711,11 +711,11 @@ extension ChatViewController: MessageInputBarDelegate {
     func addMember(uid: String) {
         let postRef = db.collection("channels").document(post.id!)
         var mem = post.members
-        if post.members.contains(user.uid) {
+        if post.members.contains(uid) {
             print("Already contains userID")
             return
         }
-        
+
         mem.append(uid)
         let membersStr = mem.joined(separator: "-")
         postRef.updateData([
@@ -725,6 +725,12 @@ extension ChatViewController: MessageInputBarDelegate {
                 print("Error updating document: \(err)")
             } else {
                 print("added member")
+                guard let postID = self.post.id else {return}
+
+                Analytics.logEvent("joined_chat", parameters: [
+                    "user": self.user.uid as NSObject,
+                    "postID": postID as NSObject
+                    ])
             }
         }
     }
@@ -745,10 +751,18 @@ extension ChatViewController: MessageInputBarDelegate {
                 print("Error updating document: \(err)")
             } else {
                 print("removed member")
+                guard let postID = self.post.id else {return}
+
+                Analytics.logEvent("user_removed", parameters: [
+                    "removed_user": uid as NSObject,
+                    "postID": postID as NSObject
+                    ])
             }
         }
     }
-    
+
+
+
     func removeChatFromUserList(uid: String) {
         let userRef = db.collection("students").document(uid)
         

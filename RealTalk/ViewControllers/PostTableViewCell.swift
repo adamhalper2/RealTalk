@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseFirestore
 import ProgressHUD
+import Firebase
 
 class PostTableViewCell: UITableViewCell {
 
@@ -222,6 +223,12 @@ class PostTableViewCell: UITableViewCell {
         let newReport = Report(postID: postID, fromID: fromID, toID: toID, onPost: true)
         let reportsRef = db.collection("reports")
         reportsRef.addDocument(data: newReport.representation)
+
+        Analytics.logEvent("add_report", parameters: [
+            "sender": AppController.user!.uid as NSObject,
+            "reportedPost": currPost.content as NSObject,
+            "reportedAuthor": toID as NSObject
+            ])
 
         let reportCount = currPost.reportCount
         var isActive = true

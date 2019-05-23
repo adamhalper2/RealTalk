@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseFirestore
 import ProgressHUD
+import Firebase
 
 class PollTableViewCell: UITableViewCell {
 
@@ -42,10 +43,11 @@ class PollTableViewCell: UITableViewCell {
     let user = AppController.user!
     var hasVoted = false {
         didSet {
+            print("did set hasVoted \(hasVoted)")
             if (hasVoted) {
                 print("set hasVoted == true)")
                 DispatchQueue.main.async {
-                    self.staticFill()
+                    self.animateFill()
                 }
             }
         }
@@ -73,11 +75,9 @@ class PollTableViewCell: UITableViewCell {
 
     func setCell(post: Post) {
 
-        optionAView.frame.size.width = 0
-        optionBView.frame.size.width = 0
+        //optionAView.frame.size.width = 0
+        //optionBView.frame.size.width = 0
 
-        optionAPercentLabel.isHidden = true
-        optionBPercentLabel.isHidden = true
 
         if votes.count == 1 {
             voteCountLabel.text = "1 vote"
@@ -114,7 +114,6 @@ class PollTableViewCell: UITableViewCell {
         checkIfUserReported()
         checkIfMembersOnline()
         checkIfUserIsModerator()
-        checkIfUserVoted()
 
         lockIndicator.tintColor = UIColor.darkGray
         print("post.isLocked is \(post.isLocked)")
@@ -127,6 +126,8 @@ class PollTableViewCell: UITableViewCell {
         }
     }
 
+
+    /*
     func checkIfUserVoted() {
         print("check if user voted called...\(votes)")
         for vote in votes {
@@ -136,6 +137,7 @@ class PollTableViewCell: UITableViewCell {
             }
         }
     }
+    */
 
 
     func setPoll(pollID: String) {
@@ -494,6 +496,13 @@ class PollTableViewCell: UITableViewCell {
         let newReport = Report(postID: postID, fromID: fromID, toID: toID, onPost: true)
         let reportsRef = db.collection("reports")
         reportsRef.addDocument(data: newReport.representation)
+
+        Analytics.logEvent("add_report", parameters: [
+            "sender": AppController.user!.uid as NSObject,
+            "reportedPost": currPost.content as NSObject,
+            "reportedAuthor": toID as NSObject
+            ])
+
 
         let reportCount = currPost.reportCount
         var isActive = true

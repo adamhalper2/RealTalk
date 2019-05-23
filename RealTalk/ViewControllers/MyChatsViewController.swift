@@ -67,10 +67,17 @@ class MyChatsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell") as! ChatPreviewTableViewCell
         let post = posts[indexPath.row]
-        cell.setCell(post: post)
-        return cell
+        if post.pollID == "" {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell") as! ChatPreviewTableViewCell
+            cell.setCell(post: post)
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "pollPreviewCell") as! PollPreviewTableViewCell
+            cell.setCell(post: post)
+            return cell
+
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
