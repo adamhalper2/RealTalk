@@ -37,12 +37,28 @@ import EzPopup
 private let db = Firestore.firestore()
 private var reference: CollectionReference?
 
+/*
+struct AvatarObj {
+
+    let senderID: String
+    var avatarView: AvatarView
+    var message: MessageType
+
+    init(senderID: String, avatarView: AvatarView, message: MessageType) {
+        self.senderID = senderID
+        self.avatarView = avatarView
+        self.message = message
+    }
+}
+*/
+
 final class ChatViewController: MessagesViewController {
-    
+
   private var messages: [Message] = []
   private var messageListener: ListenerRegistration?
-  private var postListener: ListenerRegistration?
+  private var membersListener: ListenerRegistration?
 
+  var members: [Student] = []
   
   private let user: User
   private var post: Post
@@ -56,7 +72,8 @@ final class ChatViewController: MessagesViewController {
       }
     }
   }
-  
+
+  //var messageIndexes : [IndexPath: AvatarObj] = [:]
   private let storage = Storage.storage().reference()
   private var lockButton: UIBarButtonItem?
   private var lockUIbtn = UIButton()
@@ -75,6 +92,7 @@ final class ChatViewController: MessagesViewController {
   
   deinit {
     messageListener?.remove()
+    membersListener?.remove()
   }
 
     func setTitle(title:String, subtitle:String) -> UIView {
@@ -136,9 +154,49 @@ final class ChatViewController: MessagesViewController {
 
     }
 
+    /*
+    func loadMembers(memberIds: [String]) {
+        let postMembers = post.members
+        let memberRef = db.collection("students").addSnapshotListener { (querySnap, err) in
+            guard let snapshot = querySnap else {
+                print("Error listening for member updates: \(err?.localizedDescription ?? "No error")")
+                return
+            }
+
+            snapshot.documentChanges.forEach { change in
+                if let student = Student(document: change.document) {
+                    if postMembers.contains(student.uid) {
+                        for (index, avatar) in self.messageIndexes {
+                            if avatar.senderID == student.uid {
+                                print("setting avatar view")
+                                self.configureAvatarView(avatar.avatarView, for: avatar.message, at: index, in: self.messagesCollectionView)
+                            }
+                        }
+
+                        /*
+                        for (index, member) in self.members.enumerated() {
+                            if member.uid == student.uid {
+                                self.members[index] = student
+                                print("updated member from \(member) to \(student)")
+                            } else {
+                                self.members.append(student)
+                            }
+                        }
+                        print("members count \(self.members.count)")
+                        */
+                    }
+                }
+            }
+        }
+    }
+    */
+
+
   override func viewDidLoad() {
     super.viewDidLoad()
     self.navigationItem.titleView = setTitle(title: "\(post.content)", subtitle: "\(post.members.count) members")
+
+    //loadMembers(memberIds: post.members)
 
     self.tabBarController?.tabBar.isHidden = true
 
@@ -569,9 +627,14 @@ extension ChatViewController: MessagesLayoutDelegate {
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
 
         let sender = message.sender.id
-        print("sender: \(sender) post author: \(post.authorID)")
+        //let avatar = AvatarObj(senderID: sender, avatarView: avatarView, message: message)
+        //messageIndexes[indexPath] = avatar
+
+        print("sender: \(message.sender.displayName) post author: \(post.authorID)")
 
         if sender == post.authorID {
+
+
             let image = UIImage(named: "crownIcon")
             let av = Avatar(image: image, initials: "")
             avatarView.set(avatar: av)
@@ -582,12 +645,22 @@ extension ChatViewController: MessagesLayoutDelegate {
         } else {
             let image = UIImage(named: "memberAvatar")
             let av = Avatar(image: image, initials: "")
+            
             avatarView.set(avatar: av)
             avatarView.clipsToBounds = false
-            avatarView.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
             avatarView.backgroundColor = UIColor.clear
-            print("set av member")
+            avatarView.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
+            print("memberCount at avatar is \(members.count)")
 
+            for member in members {
+                if member.uid == sender {
+                    if member.isOnline {
+                        print("setting tint color to green")
+                        avatarView.tintColor = UIColor.customGreen.withAlphaComponent(0.5)
+                        return
+                    }
+                }
+            }
         }
     }
   
