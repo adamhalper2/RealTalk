@@ -113,6 +113,8 @@ class MembersListViewController: UIViewController, UITableViewDelegate, UITableV
                     print("added student \(student)")
 
                     self.members.append(student)
+                    self.members.sort { $0.isOnline && !$1.isOnline }
+
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                     }
