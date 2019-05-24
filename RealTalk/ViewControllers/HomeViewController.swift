@@ -172,8 +172,47 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     */
 
-    
+    func setTitle(title:String, subtitle:String) -> UIView {
 
+        let screenSize: CGRect = UIScreen.main.bounds
+        let screenWidth = screenSize.width
+        let screenHeight = screenSize.height
+
+        let titleLabel = UILabel(frame: CGRect(x: 0, y: -2, width: screenWidth/2, height: 20))
+        titleLabel.textAlignment = .center
+        titleLabel.backgroundColor = UIColor.clear
+        titleLabel.textColor = UIColor.black
+        titleLabel.font = UIFont(name: "DIN Alternate", size: 17)!
+        titleLabel.text = title
+        titleLabel.lineBreakMode = .byTruncatingTail
+
+        let subtitleLabel = UILabel(frame: CGRect(x: 0, y: 18, width: 0, height: 0))
+        subtitleLabel.backgroundColor = UIColor.clear
+        subtitleLabel.textColor = UIColor.lightGray
+        subtitleLabel.font = UIFont.systemFont(ofSize: 12)
+        subtitleLabel.text = subtitle
+        subtitleLabel.sizeToFit()
+
+        let titleView = UIView(frame: CGRect(x: 0, y: 0, width: max(titleLabel.frame.size.width, subtitleLabel.frame.size.width), height: 40))
+        titleView.addSubview(titleLabel)
+        titleView.addSubview(subtitleLabel)
+
+        let recognizer = UITapGestureRecognizer(target: self, action:nil)
+        titleView.isUserInteractionEnabled = true
+        titleView.addGestureRecognizer(recognizer)
+
+        let widthDiff = subtitleLabel.frame.size.width - titleLabel.frame.size.width
+
+        if widthDiff < 0 {
+            let newX = widthDiff / 2
+            subtitleLabel.frame.origin.x = abs(newX)
+        } else {
+            let newX = widthDiff / 2
+            titleLabel.frame.origin.x = newX
+        }
+
+        return titleView
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -228,6 +267,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     func setNavBar() {
         //1. customize title font
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "DIN Alternate", size: 25)!]
+        //self.navigationItem.titleView = setTitle(title: "Stanford", subtitle: "100 members")
 
 
         //2. add heart
