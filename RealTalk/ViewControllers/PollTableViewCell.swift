@@ -484,6 +484,7 @@ class PollTableViewCell: UITableViewCell {
         reportBtn.tintColor = UIColor.darkGray
         reportBtn.isEnabled = true
         onlineIndicator.tintColor = UIColor.lightGray
+        resetCell()
 
     }
 
